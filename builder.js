@@ -76,7 +76,7 @@ function validateCategories() {
     }
   });
 }
-validateCategories();
+
 
 let cssContent = fs.existsSync(cssFile) ? fs.readFileSync(cssFile, 'utf8') : '';
 let chatJsContent = fs.existsSync(chatJsFile) ? fs.readFileSync(chatJsFile, 'utf8') : '';
@@ -291,6 +291,9 @@ In an era of vendor lock-in and rising SaaS costs, open source provides a sustai
 Open source thrives on contribution. Whether it's reporting bugs or writing documentation, being part of the community helps improve the tools we all rely on.`
   }
 };
+
+validateCategories();
+
 let faqBank = [];
 try {
   faqBank = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'faqs.json'), 'utf8'));
@@ -412,7 +415,7 @@ function getBaseLayout(title, desc, canonicalPath, content, lang = 'en', headInj
     // Search Intent Analytics (#42)
     window.logSearchIntent = (query, resultCount) => {
       if (window.va) window.va('track', 'Search Intent', { query, resultCount });
-      console.log(`[Analytics] Search: "\${query}" - Results: \${ resultCount } `);
+      console.log('[Analytics] Search: "' + query + '" - Results: ' + resultCount);
     };
   </script>
   <script defer src="/js/search.js"></script>

@@ -5,14 +5,7 @@ const https = require('https');
 // Usage: node scripts/ingest.js <github-repo-path> <category>
 // Example: node scripts/ingest.js n8n-io/n8n automation-tools
 
-const repoPath = process.argv[2];
-const category = process.argv[3];
 
-if (!repoPath || !category) {
-  console.error("Usage: node scripts/ingest.js <owner/repo> <category>");
-  console.error("Example: node scripts/ingest.js langgenius/dify ai-tools");
-  process.exit(1);
-}
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Optional, but prevents rate limiting
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -247,6 +240,14 @@ function generateMockContent(repoData, cat) {
 }
 
 async function run() {
+  const repoPath = process.argv[2];
+  const category = process.argv[3];
+
+  if (!repoPath || !category) {
+    console.error("Usage: node scripts/ingest.js <owner/repo> <category>");
+    console.error("Example: node scripts/ingest.js langgenius/dify ai-tools");
+    process.exit(1);
+  }
   try {
     console.log(`🔍 Fetching repository data for: ${repoPath}...`);
     const repoData = await fetchGithubData(repoPath);
