@@ -5,6 +5,7 @@
   "main": "builder.js",
   "scripts": {
     "build": "node builder.js",
+    "test:tools": "node scripts/validate-tools.js",
     "start": "node builder.js",
     "verify:sitemaps": "node scripts/verify-sitemaps.js"
   },
