@@ -1,0 +1,39 @@
+image: node:20
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  GEMINI_API_KEY: $GEMINI_API_KEY
+
+cache:
+  paths:
+    - node_modules/
+
+validate-tools:
+  stage: test
+  script:
+    - npm install
+    - npm run test:tools
+
+build-site:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - public/
+    expire_in: 1 week
+
+pages:
+  stage: deploy
+  script:
+    - echo "Deploying to GitLab Pages..."
+  artifacts:
+    paths:
+      - public/
+  only:
+    - main
