@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- freemium.services — SPECIAL FEATURE PAGES SITEMAP -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://freemium.services/ai-kanban/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.92</priority></url>
+  <url><loc>https://freemium.services/ides/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
+  <url><loc>https://freemium.services/coding/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
+  <url><loc>https://freemium.services/assistants/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/directory/</loc><lastmod>2026-04-10</lastmod><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>https://freemium.services/search/</loc><lastmod>2026-04-10</lastmod><changefreq>daily</changefreq><priority>0.80</priority></url>
+  <url><loc>https://freemium.services/submit/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://freemium.services/tq-integration/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <url><loc>https://freemium.services/changelog/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://freemium.services/html-sitemap/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.65</priority></url>
+</urlset>

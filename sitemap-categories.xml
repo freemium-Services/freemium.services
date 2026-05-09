@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  freemium.services — CATEGORY PAGES SITEMAP
+  10 primary category hubs · Priority 0.90 – 0.95
+  Each category targets high-volume head keywords
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── AI Tools ── -->
+  <url>
+    <loc>https://freemium.services/ai-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="ta"        href="https://freemium.services/ta/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ai-tools/"/>
+  </url>
+
+  <!-- ── Open Source ── -->
+  <url>
+    <loc>https://freemium.services/open-source/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.93</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/open-source/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/open-source/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/open-source/"/>
+  </url>
+
+  <!-- ── Self-Hosting ── -->
+  <url>
+    <loc>https://freemium.services/self-hosting/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.93</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/self-hosting/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/self-hosting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/self-hosting/"/>
+  </url>
+
+  <!-- ── Automation Tools ── -->
+  <url>
+    <loc>https://freemium.services/automation-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/automation-tools/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/automation-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/automation-tools/"/>
+  </url>
+
+  <!-- ── AI Agents ── -->
+  <url>
+    <loc>https://freemium.services/ai-agents/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ai-agents/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/ai-agents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ai-agents/"/>
+  </url>
+
+  <!-- ── Developer Tools ── -->
+  <url>
+    <loc>https://freemium.services/developer-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/developer-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/developer-tools/"/>
+  </url>
+
+  <!-- ── RAG & Search ── -->
+  <url>
+    <loc>https://freemium.services/rag-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/rag-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/rag-tools/"/>
+  </url>
+
+  <!-- ── Vector Databases ── -->
+  <url>
+    <loc>https://freemium.services/vector-databases/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.87</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/vector-databases/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/vector-databases/"/>
+  </url>
+
+  <!-- ── AI Kanban ── -->
+  <url>
+    <loc>https://freemium.services/ai-kanban/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ai-kanban/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ai-kanban/"/>
+  </url>
+
+  <!-- ── CLI Tools ── -->
+  <url>
+    <loc>https://freemium.services/cli-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/cli-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/cli-tools/"/>
+  </url>
+
+</urlset>

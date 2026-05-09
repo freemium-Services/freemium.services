@@ -1,0 +1,44 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build site
+        run: |
+          npm install
+          npm run build
+
+      - name: Verify sitemap availability
+        run: |
+          npm run verify:sitemaps
+
+      - name: Verify build artifacts
+        run: |
+          if [ ! -f "public/build-report.json" ]; then
+            echo "Build failed: build-report.json not found. Did the validation fail?"
+            exit 1
+          fi
+          cat public/build-report.json
+
+      - name: Check for broken links
+        run: |
+          npx linkinator ./public --recurse --silent --skip "https://turboquant.network"
+
+          echo "Build successful."

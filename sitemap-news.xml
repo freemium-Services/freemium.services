@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  freemium.services — NEWS SITEMAP
+  Google News · Bing News · Apple News
+  Includes articles published within the last 48 hours to 2 years
+  Protocol: google.com/schemas/sitemap-news/0.9
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+
+  <url>
+    <loc>https://freemium.services/blog/best-free-ai-tools-developers-2026/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Freemium Services</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-04-02T09:00:00+05:30</news:publication_date>
+      <news:title>Best Free AI Tools for Developers in 2026</news:title>
+      <news:keywords>free AI tools, developer tools 2026, open source AI, ollama, claude code</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/blog/self-host-entire-saas-stack-40-month/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Freemium Services</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-03-28T09:00:00+05:30</news:publication_date>
+      <news:title>How to Self-Host Your Entire SaaS Stack for $40/Month</news:title>
+      <news:keywords>self-hosting, open source SaaS, coolify, n8n, self-hosted tools</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/blog/depin-edge-computing-2026-guide/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Freemium Services</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-03-22T09:00:00+05:30</news:publication_date>
+      <news:title>DePIN and Edge Computing: The 2026 Developer Guide</news:title>
+      <news:keywords>DePIN, TurboQuant, edge computing, decentralized infrastructure, Web3</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/blog/deepseek-r1-local-setup-guide/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Freemium Services</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-03-08T09:00:00+05:30</news:publication_date>
+      <news:title>Running DeepSeek-R1 Locally: The Complete 2026 Setup Guide</news:title>
+      <news:keywords>DeepSeek-R1, local LLM, ollama, self-hosted AI, reasoning models</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/blog/rag-production-mistakes-to-avoid/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Freemium Services</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-03-15T09:00:00+05:30</news:publication_date>
+      <news:title>5 RAG Mistakes That Kill Production Apps (And How to Fix Them)</news:title>
+      <news:keywords>RAG, retrieval augmented generation, vector database, LLM production, embeddings</news:keywords>
+    </news:news>
+  </url>
+
+</urlset>

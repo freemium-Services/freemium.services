@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- freemium.services — BLOG ARTICLES SITEMAP -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url><loc>https://freemium.services/blog/</loc><lastmod>2026-04-10</lastmod><changefreq>daily</changefreq><priority>0.90</priority></url>
+
+  <url>
+    <loc>https://freemium.services/blog/best-free-ai-tools-developers-2026/</loc>
+    <lastmod>2026-04-02</lastmod><changefreq>monthly</changefreq><priority>0.88</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://freemium.services/blog/best-free-ai-tools-developers-2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://freemium.services/hi/blog/best-free-ai-tools-developers-2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/blog/best-free-ai-tools-developers-2026/"/>
+  </url>
+
+  <url><loc>https://freemium.services/blog/self-host-entire-saas-stack-40-month/</loc><lastmod>2026-03-28</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/blog/depin-edge-computing-2026-guide/</loc><lastmod>2026-03-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/blog/rag-production-mistakes-to-avoid/</loc><lastmod>2026-03-15</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/blog/deepseek-r1-local-setup-guide/</loc><lastmod>2026-03-08</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/blog/n8n-ai-agents-production-guide/</loc><lastmod>2026-02-28</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/blog/ollama-complete-guide-2026/</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/blog/coolify-vs-heroku-2026/</loc><lastmod>2026-02-14</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/blog/vector-databases-compared-2026/</loc><lastmod>2026-02-07</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/blog/open-source-ai-stack-2026/</loc><lastmod>2026-01-30</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/blog/turboquant-depin-explained/</loc><lastmod>2026-01-22</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/blog/claude-code-vs-cursor-vs-cline/</loc><lastmod>2026-01-15</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/blog/zed-editor-guide-2026/</loc><lastmod>2026-01-08</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+</urlset>

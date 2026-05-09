@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freemium.Services — World's Largest Verified Directory of Freemium & Open-Source Tools</title>
+<meta name="description" content="Discover 2,000+ verified freemium and open-source tools with step-by-step self-hosting guides. The ultimate directory for developers, AI builders, and indie hackers.">
+<meta name="keywords" content="freemium tools, open source SaaS, self-hosted alternatives, AI tools directory, developer tools, free software, open source automation">
+<meta property="og:title" content="Freemium.Services — World's Largest Open-Source & Freemium Tools Directory">
+<meta property="og:description" content="Discover 2,000+ verified freemium and open-source tools with step-by-step self-hosting guides.">
+<meta property="og:url" content="https://freemium.services">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://freemium.services">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://freemium.services/#org",
+      "name": "Freemium.Services",
+      "url": "https://freemium.services",
+      "logo": "https://freemium.services/logo.png",
+      "description": "The world's largest verified directory of freemium and open-source tools with self-hosting guides.",
+      "sameAs": ["https://turboquant.network"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://freemium.services/#website",
+      "url": "https://freemium.services",
+      "name": "Freemium.Services",
+      "publisher": {"@id": "https://freemium.services/#org"},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {"@type": "EntryPoint", "urlTemplate": "https://freemium.services/search?q={search_term_string}"},
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [{"@type": "ListItem","position": 1,"name": "Home","item": "https://freemium.services"}]
+    }
+  ]
+}
+</script>
+
+<style>
+:root {
+  --bg: #080B10;
+  --bg2: #0D1117;
+  --bg3: #111820;
+  --surface: #141C26;
+  --surface2: #1A2332;
+  --border: #1E2D40;
+  --border2: #243344;
+  --text: #E8F0F8;
+  --text2: #9BB0C8;
+  --text3: #5A7A9A;
+  --accent: #00D4FF;
+  --accent2: #0099CC;
+  --green: #00FF88;
+  --green2: #00CC6A;
+  --orange: #FF6B35;
+  --purple: #7C3AED;
+  --yellow: #FFD60A;
+  --red: #FF3B5C;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --glow: 0 0 40px rgba(0,212,255,0.15);
+  --glow-green: 0 0 40px rgba(0,255,136,0.15);
+  --radius: 8px;
+  --radius2: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* GRID BACKGROUND */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,11,16,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 60px;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.logo span { color: var(--green); }
+
+.nav-search {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.nav-search:focus-within { border-color: var(--accent); }
+
+.nav-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+}
+
+.nav-search input::placeholder { color: var(--text3); }
+
+.nav-search button {
+  background: none;
+  border: none;
+  color: var(--text3);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); background: var(--surface); }
+
+.btn-submit {
+  background: var(--accent);
+  color: var(--bg) !important;
+  font-weight: 600 !important;
+  padding: 0.4rem 1rem !important;
+}
+
+.btn-submit:hover { background: #00b8d9 !important; }
+
+/* HERO */
+.hero {
+  position: relative;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, rgba(0,255,136,0.04) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.6s ease;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  animation: fadeInUp 0.7s ease 0.1s both;
+}
+
+.h1-accent { color: var(--accent); }
+.h1-green { color: var(--green); }
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text2);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  animation: fadeInUp 0.7s ease 0.2s both;
+  line-height: 1.7;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.7s ease 0.3s both;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.7s ease 0.4s both;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  box-shadow: 0 0 30px rgba(0,212,255,0.3);
+}
+
+.btn-primary:hover {
+  background: #00b8d9;
+  box-shadow: 0 0 50px rgba(0,212,255,0.5);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-green {
+  background: rgba(0,255,136,0.1);
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,0.3);
+}
+
+.btn-green:hover {
+  background: rgba(0,255,136,0.2);
+  box-shadow: var(--glow-green);
+}
+
+/* SECTION COMMONS */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.section-link {
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.section-link:hover { text-decoration: underline; }
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-pad { padding: 4rem 0; }
+
+/* CATEGORIES GRID */
+.categories-section { padding: 3rem 0 4rem; }
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(0,212,255,0.05));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.cat-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: var(--glow);
+}
+
+.cat-card:hover::before { opacity: 1; }
+
+.cat-icon { font-size: 2rem; }
+
+.cat-name {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.cat-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+}
+
+/* TOOL CARDS */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.tool-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+.tool-card:hover::after { transform: scaleX(1); }
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tool-logo {
+  width: 44px; height: 44px;
+  border-radius: var(--radius);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.tool-meta { flex: 1; }
+
+.tool-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tool-tagline {
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+.tool-stars {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--yellow);
+}
+
+.tool-desc {
+  font-size: 0.875rem;
+  color: var(--text2);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.tool-footer {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.tag-free { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+.tag-open { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.2); }
+.tag-self { background: rgba(0,212,255,0.08); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
+.tag-ai { background: rgba(255,107,53,0.1); color: var(--orange); border: 1px solid rgba(255,107,53,0.2); }
+.tag-new { background: rgba(255,214,10,0.1); color: var(--yellow); border: 1px solid rgba(255,214,10,0.2); }
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,212,255,0.08);
+}
+
+/* DEPIN SECTION */
+.depin-section {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg3) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 3rem;
+  margin: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.depin-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(0,212,255,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.depin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.depin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 100px;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.depin-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.depin-section p {
+  color: var(--text2);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.depin-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.depin-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.df-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+.df-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.df-desc {
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+/* TERMINAL WIDGET */
+.terminal {
+  background: #050810;
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  overflow: hidden;
+}
+
+.terminal-bar {
+  background: var(--surface);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.t-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+
+.t-red { background: #ff5f57; }
+.t-yellow { background: #febc2e; }
+.t-green { background: #28c840; }
+
+.t-title {
+  margin-left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+}
+
+.terminal-body {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 2;
+}
+
+.t-prompt { color: var(--green); }
+.t-cmd { color: var(--text); }
+.t-out { color: var(--text3); }
+.t-url { color: var(--accent); }
+.t-success { color: var(--green); }
+.t-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--accent);
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* SELF HOSTING SECTION */
+.selfhost-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-bottom: 0.5rem;
+}
+
+.step-card h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.step-card p {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* AI ECOSYSTEM SECTION */
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.eco-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 1.25rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+  display: block;
+}
+
+.eco-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.eco-category {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.eco-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.eco-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg2);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+.eco-icon { font-size: 1rem; }
+
+/* BLOG SECTION */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.blog-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+  display: block;
+}
+
+.blog-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+
+.blog-img {
+  height: 160px;
+  background: linear-gradient(135deg, var(--surface2), var(--bg3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-content { padding: 1.25rem; }
+
+.blog-cat {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.blog-card h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.blog-meta {
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+/* TURBOQUANT CTA */
+.tq-banner {
+  background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,255,136,0.05) 100%);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  margin: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.tq-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,212,255,0.06) 0%, transparent 70%);
+}
+
+.tq-banner h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+
+.tq-banner p {
+  color: var(--text2);
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.tq-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.tq-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text2);
+}
+
+.tq-check { color: var(--green); }
+
+/* FAQ SECTION */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.faq-item:hover { border-color: var(--border2); }
+
+.faq-item.open { border-color: var(--accent); }
+
+.faq-q {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.faq-icon {
+  color: var(--accent);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-a {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-top: 0.75rem;
+  display: none;
+}
+
+.faq-item.open .faq-a { display: block; }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.compare-table th {
+  background: var(--surface2);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: middle;
+}
+
+.compare-table tr:hover td { background: var(--surface); }
+
+.compare-table a { color: var(--accent); text-decoration: none; }
+.compare-table a:hover { text-decoration: underline; }
+
+.check-y { color: var(--green); }
+.check-n { color: var(--red); }
+.check-p { color: var(--yellow); }
+
+/* RECENTLY ADDED */
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.recent-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s;
+}
+
+.recent-card:hover {
+  border-color: var(--accent);
+}
+
+.recent-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+.recent-info { flex: 1; min-width: 0; }
+
+.recent-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-tag {
+  font-size: 0.72rem;
+  color: var(--text3);
+  font-family: var(--font-mono);
+}
+
+/* FOOTER */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 4rem 2rem 2rem;
+  margin-top: 6rem;
+}
+
+.footer-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand p {
+  color: var(--text3);
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+.footer-brand .logo { display: block; margin-bottom: 0.25rem; }
+
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col li { margin-bottom: 0.5rem; }
+
+.footer-col a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--text3);
+  font-family: var(--font-mono);
+}
+
+.footer-bottom a { color: var(--accent); text-decoration: none; }
+
+/* AI CHAT WIDGET */
+.chat-widget {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+}
+
+.chat-btn {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 20px rgba(0,212,255,0.4);
+  transition: all 0.3s;
+}
+
+.chat-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(0,212,255,0.5);
+}
+
+.chat-panel {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 340px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.chat-panel.open { display: flex; }
+
+.chat-header {
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chat-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.chat-name { font-weight: 600; font-size: 0.9rem; }
+.chat-status { font-size: 0.72rem; color: var(--green); font-family: var(--font-mono); }
+
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.msg-bot {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  align-self: flex-start;
+}
+
+.msg-user {
+  background: rgba(0,212,255,0.15);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--text);
+  align-self: flex-end;
+}
+
+.chat-input-wrap {
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus { border-color: var(--accent); }
+
+.chat-send {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.chat-send:hover { background: #00b8d9; }
+
+/* SEARCH SUGGESTIONS */
+.search-suggest {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  z-index: 100;
+  display: none;
+}
+
+.search-suggest.show { display: block; }
+
+.suggest-item {
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.suggest-item:hover { background: var(--surface); color: var(--text); }
+.suggest-item span { color: var(--text3); font-size: 0.75rem; }
+
+/* TRENDING SECTION */
+.trending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trending-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.trending-item:hover {
+  border-color: var(--accent);
+}
+
+.trending-rank {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text3);
+  width: 1.5rem;
+  text-align: center;
+}
+
+.trending-rank.top { color: var(--yellow); font-weight: 700; }
+
+.trending-icon { font-size: 1.5rem; }
+
+.trending-info { flex: 1; }
+
+.trending-name { font-weight: 600; font-size: 0.95rem; }
+
+.trending-meta { font-size: 0.78rem; color: var(--text3); font-family: var(--font-mono); }
+
+.trending-arrow { color: var(--text3); font-size: 0.9rem; }
+
+/* LANG SWITCHER */
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.lang-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover, .lang-btn.active { border-color: var(--accent); color: var(--accent); }
+
+/* SECTION DIVIDER */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .depin-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  nav .lang-switch { display: none; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 3rem 1rem 2rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .chat-panel { width: 290px; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-search { display: none; }
+}
+
+/* SCROLL ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://freemium.services" class="logo">freemium<span>.services</span></a>
+    <div class="nav-search" style="position:relative">
+      <input type="text" id="globalSearch" placeholder="Search 2,000+ tools..." autocomplete="off">
+      <button>⌘K</button>
+      <div class="search-suggest" id="searchSuggest">
+        <div class="suggest-item">🤖 n8n <span>Automation</span></div>
+        <div class="suggest-item">🧠 Onyx <span>AI Assistant</span></div>
+        <div class="suggest-item">📊 Marimo <span>Notebooks</span></div>
+        <div class="suggest-item">⚡ Claude Code <span>AI Coding</span></div>
+        <div class="suggest-item">🔍 Qdrant <span>Vector DB</span></div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/category/ai-tools.html">AI Tools</a></li>
+      <li><a href="/category/open-source.html">Open Source</a></li>
+      <li><a href="/category/self-hosting.html">Self-Hosting</a></li>
+      <li><a href="/category/developer-tools.html">Dev Tools</a></li>
+      <li><a href="https://turboquant.network" rel="noopener" style="color:var(--accent)">TurboQuant ↗</a></li>
+      <li><a href="/submit.html" class="btn-submit">+ Submit Tool</a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active">EN</button>
+      <button class="lang-btn">HI</button>
+      <button class="lang-btn">TA</button>
+      <button class="lang-btn">ML</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    2,847 tools indexed · Updated daily
+  </div>
+  <h1>The World's <span class="h1-accent">Largest Verified</span> Directory of <span class="h1-green">Freemium</span> &amp; Open-Source Tools</h1>
+  <p class="hero-sub">Discover, compare, and self-host the best free, open-source, and freemium tools — with step-by-step guides for every platform.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">2,847</span><span class="stat-label">Tools Listed</span></div>
+    <div class="stat"><span class="stat-num">47</span><span class="stat-label">Categories</span></div>
+    <div class="stat"><span class="stat-num">1,200+</span><span class="stat-label">Self-Host Guides</span></div>
+    <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Verified Free Tier</span></div>
+  </div>
+  <div class="hero-ctas">
+    <a href="#explore" class="btn btn-primary">🔍 Explore Directory</a>
+    <a href="/category/self-hosting.html" class="btn btn-green">🛠 Self-Host Guides</a>
+    <a href="https://turboquant.network" class="btn btn-secondary" rel="noopener">⚡ Powered by TurboQuant</a>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main>
+
+<!-- CATEGORIES -->
+<section class="categories-section reveal" id="explore">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Browse by Category</h2>
+      <a href="/categories.html" class="section-link">View all 47 →</a>
+    </div>
+    <div class="categories-grid">
+      <a href="/category/ai-tools.html" class="cat-card">
+        <div class="cat-icon">🤖</div>
+        <div class="cat-name">AI Tools</div>
+        <div class="cat-count">342 tools</div>
+      </a>
+      <a href="/category/open-source.html" class="cat-card">
+        <div class="cat-icon">🐙</div>
+        <div class="cat-name">Open Source</div>
+        <div class="cat-count">891 tools</div>
+      </a>
+      <a href="/category/self-hosting.html" class="cat-card">
+        <div class="cat-icon">🖥️</div>
+        <div class="cat-name">Self-Hosting</div>
+        <div class="cat-count">215 guides</div>
+      </a>
+      <a href="/category/automation-tools.html" class="cat-card">
+        <div class="cat-icon">⚙️</div>
+        <div class="cat-name">Automation</div>
+        <div class="cat-count">178 tools</div>
+      </a>
+      <a href="/category/ai-agents.html" class="cat-card">
+        <div class="cat-icon">🧠</div>
+        <div class="cat-name">AI Agents</div>
+        <div class="cat-count">134 tools</div>
+      </a>
+      <a href="/category/developer-tools.html" class="cat-card">
+        <div class="cat-icon">⌨️</div>
+        <div class="cat-name">Dev Tools</div>
+        <div class="cat-count">267 tools</div>
+      </a>
+      <a href="/category/rag-tools.html" class="cat-card">
+        <div class="cat-icon">📚</div>
+        <div class="cat-name">RAG Tools</div>
+        <div class="cat-count">89 tools</div>
+      </a>
+      <a href="/category/vector-databases.html" class="cat-card">
+        <div class="cat-icon">🗄️</div>
+        <div class="cat-name">Vector DBs</div>
+        <div class="cat-count">43 tools</div>
+      </a>
+      <a href="/category/ai-kanban.html" class="cat-card">
+        <div class="cat-icon">📋</div>
+        <div class="cat-name">AI Kanban</div>
+        <div class="cat-count">67 tools</div>
+      </a>
+      <a href="/category/cli-tools.html" class="cat-card">
+        <div class="cat-icon">💻</div>
+        <div class="cat-name">CLI Tools</div>
+        <div class="cat-count">156 tools</div>
+      </a>
+      <a href="/category/assistants.html" class="cat-card">
+        <div class="cat-icon">💬</div>
+        <div class="cat-name">Assistants</div>
+        <div class="cat-count">98 tools</div>
+      </a>
+      <a href="/category/ides.html" class="cat-card">
+        <div class="cat-icon">🖊️</div>
+        <div class="cat-name">AI IDEs</div>
+        <div class="cat-count">52 tools</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TRENDING TOOLS -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🔥 Trending This Week</h2>
+      <a href="/trending.html" class="section-link">See all →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div class="trending-list">
+        <a href="/tools/n8n.html" class="trending-item">
+          <span class="trending-rank top">1</span>
+          <span class="trending-icon">🔁</span>
+          <div class="trending-info">
+            <div class="trending-name">n8n</div>
+            <div class="trending-meta">Workflow Automation · ★ 47.2k · Self-hostable</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/claude-code.html" class="trending-item">
+          <span class="trending-rank top">2</span>
+          <span class="trending-icon">⚡</span>
+          <div class="trending-info">
+            <div class="trending-name">Claude Code</div>
+            <div class="trending-meta">AI Coding Agent · Anthropic · Free tier</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/onyx.html" class="trending-item">
+          <span class="trending-rank top">3</span>
+          <span class="trending-icon">🧠</span>
+          <div class="trending-info">
+            <div class="trending-name">Onyx</div>
+            <div class="trending-meta">Enterprise AI Assistant · ★ 12.8k · Open source</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/marimo.html" class="trending-item">
+          <span class="trending-rank">4</span>
+          <span class="trending-icon">📓</span>
+          <div class="trending-info">
+            <div class="trending-name">Marimo</div>
+            <div class="trending-meta">Reactive Notebooks · ★ 8.4k · Open source</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/qdrant.html" class="trending-item">
+          <span class="trending-rank">5</span>
+          <span class="trending-icon">🗄️</span>
+          <div class="trending-info">
+            <div class="trending-name">Qdrant</div>
+            <div class="trending-meta">Vector Database · ★ 21k · Self-hostable</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+      </div>
+      <div class="trending-list">
+        <a href="/tools/goose.html" class="trending-item">
+          <span class="trending-rank">6</span>
+          <span class="trending-icon">🪿</span>
+          <div class="trending-info">
+            <div class="trending-name">Goose</div>
+            <div class="trending-meta">AI Dev Agent · Block · Open source</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/dify.html" class="trending-item">
+          <span class="trending-rank">7</span>
+          <span class="trending-icon">🌊</span>
+          <div class="trending-info">
+            <div class="trending-name">Dify</div>
+            <div class="trending-meta">LLM App Platform · ★ 52k · Self-hostable</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/langflow.html" class="trending-item">
+          <span class="trending-rank">8</span>
+          <span class="trending-icon">🔗</span>
+          <div class="trending-info">
+            <div class="trending-name">Langflow</div>
+            <div class="trending-meta">RAG Builder · ★ 38k · Open source</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/cline.html" class="trending-item">
+          <span class="trending-rank">9</span>
+          <span class="trending-icon">🖊️</span>
+          <div class="trending-info">
+            <div class="trending-name">Cline</div>
+            <div class="trending-meta">VS Code AI Agent · ★ 29k · Free</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+        <a href="/tools/meilisearch.html" class="trending-item">
+          <span class="trending-rank">10</span>
+          <span class="trending-icon">🔍</span>
+          <div class="trending-info">
+            <div class="trending-name">Meilisearch</div>
+            <div class="trending-meta">Search Engine · ★ 47k · Self-hostable</div>
+          </div>
+          <span class="trending-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FEATURED AI TOOLS -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🤖 Top AI Tools — Free &amp; Open Source</h2>
+      <a href="/category/ai-tools.html" class="section-link">Browse 342 AI tools →</a>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterTools(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterTools(this,'free')">✓ Free Tier</button>
+      <button class="filter-btn" onclick="filterTools(this,'open')">Open Source</button>
+      <button class="filter-btn" onclick="filterTools(this,'self')">Self-Hostable</button>
+      <button class="filter-btn" onclick="filterTools(this,'ai')">AI-Powered</button>
+    </div>
+    <div class="tools-grid" id="toolsGrid">
+
+      <a href="/tools/n8n.html" class="tool-card" data-tags="open self">
+        <div class="tool-header">
+          <div class="tool-logo">🔁</div>
+          <div class="tool-meta">
+            <div class="tool-name">n8n</div>
+            <div class="tool-tagline">Workflow Automation Platform</div>
+          </div>
+          <div class="tool-stars">★ 47.2k</div>
+        </div>
+        <div class="tool-desc">Fair-code licensed workflow automation tool. Build complex automations with 400+ integrations. Fully self-hostable alternative to Zapier and Make.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free Tier</span>
+          <span class="tag tag-open">Open Source</span>
+          <span class="tag tag-self">Self-Hostable</span>
+        </div>
+      </a>
+
+      <a href="/tools/claude-code.html" class="tool-card" data-tags="free ai">
+        <div class="tool-header">
+          <div class="tool-logo">⚡</div>
+          <div class="tool-meta">
+            <div class="tool-name">Claude Code</div>
+            <div class="tool-tagline">Agentic AI Coding CLI</div>
+          </div>
+          <div class="tool-stars">★ New</div>
+        </div>
+        <div class="tool-desc">Anthropic's terminal-native AI coding agent. Reads your codebase, writes code, runs tests, and ships features autonomously. Free tier available.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free Tier</span>
+          <span class="tag tag-ai">AI-Powered</span>
+          <span class="tag tag-new">🆕 New</span>
+        </div>
+      </a>
+
+      <a href="/tools/onyx.html" class="tool-card" data-tags="open ai self">
+        <div class="tool-header">
+          <div class="tool-logo">🧠</div>
+          <div class="tool-meta">
+            <div class="tool-name">Onyx</div>
+            <div class="tool-tagline">Enterprise AI Knowledge Platform</div>
+          </div>
+          <div class="tool-stars">★ 12.8k</div>
+        </div>
+        <div class="tool-desc">Open-source enterprise search and AI assistant. Connects to Slack, Notion, Google Drive and more. Self-host your own enterprise AI brain.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free Tier</span>
+          <span class="tag tag-open">Open Source</span>
+          <span class="tag tag-ai">AI-Powered</span>
+        </div>
+      </a>
+
+      <a href="/tools/dify.html" class="tool-card" data-tags="open ai self">
+        <div class="tool-header">
+          <div class="tool-logo">🌊</div>
+          <div class="tool-meta">
+            <div class="tool-name">Dify</div>
+            <div class="tool-tagline">LLM App Development Platform</div>
+          </div>
+          <div class="tool-stars">★ 52k</div>
+        </div>
+        <div class="tool-desc">Build, deploy, and iterate LLM apps with a visual studio. Supports RAG pipelines, agents, and workflows. Self-hostable with Docker.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free Tier</span>
+          <span class="tag tag-open">Open Source</span>
+          <span class="tag tag-self">Self-Hostable</span>
+        </div>
+      </a>
+
+      <a href="/tools/langflow.html" class="tool-card" data-tags="open ai self">
+        <div class="tool-header">
+          <div class="tool-logo">🔗</div>
+          <div class="tool-meta">
+            <div class="tool-name">Langflow</div>
+            <div class="tool-tagline">Visual RAG &amp; Agent Builder</div>
+          </div>
+          <div class="tool-stars">★ 38k</div>
+        </div>
+        <div class="tool-desc">Drag-and-drop UI for building RAG pipelines and AI agents. Built on LangChain. Deploy as API instantly. Self-hostable on any cloud.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free Tier</span>
+          <span class="tag tag-open">Open Source</span>
+          <span class="tag tag-ai">AI-Powered</span>
+        </div>
+      </a>
+
+      <a href="/tools/goose.html" class="tool-card" data-tags="open ai free">
+        <div class="tool-header">
+          <div class="tool-logo">🪿</div>
+          <div class="tool-meta">
+            <div class="tool-name">Goose</div>
+            <div class="tool-tagline">Open-Source AI Developer Agent</div>
+          </div>
+          <div class="tool-stars">★ 11k</div>
+        </div>
+        <div class="tool-desc">Block's open-source AI developer agent. Runs locally on your machine. Writes code, browses the web, manages files, and executes shell commands.</div>
+        <div class="tool-footer">
+          <span class="tag tag-free">Free</span>
+          <span class="tag tag-open">Open Source</span>
+          <span class="tag tag-ai">AI-Powered</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RECENTLY ADDED -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🆕 Recently Added</h2>
+      <a href="/new.html" class="section-link">View all →</a>
+    </div>
+    <div class="recent-grid">
+      <a href="/tools/opencode.html" class="recent-card"><div class="recent-icon">💻</div><div class="recent-info"><div class="recent-name">OpenCode</div><div class="recent-tag">AI Coding · 2d ago</div></div></a>
+      <a href="/tools/marimo.html" class="recent-card"><div class="recent-icon">📓</div><div class="recent-info"><div class="recent-name">Marimo</div><div class="recent-tag">Notebooks · 3d ago</div></div></a>
+      <a href="/tools/cline.html" class="recent-card"><div class="recent-icon">🖊️</div><div class="recent-info"><div class="recent-name">Cline</div><div class="recent-tag">VS Code Agent · 4d ago</div></div></a>
+      <a href="/tools/roo-code.html" class="recent-card"><div class="recent-icon">🦘</div><div class="recent-info"><div class="recent-name">Roo Code</div><div class="recent-tag">AI IDE · 5d ago</div></div></a>
+      <a href="/tools/zed.html" class="recent-card"><div class="recent-icon">⚡</div><div class="recent-info"><div class="recent-name">Zed</div><div class="recent-tag">Code Editor · 6d ago</div></div></a>
+      <a href="/tools/pi.html" class="recent-card"><div class="recent-icon">🤗</div><div class="recent-info"><div class="recent-name">Pi</div><div class="recent-tag">AI Assistant · 1w ago</div></div></a>
+      <a href="/tools/openclav.html" class="recent-card"><div class="recent-icon">🔑</div><div class="recent-info"><div class="recent-name">OpenClaw</div><div class="recent-tag">Assistant · 1w ago</div></div></a>
+      <a href="/tools/meilisearch.html" class="recent-card"><div class="recent-icon">🔍</div><div class="recent-info"><div class="recent-name">Meilisearch</div><div class="recent-tag">Search · 1w ago</div></div></a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SELF-HOSTING INTRO -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🛠 Self-Hosting Guides</h2>
+      <a href="/category/self-hosting.html" class="section-link">All 1,200+ guides →</a>
+    </div>
+    <p style="color:var(--text2);max-width:600px;margin-bottom:2rem;line-height:1.7;">Take full control of your stack. Every tool in our directory includes step-by-step self-hosting instructions — Docker, Kubernetes, bare metal, and cloud-specific guides.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot t-red"></div>
+        <div class="t-dot t-yellow"></div>
+        <div class="t-dot t-green"></div>
+        <span class="t-title">Self-Host n8n in 60 seconds</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">$</span> <span class="t-cmd">docker pull n8nio/n8n</span></div>
+        <div><span class="t-out">Pulling from n8nio/n8n... done ✓</span></div>
+        <div><span class="t-prompt">$</span> <span class="t-cmd">docker run -d --name n8n -p 5678:5678 \</span></div>
+        <div><span class="t-cmd">&nbsp;&nbsp;-v ~/.n8n:/home/node/.n8n n8nio/n8n</span></div>
+        <div><span class="t-success">✓ Container started successfully</span></div>
+        <div><span class="t-out">n8n is running at: <span class="t-url">http://localhost:5678</span></span></div>
+        <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="selfhost-steps">
+      <div class="step-card">
+        <div class="step-num">STEP 01</div>
+        <h3>Choose Your Tool</h3>
+        <p>Browse 2,847 verified tools. Filter by category, license type, and self-hosting difficulty level.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 02</div>
+        <h3>Read the Guide</h3>
+        <p>Every tool page includes a detailed self-hosting guide with Docker commands, environment variables, and config examples.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 03</div>
+        <h3>Deploy Anywhere</h3>
+        <p>Deploy on your VPS, home server, or cloud. Guides for AWS, GCP, Hetzner, DigitalOcean, and more.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">STEP 04</div>
+        <h3>Scale with TurboQuant</h3>
+        <p>Need edge compute for your self-hosted stack? <a href="https://turboquant.network" style="color:var(--accent)">TurboQuant's DePIN network</a> provides distributed infrastructure at scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- DEPIN + TURBOQUANT SECTION -->
+<section class="section-pad">
+  <div class="container">
+    <div class="depin-section reveal">
+      <div class="depin-grid">
+        <div>
+          <div class="depin-badge">⚡ DePIN Edge Compute</div>
+          <h2>Power Your AI Stack with <span style="color:var(--accent)">TurboQuant Network</span></h2>
+          <p>Freemium.Services is built on and powered by the <a href="https://turboquant.network" style="color:var(--accent)">TurboQuant DePIN network</a> — a decentralized edge compute infrastructure designed for AI workloads at scale.</p>
+          <p>Whether you're running self-hosted AI tools, vector databases, or LLM inference endpoints, TurboQuant provides the distributed compute backbone your modern stack needs.</p>
+          <div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap">
+            <a href="https://turboquant.network" class="btn btn-primary" rel="noopener">Explore TurboQuant →</a>
+            <a href="/docs/depin-guide.html" class="btn btn-secondary">DePIN Guide</a>
+          </div>
+        </div>
+        <div class="depin-features">
+          <div class="depin-feature">
+            <div class="df-icon">🌐</div>
+            <div>
+              <div class="df-title">Global Edge Network</div>
+              <div class="df-desc">Deploy workloads closer to users with TurboQuant's distributed node network across 50+ regions.</div>
+            </div>
+          </div>
+          <div class="depin-feature">
+            <div class="df-icon">🤖</div>
+            <div>
+              <div class="df-title">AI Inference at the Edge</div>
+              <div class="df-desc">Run LLM inference, RAG pipelines, and AI agents on TurboQuant's optimized edge nodes — ultra-low latency.</div>
+            </div>
+          </div>
+          <div class="depin-feature">
+            <div class="df-icon">🔒</div>
+            <div>
+              <div class="df-title">Decentralized &amp; Private</div>
+              <div class="df-desc">DePIN architecture means no single point of failure. Your data stays sovereign and secure.</div>
+            </div>
+          </div>
+          <div class="depin-feature">
+            <div class="df-icon">💰</div>
+            <div>
+              <div class="df-title">10x Cheaper Than AWS</div>
+              <div class="df-desc">Leverage idle compute from the TurboQuant network. Pay only for what you use, at dramatically lower rates.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- AI ECOSYSTEM SECTION -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🧬 AI Tools Ecosystem</h2>
+      <a href="/category/ai-tools.html" class="section-link">Explore all →</a>
+    </div>
+    <div class="ecosystem-grid">
+      <a href="/category/assistants.html" class="eco-card">
+        <div class="eco-category">AI Assistants</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">💬</span> OpenClaw</div>
+          <div class="eco-item"><span class="eco-icon">🤗</span> Pi by Inflection</div>
+          <div class="eco-item"><span class="eco-icon">🌐</span> Perplexity AI</div>
+        </div>
+      </a>
+      <a href="/category/ides.html" class="eco-card">
+        <div class="eco-category">AI Code Editors</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">🖊️</span> Cline</div>
+          <div class="eco-item"><span class="eco-icon">🦘</span> Roo Code</div>
+          <div class="eco-item"><span class="eco-icon">⚡</span> Zed Editor</div>
+        </div>
+      </a>
+      <a href="/category/ai-agents.html" class="eco-card">
+        <div class="eco-category">AI Coding Agents</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">⚡</span> Claude Code</div>
+          <div class="eco-item"><span class="eco-icon">🤖</span> Codex CLI</div>
+          <div class="eco-item"><span class="eco-icon">🪿</span> Goose</div>
+        </div>
+      </a>
+      <a href="/category/rag-tools.html" class="eco-card">
+        <div class="eco-category">RAG &amp; Vector Tools</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">🗄️</span> Qdrant</div>
+          <div class="eco-item"><span class="eco-icon">🔗</span> Langflow</div>
+          <div class="eco-item"><span class="eco-icon">🧩</span> LlamaIndex</div>
+        </div>
+      </a>
+      <a href="/category/automation-tools.html" class="eco-card">
+        <div class="eco-category">Automation</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">🔁</span> n8n</div>
+          <div class="eco-item"><span class="eco-icon">🌊</span> Activepieces</div>
+          <div class="eco-item"><span class="eco-icon">⚙️</span> Windmill</div>
+        </div>
+      </a>
+      <a href="/category/developer-tools.html" class="eco-card">
+        <div class="eco-category">Developer Tools</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-icon">📓</span> Marimo</div>
+          <div class="eco-item"><span class="eco-icon">🔍</span> Meilisearch</div>
+          <div class="eco-item"><span class="eco-icon">📊</span> Metabase</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- COMPARISON TABLE -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">⚖️ Top Automation Tools Compared</h2>
+      <a href="/compare/automation.html" class="section-link">Full comparison →</a>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Free Tier</th>
+            <th>Open Source</th>
+            <th>Self-Hostable</th>
+            <th>AI Features</th>
+            <th>GitHub Stars</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="/tools/n8n.html">🔁 n8n</a></td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-y">✓</span> Fair-code</td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-y">✓</span> Native AI nodes</td>
+            <td>47.2k</td>
+            <td><a href="/tools/n8n.html" class="btn btn-secondary" style="padding:0.3rem 0.75rem;font-size:0.8rem">View →</a></td>
+          </tr>
+          <tr>
+            <td><a href="/tools/activepieces.html">🌊 Activepieces</a></td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-y">✓</span> MIT</td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-p">~</span> Via integrations</td>
+            <td>11.8k</td>
+            <td><a href="/tools/activepieces.html" class="btn btn-secondary" style="padding:0.3rem 0.75rem;font-size:0.8rem">View →</a></td>
+          </tr>
+          <tr>
+            <td>Zapier</td>
+            <td><span class="check-p">~</span> Limited</td>
+            <td><span class="check-n">✗</span></td>
+            <td><span class="check-n">✗</span></td>
+            <td><span class="check-y">✓</span></td>
+            <td>—</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Make (Integromat)</td>
+            <td><span class="check-p">~</span> Limited</td>
+            <td><span class="check-n">✗</span></td>
+            <td><span class="check-n">✗</span></td>
+            <td><span class="check-y">✓</span></td>
+            <td>—</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="/tools/windmill.html">⚙️ Windmill</a></td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-y">✓</span> AGPLv3</td>
+            <td><span class="check-y">✓</span></td>
+            <td><span class="check-p">~</span> AI scripts</td>
+            <td>9.8k</td>
+            <td><a href="/tools/windmill.html" class="btn btn-secondary" style="padding:0.3rem 0.75rem;font-size:0.8rem">View →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- BLOG SECTION -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">📰 Latest Guides &amp; Articles</h2>
+      <a href="/blog.html" class="section-link">All articles →</a>
+    </div>
+    <div class="blog-grid">
+      <a href="/blog/best-free-ai-tools-2026.html" class="blog-card">
+        <div class="blog-img">🤖</div>
+        <div class="blog-content">
+          <div class="blog-cat">AI Tools</div>
+          <h3>Best Free AI Tools in 2026 — Complete Developer Guide</h3>
+          <div class="blog-meta">8 min read · Updated April 2026</div>
+        </div>
+      </a>
+      <a href="/blog/self-hosted-saas-stack.html" class="blog-card">
+        <div class="blog-img">🖥️</div>
+        <div class="blog-content">
+          <div class="blog-cat">Self-Hosting</div>
+          <h3>Top Self-Hosted SaaS Stack for Indie Hackers in 2026</h3>
+          <div class="blog-meta">12 min read · Updated March 2026</div>
+        </div>
+      </a>
+      <a href="/blog/zapier-alternatives.html" class="blog-card">
+        <div class="blog-img">🔁</div>
+        <div class="blog-content">
+          <div class="blog-cat">Automation</div>
+          <h3>7 Best Open-Source Alternatives to Zapier (Self-Hostable)</h3>
+          <div class="blog-meta">10 min read · Updated April 2026</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FAQ SECTION -->
+<section class="section-pad reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">❓ Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-grid" id="faqGrid">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is Freemium.Services?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Freemium.Services is the world's largest verified directory of freemium, free, and open-source software tools. We curate, verify, and provide step-by-step self-hosting guides for 2,847+ tools across 47 categories. Every listing is manually verified to confirm the free tier or open-source license is genuine.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What does "freemium" mean in this context?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Freemium tools are software products that offer a meaningful free tier — not just a 14-day trial. This includes fully open-source tools (self-hostable for free), tools with permanent free plans, and tools where the core functionality is free with optional paid upgrades.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I self-host these tools?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Each tool page includes a dedicated self-hosting section with step-by-step instructions. Most include Docker Compose files, environment variable references, and cloud-specific guides for AWS, GCP, Hetzner, DigitalOcean, and more. You can also leverage the TurboQuant edge network for distributed deployment.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is TurboQuant and how is it connected?<span class="faq-icon">+</span></div>
+        <div class="faq-a">TurboQuant (turboquant.network) is a DePIN-style decentralized edge compute network powering the infrastructure behind Freemium.Services. It provides the distributed AI inference, edge caching, and compute resources that enable fast, globally available access to this directory. You can use TurboQuant to host your own self-hosted tools at scale.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I submit a tool to the directory?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Click "Submit Tool" in the navigation bar. Fill out the submission form with the tool's name, URL, category, license type, and a brief description. Our team manually reviews each submission within 48 hours to verify the free tier and add it to the appropriate categories.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Are all tools on this site truly free?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. Every tool listed is verified to have either: a genuine free tier with no credit card required, an open-source license allowing free self-hosting, or a freemium model with meaningful functionality in the free plan. We clearly label each tool's license type on its listing page.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is a DePIN network?<span class="faq-icon">+</span></div>
+        <div class="faq-a">DePIN stands for Decentralized Physical Infrastructure Network. It's a model where physical computing resources (servers, GPUs, storage) are contributed by a distributed network of participants rather than centralized in a single cloud provider's data center. TurboQuant operates a DePIN network specifically optimized for AI inference workloads, offering lower costs and better privacy than traditional cloud providers.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I use the AI chat assistant?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes! Click the chat bubble in the bottom-right corner to talk to our AI assistant. It can help you find the right tools for your use case, compare alternatives, suggest self-hosting strategies, and answer questions about any tool in our directory. It's powered by Claude AI through the TurboQuant network.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TURBOQUANT CTA BANNER -->
+<section class="section-pad">
+  <div class="container">
+    <div class="tq-banner reveal">
+      <h2>Build Your AI Stack on <span style="color:var(--accent)">TurboQuant</span></h2>
+      <p>The decentralized edge compute network powering the next generation of AI-native applications. Lower costs, higher performance, true data sovereignty.</p>
+      <div class="tq-features">
+        <div class="tq-feature"><span class="tq-check">✓</span> Edge AI Inference</div>
+        <div class="tq-feature"><span class="tq-check">✓</span> DePIN Infrastructure</div>
+        <div class="tq-feature"><span class="tq-check">✓</span> 10x Cost Savings</div>
+        <div class="tq-feature"><span class="tq-check">✓</span> Global Distribution</div>
+        <div class="tq-feature"><span class="tq-check">✓</span> AI Workflow Integration</div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
+        <a href="https://turboquant.network" class="btn btn-primary" rel="noopener" target="_blank">🚀 Get Started with TurboQuant</a>
+        <a href="/docs/turboquant-integration.html" class="btn btn-secondary">Integration Docs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="https://freemium.services" class="logo">freemium<span>.services</span></a>
+      <p>The world's largest verified directory of freemium and open-source tools. Step-by-step self-hosting guides for every tool. Powered by the TurboQuant edge network.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Directory</h4>
+      <ul>
+        <li><a href="/category/ai-tools.html">AI Tools</a></li>
+        <li><a href="/category/open-source.html">Open Source</a></li>
+        <li><a href="/category/self-hosting.html">Self-Hosting</a></li>
+        <li><a href="/category/automation-tools.html">Automation</a></li>
+        <li><a href="/category/developer-tools.html">Dev Tools</a></li>
+        <li><a href="/categories.html">All Categories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Popular Tools</h4>
+      <ul>
+        <li><a href="/tools/n8n.html">n8n</a></li>
+        <li><a href="/tools/claude-code.html">Claude Code</a></li>
+        <li><a href="/tools/onyx.html">Onyx</a></li>
+        <li><a href="/tools/dify.html">Dify</a></li>
+        <li><a href="/tools/langflow.html">Langflow</a></li>
+        <li><a href="/tools/marimo.html">Marimo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/quickstart.html">Quickstart</a></li>
+        <li><a href="/docs/self-hosting.html">Self-Hosting Guide</a></li>
+        <li><a href="/compare.html">Compare Tools</a></li>
+        <li><a href="/submit.html">Submit a Tool</a></li>
+        <li><a href="/changelog.html">Changelog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Ecosystem</h4>
+      <ul>
+        <li><a href="https://turboquant.network" rel="noopener">TurboQuant ↗</a></li>
+        <li><a href="/docs/depin-guide.html">DePIN Guide</a></li>
+        <li><a href="/docs/turboquant-integration.html">TQ Integration</a></li>
+        <li><a href="/docs/api.html">API Docs</a></li>
+        <li><a href="/sitemap.xml">Sitemap</a></li>
+        <li><a href="/rss.xml">RSS Feed</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 freemium.services — Powered by <a href="https://turboquant.network">TurboQuant Network</a></span>
+    <span>2,847 tools · 47 categories · Updated daily</span>
+    <span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+  </div>
+</footer>
+
+<!-- AI CHAT WIDGET -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-name">FreemiumAI Assistant</div>
+        <div class="chat-status">● Online · Powered by TurboQuant</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg msg-bot">👋 Hi! I can help you find the perfect free or open-source tool for your needs. What are you building?</div>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">→</button>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()">🤖</button>
+</div>
+
+<!-- SCHEMA: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is Freemium.Services?","acceptedAnswer":{"@type":"Answer","text":"Freemium.Services is the world's largest verified directory of freemium, free, and open-source software tools, with 2,847+ tools across 47 categories and step-by-step self-hosting guides."}},
+    {"@type":"Question","name":"How do I self-host these tools?","acceptedAnswer":{"@type":"Answer","text":"Each tool page includes step-by-step self-hosting instructions with Docker Compose files, environment variable references, and cloud-specific guides for AWS, GCP, Hetzner, and DigitalOcean."}},
+    {"@type":"Question","name":"What is TurboQuant?","acceptedAnswer":{"@type":"Answer","text":"TurboQuant (turboquant.network) is a DePIN-style decentralized edge compute network powering the infrastructure behind Freemium.Services, providing distributed AI inference and edge compute resources."}},
+    {"@type":"Question","name":"What is a DePIN network?","acceptedAnswer":{"@type":"Answer","text":"DePIN stands for Decentralized Physical Infrastructure Network — a model where computing resources are contributed by a distributed network rather than centralized in a single cloud provider."}}
+  ]
+}
+</script>
+
+<script>
+// SEARCH SUGGESTIONS
+const searchInput = document.getElementById('globalSearch');
+const suggest = document.getElementById('searchSuggest');
+if (searchInput) {
+  searchInput.addEventListener('input', function() {
+    suggest.classList.toggle('show', this.value.length > 1);
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-search')) suggest.classList.remove('show');
+  });
+}
+
+// TOOL FILTER
+function filterTools(btn, tag) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tool-card').forEach(card => {
+    card.style.display = (tag === 'all' || card.dataset.tags?.includes(tag)) ? '' : 'none';
+  });
+}
+
+// FAQ TOGGLE
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+// CHAT WIDGET
+function toggleChat() {
+  document.getElementById('chatPanel').classList.toggle('open');
+}
+
+const responses = [
+  "Great question! For workflow automation, I'd recommend checking out **n8n** — it's open-source, self-hostable, and has 400+ integrations. See /tools/n8n.html",
+  "For AI coding, **Claude Code** and **Cline** are both excellent free options. Claude Code is a CLI agent by Anthropic, while Cline runs inside VS Code.",
+  "If you need a vector database for RAG pipelines, **Qdrant** is the top open-source option. It's fully self-hostable and integrates with LangChain, Langflow, and more.",
+  "For LLM app development, **Dify** (52k ⭐) and **Langflow** (38k ⭐) are the leading open-source platforms — both self-hostable with Docker.",
+  "Powered by **TurboQuant's DePIN edge network**, this directory serves real-time tool data from distributed nodes globally. Visit turboquant.network to learn more!"
+];
+
+let msgCount = 0;
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const msgs = document.getElementById('chatMessages');
+  if (!input.value.trim()) return;
+  msgs.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
+  const resp = responses[msgCount % responses.length];
+  setTimeout(() => {
+    msgs.innerHTML += `<div class="msg msg-bot">${resp}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+  msgCount++;
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// LANG SWITCHER
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

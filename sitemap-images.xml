@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  freemium.services — IMAGE SITEMAP
+  Google Image Search indexing
+  Protocol: google.com/schemas/sitemap-image/1.1
+  Covers: OG images, tool logos, category visuals, hero images
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://freemium.services/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/og.png</image:loc>
+      <image:title>Freemium Services — 20,000+ Open-Source Tools Directory</image:title>
+      <image:caption>The world's largest verified directory of freemium and open-source tools with self-hosting guides and TurboQuant DePIN deployment</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://freemium.services/img/hero-bg.png</image:loc>
+      <image:title>Freemium Services Homepage Hero</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/n8n/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/tools/n8n.png</image:loc>
+      <image:title>n8n — Open-Source Workflow Automation Tool</image:title>
+      <image:caption>n8n fair-code workflow automation with 400+ integrations, self-hostable, and AI agent builder</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/ollama/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/tools/ollama.png</image:loc>
+      <image:title>Ollama — Run LLMs Locally</image:title>
+      <image:caption>Ollama runs Llama 3.3, Mistral, DeepSeek-R1 and 150+ models locally with a single command</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/qdrant/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/tools/qdrant.png</image:loc>
+      <image:title>Qdrant — High-Performance Vector Database</image:title>
+      <image:caption>Qdrant is the fastest self-hostable vector database for RAG pipelines and semantic search</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/dify/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/tools/dify.png</image:loc>
+      <image:title>Dify — Open-Source LLM App Platform</image:title>
+      <image:caption>Dify LLMOps platform for building RAG pipelines and AI agents with visual workflows</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/coolify/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/tools/coolify.png</image:loc>
+      <image:title>Coolify — Self-Hosted Heroku Alternative</image:title>
+      <image:caption>Coolify open-source PaaS for deploying apps, databases, and services with auto-SSL</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ai-tools/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/categories/ai-tools-og.png</image:loc>
+      <image:title>Best AI Tools 2026 — Freemium Services</image:title>
+      <image:caption>240+ verified AI tools including LLMs, image generators, coding assistants and agents</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/self-hosting/</loc>
+    <image:image>
+      <image:loc>https://freemium.services/img/categories/self-hosting-og.png</image:loc>
+      <image:title>Best Self-Hosting Tools 2026 — Freemium Services</image:title>
+      <image:caption>320+ self-hostable applications for data sovereignty, privacy, and cost reduction</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  freemium.services — TOOL PAGES SITEMAP (PROGRAMMATIC SEO)
+  50+ individual tool pages · Schema: SoftwareApplication
+  Each page: 30-50 FAQs, self-hosting guide, comparisons
+  Priority: 0.80 – 0.92 based on search volume & stars
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ════════════════════════════════════
+       TIER 1 — Highest Search Volume
+       Priority 0.90 – 0.92
+  ════════════════════════════════════ -->
+
+  <url>
+    <loc>https://freemium.services/tools/n8n/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/n8n/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/tools/n8n/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/n8n/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/ollama/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/ollama/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/tools/ollama/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/ollama/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/open-webui/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/open-webui/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/open-webui/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/claude-code/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/claude-code/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/claude-code/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/dify/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.91</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/dify/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/dify/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/zed/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.91</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/zed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/zed/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/flowise/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/flowise/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/flowise/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/langflow/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/langflow/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/langflow/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/qdrant/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/qdrant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/qdrant/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/coolify/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/coolify/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/coolify/"/>
+  </url>
+
+  <!-- ════════════════════════════════════
+       TIER 2 — High Search Volume
+       Priority 0.85 – 0.89
+  ════════════════════════════════════ -->
+
+  <url>
+    <loc>https://freemium.services/tools/perplexica/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.89</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/anythingllm/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/langchain/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/llamaindex/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/cline/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/roo-code/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.87</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/goose/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.87</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/activepieces/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.87</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/weaviate/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/marimo/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/onyx/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/haystack/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/autogpt/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/aider/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/searxng/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ════════════════════════════════════
+       TIER 3 — Medium Search Volume
+       Priority 0.78 – 0.84
+  ════════════════════════════════════ -->
+
+  <url>
+    <loc>https://freemium.services/tools/milvus/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/pgvector/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/chroma/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/supabase/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/redis/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/meilisearch/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/airflow/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/prefect/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/windmill/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/pipedream/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/metabase/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.81</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/appflowy/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/plane/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/focalboard/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/twenty/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/monica/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/linear/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+
+  <!-- ════════════════════════════════════
+       TIER 4 — Long-tail / CLI Tools
+       Priority 0.72 – 0.78
+  ════════════════════════════════════ -->
+
+  <url>
+    <loc>https://freemium.services/tools/ripgrep/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/fzf/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.77</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/lazygit/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.77</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/warp/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.78</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/cursor/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/windsurf/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/private-gpt/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/uptime-kuma/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/vaultwarden/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/grafana/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/portainer/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/nextcloud/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/immich/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/obsidian/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.81</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tools/redpanda/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+</urlset>

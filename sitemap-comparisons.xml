@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- freemium.services — COMPARISONS SITEMAP -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://freemium.services/compare/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
+  <url><loc>https://freemium.services/compare/n8n-vs-zapier/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/compare/ollama-vs-lmstudio/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/compare/qdrant-vs-weaviate/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/compare/cursor-vs-vscode-cline/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/compare/dify-vs-flowise/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/compare/n8n-vs-activepieces/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/compare/ollama-vs-localai/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/compare/coolify-vs-caprover/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://freemium.services/compare/qdrant-vs-pinecone/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/compare/dify-vs-langflow/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/compare/claude-code-vs-cursor/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/compare/zed-vs-vscode/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/compare/anythingllm-vs-dify/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://freemium.services/compare/searxng-vs-brave/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.83</priority></url>
+</urlset>

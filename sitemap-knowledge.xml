@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- freemium.services — KNOWLEDGE HUB SITEMAP (10,000–15,000 word technical guides) -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url><loc>https://freemium.services/quickstart/</loc><lastmod>2026-04-10</lastmod><changefreq>weekly</changefreq><priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://freemium.services/quickstart/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://freemium.services/hi/quickstart/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/quickstart/"/>
+  </url>
+
+  <url><loc>https://freemium.services/cloud/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/streaming/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/thinking/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/structured-outputs/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/vision/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/embeddings/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/tool-calling/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://freemium.services/web-search/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/integrations/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://freemium.services/rag-guide/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/self-hosting-101/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://freemium.services/ai-agents-guide/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.87</priority></url>
+  <url><loc>https://freemium.services/depin-guide/</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+</urlset>
