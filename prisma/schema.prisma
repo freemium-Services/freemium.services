@@ -137,8 +137,21 @@ model Category {
 model ContentPage {
   id        String   @id @default(cuid())
   slug      String   @unique
-  type      String   // 'TOOL' | 'WORKFLOW' | 'PILLAR' | 'COMPARISON'
+  type      PageType
+  title     String?
+  summary   String?  @db.Text
+  cluster   String?
+  intent    SearchIntent?
+  archetype ArticleArchetype?
+  wordCountTarget Int?
+  faqTarget Int?
+  aeoSummary Json?
+  embeddingText String? @db.Text
   blocks    Block[]
+  faqs      BlogFAQ[]
+  outgoingLinks InternalLink[] @relation("OutgoingLinks")
+  incomingLinks InternalLink[] @relation("IncomingLinks")
+  capturedQueries SemanticQuery[]
   
   // Reverse lookups
   tool      Tool?
@@ -168,6 +181,58 @@ model FAQ {
   answer    String @db.Text
   tool      Tool?  @relation(fields: [toolId], references: [id])
   toolId    String?
+}
+
+model BlogFAQ {
+  id         String    @id @default(cuid())
+  question   String
+  answer     String    @db.Text
+  source     FAQSource @default(EDITORIAL)
+  intentType FAQIntent
+  sourceUrl  String?
+  embeddingText String? @db.Text
+  order      Int       @default(0)
+  page       ContentPage @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  pageId     String
+
+  @@index([pageId])
+  @@index([intentType])
+  @@index([source])
+}
+
+model InternalLink {
+  id           String @id @default(cuid())
+  sourcePage   ContentPage @relation("OutgoingLinks", fields: [sourcePageId], references: [id], onDelete: Cascade)
+  sourcePageId String
+  targetPage   ContentPage? @relation("IncomingLinks", fields: [targetPageId], references: [id])
+  targetPageId String?
+  targetType   LinkTargetType
+  targetId     String
+  anchorText   String
+  semanticRole LinkSemanticRole @default(RELATED_ENTITY)
+  weight       Float @default(1)
+
+  @@index([sourcePageId])
+  @@index([targetPageId])
+  @@index([targetType, targetId])
+}
+
+model SemanticQuery {
+  id          String @id @default(cuid())
+  query       String
+  normalized  String
+  source      QuerySource
+  intent      SearchIntent?
+  status      QueryStatus @default(UNANSWERED)
+  volumeHint  Int?
+  trendScore  Float?
+  page        ContentPage? @relation(fields: [pageId], references: [id])
+  pageId      String?
+  createdAt   DateTime @default(now())
+
+  @@index([source])
+  @@index([status])
+  @@index([pageId])
 }
 
 model SeoMetadata {
@@ -201,4 +266,97 @@ enum Level {
   LOW
   MEDIUM
   HIGH
+}
+
+enum PageType {
+  TOOL
+  WORKFLOW
+  PILLAR
+  COMPARISON
+  ARTICLE
+  GUIDE
+  DIRECTORY
+}
+
+enum ArticleArchetype {
+  BEST_TOOL_LIST
+  COMPARISON
+  SELF_HOST_GUIDE
+  WORKFLOW_STACK
+  BENCHMARK_STUDY
+  ALTERNATIVES
+}
+
+enum SearchIntent {
+  INFORMATIONAL
+  COMMERCIAL_INVESTIGATION
+  COMPARISON
+  TRANSACTIONAL
+  NAVIGATIONAL
+  TROUBLESHOOTING
+  SETUP
+}
+
+enum FAQIntent {
+  BEGINNER
+  COMPARISON
+  OPERATIONAL
+  DEPLOYMENT
+  PRIVACY_SECURITY
+  PERFORMANCE
+  ADVANCED_WORKFLOWS
+}
+
+enum FAQSource {
+  EDITORIAL
+  REDDIT
+  QUORA
+  ANSWER_THE_PUBLIC
+  ALSO_ASKED
+  GOOGLE_AUTOSUGGEST
+  GITHUB_ISSUES
+  STACK_OVERFLOW
+  SEARCH_CONSOLE
+  CHATBOT
+}
+
+enum LinkTargetType {
+  PILLAR
+  TOOL
+  WORKFLOW
+  COMPARISON
+  DOC
+  ARTICLE
+  GUIDE
+  EXTERNAL
+}
+
+enum LinkSemanticRole {
+  PARENT_PILLAR
+  SUPPORTING_TOOL
+  WORKFLOW_STEP
+  COMPARISON_TARGET
+  DOC_REFERENCE
+  RELATED_ENTITY
+  ALTERNATIVE
+  SOURCE
+}
+
+enum QuerySource {
+  SEARCH_LOG
+  FAILED_SEARCH
+  CHATBOT
+  SEARCH_CONSOLE
+  REDDIT
+  QUORA
+  GITHUB_ISSUES
+  MANUAL_RESEARCH
+}
+
+enum QueryStatus {
+  UNANSWERED
+  CLUSTERED
+  BRIEFED
+  PUBLISHED
+  IGNORED
 }

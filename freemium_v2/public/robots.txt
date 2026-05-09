@@ -1,0 +1,134 @@
+# ============================================================
+# robots.txt — freemium.services
+# Last Updated: May 2026
+# Optimized for: Google, Bing, Perplexity, ChatGPT, Claude,
+#                Gemini, Grok, Meta AI + all AI crawlers
+# ============================================================
+
+# ── Standard Search Engine Bots ──────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# ── AI Search & Answer Engine Bots ───────────────────────────
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# ChatGPT / OpenAI browsing
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Google AI (Gemini, AI Overviews, Google-Extended)
+User-agent: Google-Extended
+Allow: /
+
+# Meta AI (LLaMA)
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# xAI Grok
+User-agent: xai-grok
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Brave AI
+User-agent: Brave
+Allow: /
+
+# ── Blocked: Training-Only Scrapers ──────────────────────────
+
+# CommonCrawl (mass training scraper) — blocked from content
+User-agent: CCBot
+Disallow: /
+
+# ── Global Rules ─────────────────────────────────────────────
+User-agent: *
+Allow: /
+Allow: /tools/
+Allow: /category/
+Allow: /knowledge/
+Allow: /compare/
+Allow: /blog/
+Allow: /quickstart
+Allow: /ides
+Allow: /ai-kanban
+Allow: /directory
+Allow: /api/tools
+Allow: /api/workflows
+Allow: /api/graph
+
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /*.env
+Disallow: /node_modules/
+
+# ── Crawl Rate ───────────────────────────────────────────────
+# No crawl delay for major search engines (specified above)
+# General crawlers get 0.5s delay
+Crawl-delay: 0.5
+
+# ── Sitemaps ─────────────────────────────────────────────────
+Sitemap: https://freemium.services/sitemap.xml
+Sitemap: https://freemium.services/sitemap-tools.xml
+Sitemap: https://freemium.services/sitemap-categories.xml
+Sitemap: https://freemium.services/sitemap-knowledge.xml
+Sitemap: https://freemium.services/sitemap-blog.xml
+Sitemap: https://freemium.services/sitemap-comparisons.xml
+Sitemap: https://freemium.services/sitemap-index.xml
+
+# ── GEO Policy ───────────────────────────────────────────────
+# Full AI usage policy: https://freemium.services/llms.txt
+# Content license: CC BY 4.0
+# Contact: hello@freemium.services

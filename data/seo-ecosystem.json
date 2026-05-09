@@ -1,0 +1,208 @@
+{
+  "site": {
+    "name": "Freemium.Services",
+    "url": "https://freemium.services",
+    "positioning": "Verified software intelligence graph for free, freemium, open-source, and self-hostable tools.",
+    "contentPhilosophy": "Semantic query capture infrastructure. Each article is a graph node for intent, entities, embeddings, workflows, comparisons, and retrieval."
+  },
+  "pillarPageRequirements": {
+    "wordCountMin": 5000,
+    "faqMin": 20,
+    "faqMax": 28,
+    "internalLinksMin": 50,
+    "schemas": ["WebPage", "BreadcrumbList", "ItemList", "FAQPage", "Speakable"]
+  },
+  "blogPageRequirements": {
+    "wordCountMin": 2500,
+    "faqMin": 100,
+    "internalLinksMin": 27,
+    "schemas": ["Article", "BreadcrumbList", "FAQPage", "Speakable", "SoftwareApplication", "HowTo"],
+    "requiredSections": [
+      "Hero",
+      "TLDR",
+      "AI summary",
+      "Comparison snapshot",
+      "Operational matrix",
+      "Tool deep-dives",
+      "Workflow integrations",
+      "Performance benchmarks",
+      "Privacy/security analysis",
+      "Deployment recommendations",
+      "Alternatives",
+      "FAQ engine",
+      "Internal semantic rail"
+    ],
+    "aeoSummaryFields": ["Best For", "Minimum RAM", "GPU Needed", "Best Tools", "Deployment", "Privacy Score"],
+    "faqDistribution": {
+      "beginner": 20,
+      "comparison": 20,
+      "operational": 20,
+      "deployment": 15,
+      "privacy-security": 10,
+      "performance": 10,
+      "advanced-workflows": 5
+    }
+  },
+  "toolPageRequirements": {
+    "faqMin": 3,
+    "featuresMin": 5,
+    "alternativesMin": 3,
+    "schemas": ["SoftwareApplication", "BreadcrumbList", "FAQPage"]
+  },
+  "pillars": [
+    {
+      "id": "ai-tools",
+      "slug": "ai-tools",
+      "title": "Open Source AI Tools",
+      "primaryKeyword": "open source AI tools",
+      "secondaryKeywords": ["free AI tools", "local AI tools", "open source LLM tools", "self hosted AI tools"],
+      "audiences": ["developers", "students", "founders", "AI teams", "privacy-focused teams"],
+      "toolTargets": ["Ollama", "Open WebUI", "Dify", "AnythingLLM", "Qdrant", "Flowise"],
+      "contentAngles": ["local LLMs", "RAG", "AI agents", "AI coding", "private chatbots", "image generation"]
+    },
+    {
+      "id": "productivity",
+      "slug": "productivity",
+      "title": "Free Productivity Tools",
+      "primaryKeyword": "free productivity tools",
+      "secondaryKeywords": ["Notion alternatives", "free task management tools", "open source productivity apps"],
+      "audiences": ["students", "remote teams", "solo founders", "creators", "operators"],
+      "toolTargets": ["AppFlowy", "Obsidian", "Logseq", "Anytype", "Plane", "Taiga"],
+      "contentAngles": ["notes", "wikis", "tasks", "kanban", "personal knowledge management", "team docs"]
+    },
+    {
+      "id": "design-multimedia",
+      "slug": "design-multimedia",
+      "title": "Freemium Design and Multimedia Tools",
+      "primaryKeyword": "freemium design software",
+      "secondaryKeywords": ["free Canva alternatives", "open source video editor", "free graphic design tools"],
+      "audiences": ["designers", "marketers", "YouTubers", "indie makers", "social media teams"],
+      "toolTargets": ["Penpot", "Krita", "GIMP", "Inkscape", "Kdenlive", "DaVinci Resolve"],
+      "contentAngles": ["UI design", "video editing", "image editing", "brand assets", "social graphics", "mockups"]
+    },
+    {
+      "id": "marketing-analytics",
+      "slug": "marketing-analytics",
+      "title": "Free Marketing and Analytics Tools",
+      "primaryKeyword": "free marketing tools",
+      "secondaryKeywords": ["free SEO tools", "open source analytics", "Google Analytics alternatives"],
+      "audiences": ["marketers", "SEO teams", "founders", "content teams", "agencies"],
+      "toolTargets": ["Matomo", "Plausible", "Umami", "Mautic", "SearXNG", "PostHog"],
+      "contentAngles": ["SEO", "analytics", "email marketing", "social scheduling", "privacy tracking", "conversion optimization"]
+    },
+    {
+      "id": "developer-tools",
+      "slug": "developer-tools",
+      "title": "Open Source Dev and Collaboration Tools",
+      "primaryKeyword": "open source developer tools",
+      "secondaryKeywords": ["free developer tools", "AI coding tools", "open source devops tools"],
+      "audiences": ["developers", "DevOps teams", "engineering managers", "open-source maintainers", "security engineers"],
+      "toolTargets": ["Zed", "VS Code", "Cline", "Aider", "Coolify", "Supabase"],
+      "contentAngles": ["AI IDEs", "CI/CD", "terminal tools", "Git hosting", "observability", "internal tools"]
+    },
+    {
+      "id": "team-saas",
+      "slug": "team-saas",
+      "title": "Freemium SaaS for Teams and Remote Work",
+      "primaryKeyword": "freemium team software",
+      "secondaryKeywords": ["free remote work tools", "freemium team collaboration tools", "free SaaS for startups"],
+      "audiences": ["remote teams", "startups", "agencies", "support teams", "operations teams"],
+      "toolTargets": ["Mattermost", "Rocket.Chat", "Linear", "Tally", "Cal.com", "Crisp"],
+      "contentAngles": ["team chat", "meetings", "forms", "CRM", "help desk", "async work"]
+    },
+    {
+      "id": "security-privacy",
+      "slug": "security-privacy",
+      "title": "Free Cybersecurity and Privacy Tools",
+      "primaryKeyword": "free cybersecurity tools",
+      "secondaryKeywords": ["open source security tools", "free privacy tools", "self hosted password manager"],
+      "audiences": ["security teams", "IT admins", "developers", "privacy advocates", "small businesses"],
+      "toolTargets": ["Vaultwarden", "Bitwarden", "Wazuh", "Uptime Kuma", "SearXNG", "WireGuard"],
+      "contentAngles": ["password managers", "VPN", "monitoring", "SIEM", "vulnerability scanning", "privacy search"]
+    },
+    {
+      "id": "education",
+      "slug": "education",
+      "title": "Open Source E-learning and Education Tools",
+      "primaryKeyword": "open source e-learning tools",
+      "secondaryKeywords": ["free education software", "open source LMS", "free AI tools for students"],
+      "audiences": ["students", "teachers", "schools", "course creators", "researchers"],
+      "toolTargets": ["Moodle", "Open edX", "Anki", "Zotero", "Jupyter", "Marimo"],
+      "contentAngles": ["LMS", "flashcards", "student AI", "research", "classroom workflows", "course creation"]
+    },
+    {
+      "id": "automation-workflows",
+      "slug": "automation-workflows",
+      "title": "Freemium Automation and Workflow Tools",
+      "primaryKeyword": "freemium automation tools",
+      "secondaryKeywords": ["Zapier alternatives", "open source automation tools", "self hosted workflow automation"],
+      "audiences": ["operators", "developers", "marketers", "agencies", "RevOps teams"],
+      "toolTargets": ["n8n", "Activepieces", "Windmill", "Pipedream", "Node-RED", "Huginn"],
+      "contentAngles": ["Zapier alternatives", "AI automation", "webhooks", "ETL", "internal workflows", "agent workflows"]
+    },
+    {
+      "id": "emerging-tools",
+      "slug": "emerging-tools",
+      "title": "Emerging Tools 2026",
+      "primaryKeyword": "trending software tools 2026",
+      "secondaryKeywords": ["new AI tools 2026", "GitHub trending tools", "new open source tools"],
+      "audiences": ["founders", "developers", "investors", "product teams", "researchers"],
+      "toolTargets": ["GitHub Trending", "Product Hunt", "Hacker News", "Reddit", "OpenAlternative"],
+      "contentAngles": ["new launches", "fast-growing repos", "AI startups", "developer trends", "productivity trends", "self-hosting trends"]
+    }
+  ],
+  "blogGeneration": {
+    "intents": ["best-tool-list", "comparison", "self-host-guide", "workflow-stack", "benchmark-study", "alternatives"],
+    "modifiers": ["2026", "for beginners", "for students", "for startups", "for teams", "self-hosted", "open source", "privacy-first", "without credit card", "on a budget"],
+    "formats": ["Best {category} Tools for {persona}", "Top {number} Open Source {category}", "{toolA} vs {toolB}", "How to Self-Host {tool}", "Best {category} Tools Under {RAM}", "Best Open Source Alternatives to {tool}"],
+    "minimumBacklogSize": 1000,
+    "distribution": {
+      "best-tool-list": 250,
+      "comparison": 250,
+      "self-host-guide": 150,
+      "workflow-stack": 150,
+      "benchmark-study": 100,
+      "alternatives": 100
+    }
+  },
+  "internalLinkPolicy": {
+    "pillarToToolsMin": 50,
+    "pillarToBlogsMin": 25,
+    "articleToPillarsMin": 2,
+    "articleToPillarsMax": 4,
+    "articleToToolsMin": 10,
+    "articleToToolsMax": 20,
+    "articleToWorkflowsMin": 3,
+    "articleToWorkflowsMax": 6,
+    "articleToComparisonsMin": 2,
+    "articleToComparisonsMax": 4,
+    "articleToDocsMin": 5,
+    "articleToDocsMax": 10,
+    "articleToRelatedArticlesMin": 5,
+    "articleToRelatedArticlesMax": 8,
+    "blogToToolsMin": 10,
+    "blogToRelatedBlogsMin": 5,
+    "toolToAlternativesMin": 3,
+    "toolToPillarRequired": true
+  },
+  "contentPipeline": {
+    "stages": [
+      "search logs",
+      "failed searches",
+      "topic clustering",
+      "query expansion",
+      "outline generation",
+      "FAQ sourcing",
+      "entity linking",
+      "AI draft",
+      "human refinement",
+      "block conversion",
+      "schema injection",
+      "publish",
+      "IndexNow",
+      "embedding generation",
+      "internal linking"
+    ],
+    "faqSources": ["Reddit", "Quora", "AnswerThePublic", "AlsoAsked", "Google Autosuggest", "GitHub Issues", "StackOverflow"]
+  }
+}

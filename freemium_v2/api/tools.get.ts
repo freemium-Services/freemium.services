@@ -1,0 +1,7 @@
+import { defineEventHandler, setHeader } from 'nitro/h3';
+import { buildToolsFeed } from './_feeds';
+
+export default defineEventHandler((event) => {
+  setHeader(event, 'Cache-Control', 'public, max-age=300, s-maxage=3600');
+  return buildToolsFeed();
+});

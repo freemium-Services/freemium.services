@@ -6,6 +6,8 @@ node_modules/
 # Build artifacts
 build/
 public/
+!freemium_v2/public/
+!freemium_v2/public/**
 
 # Log files
 *.log

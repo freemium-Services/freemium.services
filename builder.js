@@ -13,6 +13,7 @@ const newsletterJsFile = path.join(__dirname, 'src', 'js', 'newsletter.js');
 const glossaryFile = path.join(__dirname, 'data', 'glossary.json');
 const outDir = path.join(__dirname, 'public');
 const ogDir = path.join(outDir, 'og');
+const verificationFiles = ['google04335a96bc295973.html'];
 
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 if (!fs.existsSync(ogDir)) fs.mkdirSync(ogDir, { recursive: true });
@@ -861,6 +862,12 @@ async function build() {
   fs.writeFileSync(path.join(jsDir, 'chat-widget.js'), chatJsContent);
   fs.writeFileSync(path.join(jsDir, 'search.js'), searchJsContent);
   fs.writeFileSync(path.join(jsDir, 'newsletter.js'), newsletterJsContent);
+  verificationFiles.forEach(file => {
+    const source = path.join(__dirname, file);
+    if (fs.existsSync(source)) {
+      fs.copyFileSync(source, path.join(outDir, file));
+    }
+  });
 
   const sitemaps = {
     core: [],
