@@ -4,31 +4,13 @@ const https = require('https');
 
 const publicDir = path.join(__dirname, '..', 'public');
 const robotsPath = path.join(publicDir, 'robots.txt');
+const SITE_URL = 'https://freemium.services';
 
-async function checkUrlStatus(url) {
-    return new Promise(resolve => {
-        const options = {
-            method: 'HEAD',
-            timeout: 5000 // 5 seconds timeout
-        };
-
-        const req = https.request(url, options, (res) => {
-            resolve(res.statusCode);
-            res.destroy(); // Important to close the connection
-        });
-
-        req.on('timeout', () => {
-            req.destroy();
-            resolve('TIMEOUT');
-        });
-
-        req.on('error', (e) => {
-            // console.error(`  HTTP Request Error for ${url}: ${e.message}`); // Log only if needed for debugging
-            resolve('NETWORK_ERROR');
-        });
-
-        req.end();
-    });
+function checkLocalFileExistence(url) {
+    // Convert the production URL back to a local relative path
+    const relativePath = url.replace(SITE_URL, '').replace(/^\//, '') || 'index.html';
+    const fullPath = path.join(publicDir, relativePath);
+    return fs.existsSync(fullPath);
 }
 
 async function verifySitemaps() {
@@ -87,14 +69,13 @@ async function verifySitemaps() {
             console.log(`\n📄 Checking URLs in ${sitemapFile} (${locMatches.length} URLs)...`);
             for (const loc of locMatches) {
                 const url = loc.replace('<loc>', '').replace('</loc>', '');
-                const status = await checkUrlStatus(url);
-                if (status === 200) {
-                    // console.log(`  ✅ [200 OK] ${url}`); // Too verbose for large sitemaps
+                const exists = checkLocalFileExistence(url);
+                if (exists) {
+                    // console.log(`  ✅ [EXIST] ${url}`); 
                 } else {
-                    console.error(`  ❌ [${status || 'ERROR'}] ${url}`);
+                    console.error(`  ❌ [MISSING] ${url} (No build artifact found)`);
                     httpErrors++;
                 }
-                await new Promise(resolve => setTimeout(resolve, 50)); // Small delay to avoid hammering the server
             }
         } else {
             console.log(`\n📄 No URLs found in ${sitemapFile}.`);
