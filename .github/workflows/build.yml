@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      
+      - name: Validate tools.json
+        run: npm run test:tools
+
 
       - name: Build site
         run: |

@@ -15,10 +15,20 @@
       "Code nodes for custom JavaScript and Python logic",
       "Visual debugging and execution history tracking"
     ],
-    "alternatives": ["activepieces", "windmill", "pipedream"],
+    "alternatives": [
+      "activepieces",
+      "windmill",
+      "pipedream"
+    ],
     "faq": [
-      {"q": "Can n8n run completely offline?", "a": "Yes. As long as you provide it with the necessary internal network access, n8n does not require an active internet connection to run, making it ideal for highly secure enterprise environments."},
-      {"q": "How many concurrent executions can n8n handle?", "a": "When deployed using its queue mode with Redis and PostgreSQL, n8n can scale horizontally to handle thousands of concurrent executions per second, comparable to enterprise iPaaS solutions."}
+      {
+        "q": "Can n8n run completely offline?",
+        "a": "Yes. As long as you provide it with the necessary internal network access, n8n does not require an active internet connection to run, making it ideal for highly secure enterprise environments."
+      },
+      {
+        "q": "How many concurrent executions can n8n handle?",
+        "a": "When deployed using its queue mode with Redis and PostgreSQL, n8n can scale horizontally to handle thousands of concurrent executions per second, comparable to enterprise iPaaS solutions."
+      }
     ],
     "ogImage": "/og/n8n.png"
   },
@@ -38,10 +48,20 @@
       "Support for custom Modelfiles to tune behavior",
       "Cross-platform support (macOS, Windows, Linux)"
     ],
-    "alternatives": ["open-webui", "lmstudio", "vllm"],
+    "alternatives": [
+      "open-webui",
+      "lmstudio",
+      "vllm"
+    ],
     "faq": [
-      {"q": "What hardware do I need to run Ollama smoothly?", "a": "A standard 8B parameter model (like Llama 3 8B) requires around 8GB of unified memory or VRAM to run quickly. 16GB is recommended for context-heavy RAG workloads, and 32GB+ for running larger 30B+ models."},
-      {"q": "Is Ollama suitable for production deployments?", "a": "Yes, while originally built for local dev, Ollama's API can be containerized and scaled behind a load balancer for production inference. However, for extreme high-throughput enterprise use, specialized inference engines like vLLM might be preferred."}
+      {
+        "q": "What hardware do I need to run Ollama smoothly?",
+        "a": "A standard 8B parameter model (like Llama 3 8B) requires around 8GB of unified memory or VRAM to run quickly. 16GB is recommended for context-heavy RAG workloads, and 32GB+ for running larger 30B+ models."
+      },
+      {
+        "q": "Is Ollama suitable for production deployments?",
+        "a": "Yes, while originally built for local dev, Ollama's API can be containerized and scaled behind a load balancer for production inference. However, for extreme high-throughput enterprise use, specialized inference engines like vLLM might be preferred."
+      }
     ],
     "ogImage": "/og/ollama.png"
   },
@@ -61,10 +81,20 @@
       "Built-in API generation and frontend deployment",
       "Detailed observability, logging, and token usage tracking"
     ],
-    "alternatives": ["langflow", "flowise", "anythingllm"],
+    "alternatives": [
+      "langflow",
+      "flowise",
+      "anythingllm"
+    ],
     "faq": [
-      {"q": "Does Dify include a vector database?", "a": "Yes, the standard Docker Compose installation includes Weaviate or Qdrant by default for immediate out-of-the-box RAG capabilities, though you can easily configure it to use an external vector database."},
-      {"q": "Can I use Dify to build internal tools for my company?", "a": "Absolutely. Dify allows you to quickly publish AI applications as standalone web apps or integrate them into your existing infrastructure via its automatically generated REST APIs."}
+      {
+        "q": "Does Dify include a vector database?",
+        "a": "Yes, the standard Docker Compose installation includes Weaviate or Qdrant by default for immediate out-of-the-box RAG capabilities, though you can easily configure it to use an external vector database."
+      },
+      {
+        "q": "Can I use Dify to build internal tools for my company?",
+        "a": "Absolutely. Dify allows you to quickly publish AI applications as standalone web apps or integrate them into your existing infrastructure via its automatically generated REST APIs."
+      }
     ],
     "ogImage": "/og/dify.png"
   },
@@ -84,10 +114,20 @@
       "Native integration with local LLMs and vector databases",
       "Custom Python component creation for advanced logic"
     ],
-    "alternatives": ["dify", "flowise", "n8n"],
+    "alternatives": [
+      "dify",
+      "flowise",
+      "n8n"
+    ],
     "faq": [
-      {"q": "Is Langflow only for prototyping?", "a": "No, while excellent for prototyping, Langflow is increasingly used in production. Workflows can be deployed via its API, and it supports robust error handling and custom Python nodes for complex, stable logic."},
-      {"q": "Can I use Langflow completely offline?", "a": "Yes, by configuring Langflow to use local embeddings (like HuggingFace) and local LLMs (via Ollama or Llama.cpp), your entire visual workflow will run without internet access."}
+      {
+        "q": "Is Langflow only for prototyping?",
+        "a": "No, while excellent for prototyping, Langflow is increasingly used in production. Workflows can be deployed via its API, and it supports robust error handling and custom Python nodes for complex, stable logic."
+      },
+      {
+        "q": "Can I use Langflow completely offline?",
+        "a": "Yes, by configuring Langflow to use local embeddings (like HuggingFace) and local LLMs (via Ollama or Llama.cpp), your entire visual workflow will run without internet access."
+      }
     ],
     "ogImage": "/og/langflow.png"
   },
@@ -107,10 +147,20 @@
       "Role-based access control and multi-user support",
       "Web search integration and custom tool/plugin execution"
     ],
-    "alternatives": ["librechat", "anythingllm", "lobechat"],
+    "alternatives": [
+      "librechat",
+      "anythingllm",
+      "lobechat"
+    ],
     "faq": [
-      {"q": "Can Open WebUI connect to cloud APIs as well?", "a": "Yes, while optimized for Ollama, Open WebUI natively supports any OpenAI-compatible API, allowing you to use Claude, ChatGPT, or Groq alongside your local models."},
-      {"q": "How does the document upload (RAG) work securely?", "a": "Open WebUI uses local embedding models to process and store your documents within its own local vector database. None of the document data is sent externally unless you are specifically using a cloud LLM."}
+      {
+        "q": "Can Open WebUI connect to cloud APIs as well?",
+        "a": "Yes, while optimized for Ollama, Open WebUI natively supports any OpenAI-compatible API, allowing you to use Claude, ChatGPT, or Groq alongside your local models."
+      },
+      {
+        "q": "How does the document upload (RAG) work securely?",
+        "a": "Open WebUI uses local embedding models to process and store your documents within its own local vector database. None of the document data is sent externally unless you are specifically using a cloud LLM."
+      }
     ],
     "ogImage": "/og/open-webui.png"
   },
@@ -130,10 +180,20 @@
       "Built-in AI operations and API webhook triggers",
       "Unlimited tasks and executions in self-hosted mode"
     ],
-    "alternatives": ["n8n", "windmill", "pipedream"],
+    "alternatives": [
+      "n8n",
+      "windmill",
+      "pipedream"
+    ],
     "faq": [
-      {"q": "How does Activepieces compare to n8n?", "a": "Activepieces is generally considered more user-friendly and 'Zapier-like', making it better for non-technical teams. n8n is more powerful for complex data transformations and developers. Activepieces also has a more permissive MIT license."},
-      {"q": "Can I write custom code in Activepieces?", "a": "Yes, you can write custom TypeScript snippets directly within your workflows to handle specific data transformations that aren't covered by the pre-built pieces."}
+      {
+        "q": "How does Activepieces compare to n8n?",
+        "a": "Activepieces is generally considered more user-friendly and 'Zapier-like', making it better for non-technical teams. n8n is more powerful for complex data transformations and developers. Activepieces also has a more permissive MIT license."
+      },
+      {
+        "q": "Can I write custom code in Activepieces?",
+        "a": "Yes, you can write custom TypeScript snippets directly within your workflows to handle specific data transformations that aren't covered by the pre-built pieces."
+      }
     ],
     "ogImage": "/og/activepieces.png"
   },
@@ -153,10 +213,20 @@
       "Complex flow builder with branching and error handling",
       "Granular permission system for enterprise deployment"
     ],
-    "alternatives": ["retool", "pipedream", "temporal"],
+    "alternatives": [
+      "n8n",
+      "activepieces",
+      "pipedream"
+    ],
     "faq": [
-      {"q": "Is Windmill suitable for non-developers?", "a": "Windmill is primarily designed for developers to create tools that non-developers can then use. The creation of scripts requires coding knowledge, but the resulting UIs are accessible to anyone."},
-      {"q": "Can Windmill handle long-running background jobs?", "a": "Yes, Windmill is an excellent orchestration engine for long-running scripts, providing logging, retry logic, and asynchronous execution tracking out of the box."}
+      {
+        "q": "Is Windmill suitable for non-developers?",
+        "a": "Windmill is primarily designed for developers to create tools that non-developers can then use. The creation of scripts requires coding knowledge, but the resulting UIs are accessible to anyone."
+      },
+      {
+        "q": "Can Windmill handle long-running background jobs?",
+        "a": "Yes, Windmill is an excellent orchestration engine for long-running scripts, providing logging, retry logic, and asynchronous execution tracking out of the box."
+      }
     ],
     "ogImage": "/og/windmill.png"
   },
@@ -176,10 +246,20 @@
       "Zero-downtime deployments and container management",
       "Multi-server management from a single dashboard"
     ],
-    "alternatives": ["dokku", "caprover", "vercel"],
+    "alternatives": [
+      "supabase",
+      "dokku",
+      "vercel"
+    ],
     "faq": [
-      {"q": "Does Coolify lock me into their ecosystem?", "a": "No, Coolify simply orchestrates standard Docker containers on your server. If you uninstall Coolify, your containers and reverse proxies will continue to run normally."},
-      {"q": "Can I manage multiple servers with one Coolify instance?", "a": "Yes, Coolify allows you to connect multiple remote servers via SSH, enabling you to deploy different applications to different nodes from a unified central dashboard."}
+      {
+        "q": "Does Coolify lock me into their ecosystem?",
+        "a": "No, Coolify simply orchestrates standard Docker containers on your server. If you uninstall Coolify, your containers and reverse proxies will continue to run normally."
+      },
+      {
+        "q": "Can I manage multiple servers with one Coolify instance?",
+        "a": "Yes, Coolify allows you to connect multiple remote servers via SSH, enabling you to deploy different applications to different nodes from a unified central dashboard."
+      }
     ],
     "ogImage": "/og/coolify.png"
   },
@@ -199,10 +279,19 @@
       "Dynamic segment management for high-throughput updates",
       "Horizontal scaling with distributed cluster support"
     ],
-    "alternatives": ["dify", "langflow"],
+    "alternatives": [
+      "dify",
+      "langflow"
+    ],
     "faq": [
-      {"q": "Does Qdrant support metadata filtering?", "a": "Yes, Qdrant allows you to attach 'payloads' to vectors and perform complex boolean filtering alongside vector similarity searches."},
-      {"q": "Is it easy to migrate from Pinecone to Qdrant?", "a": "Yes, many developers use Qdrant as a self-hosted replacement for Pinecone. It offers similar functionality with more control over infrastructure and cost."}
+      {
+        "q": "Does Qdrant support metadata filtering?",
+        "a": "Yes, Qdrant allows you to attach 'payloads' to vectors and perform complex boolean filtering alongside vector similarity searches."
+      },
+      {
+        "q": "Is it easy to migrate from Pinecone to Qdrant?",
+        "a": "Yes, many developers use Qdrant as a self-hosted replacement for Pinecone. It offers similar functionality with more control over infrastructure and cost."
+      }
     ],
     "ogImage": "/og/qdrant.png"
   },
@@ -222,10 +311,19 @@
       "Built-in support for multiple encoding formats",
       "Highly customizable output formatting"
     ],
-    "alternatives": ["ollama", "windmill"],
+    "alternatives": [
+      "ollama",
+      "windmill"
+    ],
     "faq": [
-      {"q": "Why is ripgrep so much faster than grep?", "a": "ripgrep uses advanced algorithms like Aho-Corasick and Teddy, combined with Rust's high-performance regex engine and parallel directory walking."},
-      {"q": "Can I use ripgrep in my IDE?", "a": "Yes, many modern editors like VS Code and Zed use ripgrep under the hood to power their 'Search in Files' functionality."}
+      {
+        "q": "Why is ripgrep so much faster than grep?",
+        "a": "ripgrep uses advanced algorithms like Aho-Corasick and Teddy, combined with Rust's high-performance regex engine and parallel directory walking."
+      },
+      {
+        "q": "Can I use ripgrep in my IDE?",
+        "a": "Yes, many modern editors like VS Code and Zed use ripgrep under the hood to power their 'Search in Files' functionality."
+      }
     ],
     "ogImage": "/og/ripgrep.png"
   },
@@ -245,10 +343,19 @@
       "Auto-generated REST and GraphQL APIs",
       "Edge functions for custom server-side logic"
     ],
-    "alternatives": ["coolify", "activepieces"],
+    "alternatives": [
+      "coolify",
+      "activepieces"
+    ],
     "faq": [
-      {"q": "Is Supabase just a wrapper for Postgres?", "a": "While Postgres is the core, Supabase provides a vast ecosystem of tools (Auth, Storage, Functions) that integrate seamlessly, providing a unified developer experience."},
-      {"q": "Can I self-host Supabase for production?", "a": "Yes, Supabase provides a robust Docker Compose setup specifically for self-hosting in production environments."}
+      {
+        "q": "Is Supabase just a wrapper for Postgres?",
+        "a": "While Postgres is the core, Supabase provides a vast ecosystem of tools (Auth, Storage, Functions) that integrate seamlessly, providing a unified developer experience."
+      },
+      {
+        "q": "Can I self-host Supabase for production?",
+        "a": "Yes, Supabase provides a robust Docker Compose setup specifically for self-hosting in production environments."
+      }
     ],
     "ogImage": "/og/supabase.png"
   },
@@ -268,13 +375,20 @@
       "GPT-4 and GPT-3.5 integration for reasoning",
       "File storage and summarization capabilities"
     ],
-    "alternatives": ["ollama", "dify"],
+    "alternatives": [
+      "ollama",
+      "dify"
+    ],
     "faq": [
-      {"q": "Is AutoGPT safe to run on my local machine?", "a": "AutoGPT can execute code and browse the web. It is highly recommended to run it inside a Docker container or a sandbox environment to prevent unintended actions on your host system."},
-      {"q": "Does AutoGPT require a paid API key?", "a": "Yes, it typically requires an OpenAI API key. However, it can also be configured to use local models via tools like LocalAI or Ollama for a fully private experience."}
+      {
+        "q": "Is AutoGPT safe to run on my local machine?",
+        "a": "AutoGPT can execute code and browse the web. It is highly recommended to run it inside a Docker container or a sandbox environment to prevent unintended actions on your host system."
+      },
+      {
+        "q": "Does AutoGPT require a paid API key?",
+        "a": "Yes, it typically requires an OpenAI API key. However, it can also be configured to use local models via tools like LocalAI or Ollama for a fully private experience."
+      }
     ],
     "ogImage": "/og/auto-gpt.png"
   }
 }
-
-

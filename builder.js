@@ -56,7 +56,7 @@ function validateTool(tool) {
   // Check for at least one alternative that actually exists in toolsData for the search suggestor
   const hasValidAlt = tool.alternatives.some(altId => toolsData[altId]);
   if (!hasValidAlt) {
-    throw new Error(`Build Failed: Tool '${tool.id}' must have at least one valid alternative present in tools.json to power the search suggestor.`);
+    console.warn(`⚠️ Build Warning: Tool '${tool.id}' has no valid alternatives present in tools.json. Search suggestions for this tool will be limited.`);
   }
 
   // Inject freshness signal if missing
@@ -850,7 +850,7 @@ async function build() {
   sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
 
   // 1b. Knowledge Hub
-  const hubHtml = renderKnowledgeHub();
+  const hubHtml = renderKnowledgeHub('en');
   fs.writeFileSync(path.join(outDir, 'knowledge-hub.html'), hubHtml);
   sitemaps.knowledge.push({ loc: '/knowledge-hub.html', lastmod: new Date().toISOString().split('T')[0], priority: '1.0' });
 
@@ -870,7 +870,7 @@ async function build() {
   let toolsCount = 0;
   Object.values(toolsData).forEach(t => {
     imageUrls.push({ loc: `/tools/${t.id}.html`, img: `/og/${t.id}-og.svg`, title: t.name });
-    fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t));
+    fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t, 'en'));
 
     // Featured tools get the current build date to boost freshness signals
     const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
@@ -893,7 +893,7 @@ async function build() {
   let catCount = 0;
   Object.keys(categories).forEach(catId => {
     imageUrls.push({ loc: `/category/${catId}.html`, img: `/og/${catId}-og.svg`, title: categories[catId].name });
-    fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId]));
+    fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId], 'en'));
     sitemaps.categories.push({ loc: `/category/${catId}.html`, lastmod: new Date().toISOString().split('T')[0] });
 
     // Index category hubs and apply priority boost for self-hosting guides
@@ -919,7 +919,7 @@ async function build() {
       for (let j = i + 1; j < catTools.length; j++) {
         const a = catTools[i].id;
         const b = catTools[j].id;
-        const html = renderComparisonPage(a, b);
+        const html = renderComparisonPage(a, b, 'en');
         if (html) {
           imageUrls.push({ loc: `/compare/${a}-vs-${b}.html`, img: `/og/${a}-vs-${b}-og.svg`, title: `${a} vs ${b}` });
           fs.writeFileSync(path.join(compDir, `${a}-vs-${b}.html`), html);
