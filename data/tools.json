@@ -182,5 +182,98 @@
       {"q": "Can I manage multiple servers with one Coolify instance?", "a": "Yes, Coolify allows you to connect multiple remote servers via SSH, enabling you to deploy different applications to different nodes from a unified central dashboard."}
     ],
     "ogImage": "/og/coolify.png"
+  },
+  "qdrant": {
+    "id": "qdrant",
+    "name": "Qdrant - Vector Database",
+    "category": "vector-databases",
+    "emoji": "🦀",
+    "license": "Apache 2.0",
+    "stars": 18500,
+    "description": "Qdrant is a high-performance vector similarity search engine and vector database written in Rust. It is designed to handle high-dimensional vector embeddings with millisecond-level latency, making it the perfect memory layer for RAG (Retrieval-Augmented Generation) and semantic search applications in 2026. Qdrant provides a robust API for storing, searching, and managing vectors with additional payload filtering. Its architecture allows for vertical and horizontal scaling, supporting billion-scale datasets. By self-hosting Qdrant, developers can ensure that their sensitive vector data—representing the collective knowledge of their organization—remains private and secure, avoiding the high costs and privacy risks of managed cloud vector stores.",
+    "install": "docker run -p 6333:6333 qdrant/qdrant",
+    "features": [
+      "Rust-native performance and memory safety",
+      "Advanced filtering based on vector payloads",
+      "Support for multiple distance metrics (Cosine, Euclidean, Dot product)",
+      "Dynamic segment management for high-throughput updates",
+      "Horizontal scaling with distributed cluster support"
+    ],
+    "alternatives": ["weaviate", "milvus", "pinecone"],
+    "faq": [
+      {"q": "Does Qdrant support metadata filtering?", "a": "Yes, Qdrant allows you to attach 'payloads' to vectors and perform complex boolean filtering alongside vector similarity searches."},
+      {"q": "Is it easy to migrate from Pinecone to Qdrant?", "a": "Yes, many developers use Qdrant as a self-hosted replacement for Pinecone. It offers similar functionality with more control over infrastructure and cost."}
+    ],
+    "ogImage": "/og/qdrant.png"
+  },
+  "ripgrep": {
+    "id": "ripgrep",
+    "name": "ripgrep - Fast CLI Search",
+    "category": "cli-tools",
+    "emoji": "🔍",
+    "license": "MIT / Unlicense",
+    "stars": 45000,
+    "description": "ripgrep (rg) is a line-oriented search tool that recursively searches your current directory for a regex pattern. It is widely considered the fastest search tool for developers, outperforming grep, ack, and the silver searcher (ag). In 2026, ripgrep remains an essential component of every power-user's terminal toolkit. It automatically respects your .gitignore rules and skips hidden files/directories by default, making it incredibly intuitive for searching large codebases. Its speed comes from a highly optimized Rust implementation and smart use of memory mapping. Whether you're searching for a specific function call or auditing logs, ripgrep provides near-instant results even on massive monorepos.",
+    "install": "brew install ripgrep # macOS\nsudo apt install ripgrep # Ubuntu",
+    "features": [
+      "Extremely fast regex-based searching",
+      "Automatic respect for .gitignore and hidden files",
+      "Support for searching compressed files",
+      "Built-in support for multiple encoding formats",
+      "Highly customizable output formatting"
+    ],
+    "alternatives": ["grep", "ag", "fd"],
+    "faq": [
+      {"q": "Why is ripgrep so much faster than grep?", "a": "ripgrep uses advanced algorithms like Aho-Corasick and Teddy, combined with Rust's high-performance regex engine and parallel directory walking."},
+      {"q": "Can I use ripgrep in my IDE?", "a": "Yes, many modern editors like VS Code and Zed use ripgrep under the hood to power their 'Search in Files' functionality."}
+    ],
+    "ogImage": "/og/ripgrep.png"
+  },
+  "supabase": {
+    "id": "supabase",
+    "name": "Supabase - Open Source Firebase Alternative",
+    "category": "open-source",
+    "emoji": "⚡",
+    "license": "Apache 2.0",
+    "stars": 68000,
+    "description": "Supabase is a comprehensive open-source Backend-as-a-Service (BaaS) platform that provides every tool needed to build and scale applications. Built on top of enterprise-grade open-source tools like PostgreSQL, GoTrue, and PostgREST, Supabase offers a database, authentication, file storage, and edge functions out of the box. In 2026, it is the premier choice for developers who want the convenience of Firebase without the proprietary lock-in. By self-hosting Supabase via Docker, teams gain full control over their Postgres database, allowing for complex joins, migrations, and direct SQL access that are impossible in NoSQL alternatives. It is the gold standard for modern, scalable, and sovereign application infrastructure.",
+    "install": "npx supabase init && npx supabase start",
+    "features": [
+      "Full PostgreSQL database with real-time subscriptions",
+      "Built-in authentication and user management",
+      "S3-compatible object storage",
+      "Auto-generated REST and GraphQL APIs",
+      "Edge functions for custom server-side logic"
+    ],
+    "alternatives": ["appwrite", "pocketbase", "firebase"],
+    "faq": [
+      {"q": "Is Supabase just a wrapper for Postgres?", "a": "While Postgres is the core, Supabase provides a vast ecosystem of tools (Auth, Storage, Functions) that integrate seamlessly, providing a unified developer experience."},
+      {"q": "Can I self-host Supabase for production?", "a": "Yes, Supabase provides a robust Docker Compose setup specifically for self-hosting in production environments."}
+    ],
+    "ogImage": "/og/supabase.png"
+  },
+  "auto-gpt": {
+    "id": "auto-gpt",
+    "name": "AutoGPT - Autonomous AI Agents",
+    "category": "ai-agents",
+    "emoji": "🤖",
+    "license": "MIT",
+    "stars": 165000,
+    "description": "AutoGPT is an experimental open-source application showcasing the capabilities of the GPT-4 language model. This program, driven by GPT-4, chains together LLM 'thoughts' to autonomously achieve whatever goal you set. As one of the first examples of GPT-4 running fully autonomously, AutoGPT pushes the boundaries of what is possible with AI in 2026. It can browse the web, execute code, and manage its own long-term and short-term memory. By self-hosting AutoGPT, researchers and developers can explore the frontier of agentic workflows, building systems that can perform complex market research, software development tasks, and automated data analysis with minimal human intervention.",
+    "install": "git clone https://github.com/Significant-Gravitas/AutoGPT.git && cd AutoGPT && docker-compose run --rm auto-gpt",
+    "features": [
+      "Autonomous goal-seeking and task planning",
+      "Internet access for searches and information gathering",
+      "Long-term and short-term memory management",
+      "GPT-4 and GPT-3.5 integration for reasoning",
+      "File storage and summarization capabilities"
+    ],
+    "alternatives": ["babyagi", "claude-code", "crewai"],
+    "faq": [
+      {"q": "Is AutoGPT safe to run on my local machine?", "a": "AutoGPT can execute code and browse the web. It is highly recommended to run it inside a Docker container or a sandbox environment to prevent unintended actions on your host system."},
+      {"q": "Does AutoGPT require a paid API key?", "a": "Yes, it typically requires an OpenAI API key. However, it can also be configured to use local models via tools like LocalAI or Ollama for a fully private experience."}
+    ],
+    "ogImage": "/og/auto-gpt.png"
   }
 }
+

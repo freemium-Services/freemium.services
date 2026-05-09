@@ -95,7 +95,7 @@ async function getLocalizedTool(tool, lang, cache) {
   return {
     ...tool,
     name: await getTranslated(tool.name, lang, cache),
-    description: await getTranslated(tool.description, lang, cache),
+    description: await getTranslated(tool.description, lang, cache), // Await this
     features: await Promise.all((tool.features || []).map(f => getTranslated(f, lang, cache))),
     faq: await Promise.all((tool.faq || []).map(async f => ({
       q: await getTranslated(f.q, lang, cache),
@@ -110,7 +110,7 @@ async function getLocalizedCategory(catInfo, lang, cache) {
   return {
     ...catInfo,
     name: await getTranslated(catInfo.name, lang, cache),
-    description: await getTranslated(catInfo.description, lang, cache),
+    description: await getTranslated(catInfo.description, lang, cache), // Await this
     longDesc: await getTranslated(catInfo.longDesc, lang, cache)
   };
 }
@@ -118,8 +118,8 @@ async function getLocalizedCategory(catInfo, lang, cache) {
 async function getLocalizedFaqBank(bank, lang, cache) {
   if (lang === 'en') return bank;
   return Promise.all(bank.map(async f => ({
-    q: await getTranslated(f.q, lang, cache),
-    a: await getTranslated(f.a, lang, cache)
+    q: await getTranslated(f.q, lang, cache), // Await this
+    a: await getTranslated(f.a, lang, cache) // Await this
   })));
 }
 
@@ -128,8 +128,8 @@ async function getLocalizedGlossary(gloss, lang, cache) {
   const localized = {};
   for (const key in gloss) {
     localized[key] = {
-      term: await getTranslated(gloss[key].term, lang, cache),
-      def: await getTranslated(gloss[key].def, lang, cache)
+      term: await getTranslated(gloss[key].term, lang, cache), // Await this
+      def: await getTranslated(gloss[key].def, lang, cache) // Await this
     };
   }
   return localized;
@@ -555,80 +555,56 @@ function renderCategoryPage(catId, catInfo, lang) {
 
   const faqBankHtml = faqBank.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join('');
 
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": catTools.map((t, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `${SITE_URL}/tools/${t.id}.html`
+    }))
+  };
+
   const breadcrumbItems = [
     { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
     { name: catInfo.name, url: SITE_URL + getLocalizedUrl(`/category/${catId}.html`, lang) }
   ];
 
-  if (currentPage > 1) {
-    breadcrumbItems.push({ name: `Page ${currentPage}`, url: SITE_URL + getLocalizedUrl(`/category/${catId}-page-${currentPage}.html`, lang) });
-  }
+  const ogImagePath = generateSvgOgImage(catInfo.name, 'Category Hub', `${catId}-og.svg`);
 
-  const itemListSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": catTools.map((t, index) => ({
-      "itemListElement": tools.map((t, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "url": `${SITE_URL}/tools/${t.id}.html`
-      }))
-    };
-
-    const ogImagePath = generateSvgOgImage(catInfo.name, 'Category Hub', `${catId}-og.svg`);
-    const ogImagePath = generateSvgOgImage(catInfo.name, `Category Hub ${currentPage > 1 ? `- Page ${currentPage}` : ''}`, `${catId}${currentPage > 1 ? `-p${currentPage}` : ''}-og.svg`);
-
-    const paginationHtml = totalPages > 1 ? `
-    <div class="pagination" style="margin-top: 4rem; display: flex; gap: 0.75rem; justify-content: center; align-items: center; flex-wrap: wrap;">
-      ${Array.from({ length: totalPages }, (_, idx) => {
-      const p = idx + 1;
-      const pUrl = p === 1 ? `/category/${catId}.html` : `/category/${catId}-page-${p}.html`;
-      const active = p === currentPage;
-      return `<a href="${getLocalizedUrl(pUrl, lang)}" style="padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-family: var(--font-mono); font-size: 0.9rem; transition: all 0.2s; ${active ? 'background: var(--accent); color: var(--bg); border: 1px solid var(--accent);' : 'border: 1px solid var(--border); color: var(--text2);'}">${p}</a>`;
-    }).join('')}
-    </div>` : '';
-
-    const content = `
+  const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>${catInfo.name}</span>
-        <a href="${getLocalizedUrl('/', lang)}">Home</a> › ${currentPage === 1 ? `<span>${catInfo.name}</span>` : `<a href="${getLocalizedUrl(`/category/${catId}.html`, lang)}">${catInfo.name}</a> › <span>Page ${currentPage}</span>`}
       </nav>
       <h1>${catInfo.name}</h1>
-      <h1>${catInfo.name} ${currentPage > 1 ? `<span style="font-size: 0.6em; opacity: 0.6;">(Page ${currentPage})</span>` : ''}</h1>
       <p class="lead">${linkify(catInfo.description)}</p>
 
       ${catInfo.longDesc ? `<div class="prose" style="margin-top: 3rem; margin-bottom: 3rem;">${marked.parse(linkify(catInfo.longDesc))}</div>` : ''}
-      ${catInfo.longDesc && currentPage === 1 ? `<div class="prose" style="margin-top: 3rem; margin-bottom: 3rem;">${marked.parse(linkify(catInfo.longDesc))}</div>` : ''}
 
       <section class="grid" style="margin-top: 2rem;">
         <h2>Verified ${catInfo.name}</h2>
         <div class="grid">${toolsHtml}</div>
-        ${paginationHtml}
       </section>
 
-      ${currentPage === 1 ? `
       <section class="faq" style="margin-top: 6rem;">
         <h2>Expert FAQ — ${catInfo.name} & Open Source Mastery</h2>
         ${faqBankHtml}
       </section>
-      </section>` : ''}
     </div>
   `;
 
-    const headInject = `
+  const headInject = `
     <script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>
     <script type="application/ld+json">${JSON.stringify(itemListSchema)}</script>
   `;
 
-    return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, `/category/${catId}.html`, content, lang, headInject, '', ogImagePath);
-    const canonicalPath = currentPage === 1 ? `/category/${catId}.html` : `/category/${catId}-page-${currentPage}.html`;
+  const canonicalPath = `/category/${catId}.html`;
+  return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, canonicalPath, content, lang, headInject, '', ogImagePath);
+}
 
-    return getBaseLayout(`${catInfo.name} - Open Source Tools ${currentPage > 1 ? `- Page ${currentPage}` : ''}`, catInfo.description, canonicalPath, content, lang, headInject, '', ogImagePath);
-  }
-
-  function renderHomepage(featuredTools, lang) {
-    const featuredHtml = featuredTools.map(t => `
+function renderHomepage(featuredTools, lang) {
+  const featuredHtml = featuredTools.map(t => `
     <a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card featured-card">
       <div style="position: absolute; top: 1rem; right: 1rem; color: var(--yellow); font-family: var(--font-mono); font-size: 0.75rem;">★ ${t.stars.toLocaleString()}</div>
       <h3>${t.emoji} ${t.name}</h3>
@@ -637,7 +613,7 @@ function renderCategoryPage(catId, catInfo, lang) {
     </a>
   `).join('');
 
-    const content = `
+  const content = `
     <div class="container" style="text-align:center; padding-top: 6rem;">
       <h1>Discover, Build, & Dominate Workflows.</h1>
       <p class="lead" style="margin: 0 auto 3rem;">The world's largest verified directory of freemium & open-source tools — featuring step-by-step self-hosting guides and powered by DePIN-style edge compute networks.</p>
@@ -667,34 +643,34 @@ function renderCategoryPage(catId, catInfo, lang) {
     </section>
   `;
 
-    const webpageSchema = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Freemium Services",
-      "description": "Verified directory of freemium & open-source tools."
-    };
+  const webpageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Freemium Services",
+    "description": "Verified directory of freemium & open-source tools."
+  };
 
-    const ogImagePath = generateSvgOgImage("Freemium Services", "Verified Open Source Directory", `home-og.svg`);
+  const ogImagePath = generateSvgOgImage("Freemium Services", "Verified Open Source Directory", `home-og.svg`);
 
-    return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, lang, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
-  }
+  return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, lang, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
+}
 
-  function renderComparisonPage(aId, bId, lang) {
-    const a = toolsData[aId];
-    const b = toolsData[bId];
-    if (!a || !b) return null;
+function renderComparisonPage(aId, bId, lang) {
+  const a = toolsData[aId];
+  const b = toolsData[bId];
+  if (!a || !b) return null;
 
-    const breadcrumbItems = [
-      { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
-      { name: categories[a.category]?.name || a.category, url: SITE_URL + getLocalizedUrl(`/category/${a.category}.html`, lang) },
-      { name: `${a.name} vs ${b.name}`, url: SITE_URL + getLocalizedUrl(`/compare/${a.id}-vs-${b.id}.html`, lang) }
-    ];
+  const breadcrumbItems = [
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: categories[a.category]?.name || a.category, url: SITE_URL + getLocalizedUrl(`/category/${a.category}.html`, lang) },
+    { name: `${a.name} vs ${b.name}`, url: SITE_URL + getLocalizedUrl(`/compare/${a.id}-vs-${b.id}.html`, lang) }
+  ];
 
-    const ogImagePath = generateSvgOgImage(`${a.name} vs ${b.name}`, 'Technical Comparison', `${a.id}-vs-${b.id}-og.svg`);
+  const ogImagePath = generateSvgOgImage(`${a.name} vs ${b.name}`, 'Technical Comparison', `${a.id}-vs-${b.id}-og.svg`);
 
-    const twitterIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this 2026 technical comparison: ${a.name} vs ${b.name} on Freemium.Services`)}&url=${encodeURIComponent(`${SITE_URL}/compare/${a.id}-vs-${b.id}.html`)}`;
+  const twitterIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this 2026 technical comparison: ${a.name} vs ${b.name} on Freemium.Services`)}&url=${encodeURIComponent(`${SITE_URL}/compare/${a.id}-vs-${b.id}.html`)}`;
 
-    const content = `
+  const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <a href="${getLocalizedUrl(`/category/${a.category}.html`, lang)}">${categories[a.category]?.name || a.category}</a> › <span>${a.name} vs ${b.name}</span>
@@ -736,52 +712,52 @@ function renderCategoryPage(catId, catInfo, lang) {
     </div>
   `;
 
-    const webpageSchema = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": `${a.name} vs ${b.name} Comparison`,
-      "description": `Technical comparison of ${a.name} and ${b.name}.`
-    };
+  const webpageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": `${a.name} vs ${b.name} Comparison`,
+    "description": `Technical comparison of ${a.name} and ${b.name}.`
+  };
 
-    return getBaseLayout(`${a.name} vs ${b.name} - Detailed Comparison`, `Compare ${a.name} and ${b.name} to see which open-source tool fits your self-hosting needs.`, `/compare/${a.id}-vs-${b.id}.html`, content, `
+  return getBaseLayout(`${a.name} vs ${b.name} - Detailed Comparison`, `Compare ${a.name} and ${b.name} to see which open-source tool fits your self-hosting needs.`, `/compare/${a.id}-vs-${b.id}.html`, content, lang, `
     <script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>
     <script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>
-  `, lang, '', ogImagePath);
-  }
+  `, '', ogImagePath);
+}
 
-  // --- Knowledge Hub Generator ---
-  function renderKnowledgeHub(lang) {
-    const pillarHtml = Object.keys(categories)
-      .filter(catId => categories[catId].longDesc)
-      .map(catId => `
+// --- Knowledge Hub Generator ---
+function renderKnowledgeHub(lang) {
+  const pillarHtml = Object.keys(categories)
+    .filter(catId => categories[catId].longDesc)
+    .map(catId => `
       <section id="${catId}-guide" style="margin-bottom: 4rem;">
         <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">${categories[catId].name} Master Guide</h2>
         <div class="prose">${marked.parse(linkify(categories[catId].longDesc))}</div>
       </section>
     `).join('');
 
-    const glossaryHtml = Object.keys(glossary).map(key => `
+  const glossaryHtml = Object.keys(glossary).map(key => `
       <section id="${key.toLowerCase()}" style="margin-bottom: 2.5rem; border-left: 2px solid var(--accent); padding-left: 1.5rem;">
         <h3 style="color: var(--text); font-family: var(--font-display); margin-bottom: 0.5rem;">${glossary[key].term}</h3>
         <p style="color: var(--text2); font-size: 0.95rem; line-height: 1.6;">${glossary[key].def}</p>
       </section>
     `).join('');
 
-    const faqHtml = faqBank.map(f => `
+  const faqHtml = faqBank.map(f => `
     <div class="faq-item" style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
       <h3 style="color: var(--text); margin-bottom: 1rem; font-family: var(--font-display); font-size: 1.25rem;">${f.q}</h3>
       <div class="prose" style="color:var(--text2);">${marked.parse(f.a)}</div>
     </div>
   `).join('');
 
-    const breadcrumbItems = [
-      { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
-      { name: "Docs", url: SITE_URL + getLocalizedUrl("/knowledge-hub.html", lang) }
-    ];
+  const breadcrumbItems = [
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: "Docs", url: SITE_URL + getLocalizedUrl("/knowledge-hub.html", lang) }
+  ];
 
-    const ogImagePath = generateSvgOgImage("Docs & Technical Glossary", "Expert Resource Bank", "knowledge-hub-og.svg");
+  const ogImagePath = generateSvgOgImage("Docs & Technical Glossary", "Expert Resource Bank", "knowledge-hub-og.svg");
 
-    const content = `
+  const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>Docs</span>
@@ -794,9 +770,9 @@ function renderCategoryPage(catId, catInfo, lang) {
           <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 1.5rem; font-family: var(--font-mono);">Navigation</h3>
           <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
             ${Object.keys(categories)
-        .filter(catId => categories[catId].longDesc)
-        .map(catId => `<li style="margin-bottom: 1rem;"><a href="#${catId}-guide" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">${categories[catId].name} Guide</a></li>`)
-        .join('')}
+      .filter(catId => categories[catId].longDesc)
+      .map(catId => `<li style="margin-bottom: 1rem;"><a href="#${catId}-guide" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">${categories[catId].name} Guide</a></li>`)
+      .join('')}
             <li style="margin-bottom: 1rem;"><a href="#glossary" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">Technical Glossary</a></li>
             <li><a href="#faq" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">Global FAQ Bank</a></li>
           </ul>
@@ -819,198 +795,215 @@ function renderCategoryPage(catId, catInfo, lang) {
     </div>
   `;
 
-    const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqBank.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
-    const headInject = `<script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>\n  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+  const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqBank.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
+  const headInject = `<script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>\n  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
-    return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, lang, headInject, '', ogImagePath);
+  return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, lang, headInject, '', ogImagePath);
+}
+
+// --- Main Build Execution ---
+async function build() {
+  console.log('🚀 Generating Freemium.Services v2...');
+
+  const toolsDir = path.join(outDir, 'tools');
+  const catDir = path.join(outDir, 'category');
+  const compDir = path.join(outDir, 'compare');
+  const jsDir = path.join(outDir, 'js');
+
+  [toolsDir, catDir, compDir, jsDir].forEach(d => {
+    if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
+  });
+
+  // Copy JS files for external linking
+  fs.writeFileSync(path.join(jsDir, 'chat-widget.js'), chatJsContent);
+  fs.writeFileSync(path.join(jsDir, 'search.js'), searchJsContent);
+  fs.writeFileSync(path.join(jsDir, 'newsletter.js'), newsletterJsContent);
+
+  const sitemaps = {
+    core: [],
+    knowledge: [],
+    tools: [],
+    categories: [],
+    comparisons: []
+  };
+  const imageUrls = [];
+  const searchIndex = [];
+
+  // Calculate featured tools for freshness signals
+  const featuredTools = Object.values(toolsData)
+    .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+    .slice(0, 3);
+  const featuredIds = new Set(featuredTools.map(t => t.id));
+
+  // 1. Homepage
+  fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools));
+  imageUrls.push({ loc: '/', img: '/og/home-og.svg', title: 'Freemium Services - Home' });
+  sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
+
+  // 1b. Knowledge Hub
+  const hubHtml = renderKnowledgeHub();
+  fs.writeFileSync(path.join(outDir, 'knowledge-hub.html'), hubHtml);
+  sitemaps.knowledge.push({ loc: '/knowledge-hub.html', lastmod: new Date().toISOString().split('T')[0], priority: '1.0' });
+
+  // Add Docs to search index with a priority boost
+  searchIndex.push({
+    slug: 'knowledge-hub',
+    url: '/knowledge-hub.html',
+    title: 'Docs: Open Source & Self-Hosting Hub',
+    lastmod: new Date().toISOString().split('T')[0],
+    category: 'Documentation',
+    description: 'The definitive master resource for decentralized infrastructure, privacy-first automation, and local AI stacks.',
+    isFeatured: true
+  });
+  imageUrls.push({ loc: '/knowledge-hub.html', img: '/og/knowledge-hub-og.svg', title: 'Docs' });
+
+  // 2. Tool Pages
+  let toolsCount = 0;
+  Object.values(toolsData).forEach(t => {
+    imageUrls.push({ loc: `/tools/${t.id}.html`, img: `/og/${t.id}-og.svg`, title: t.name });
+    fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t));
+
+    // Featured tools get the current build date to boost freshness signals
+    const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
+    sitemaps.tools.push({ loc: `/tools/${t.id}.html`, lastmod });
+
+    searchIndex.push({
+      slug: t.id,
+      title: t.name,
+      category: t.category,
+      lastmod: lastmod,
+      description: t.description.replace(/[#*`]/g, '').slice(0, 100),
+      isFeatured: featuredIds.has(t.id),
+      alternatives: t.alternatives || [],
+      install: t.install || ''
+    });
+    toolsCount++;
+  });
+
+  // 3. Category Pages
+  let catCount = 0;
+  Object.keys(categories).forEach(catId => {
+    imageUrls.push({ loc: `/category/${catId}.html`, img: `/og/${catId}-og.svg`, title: categories[catId].name });
+    fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId]));
+    sitemaps.categories.push({ loc: `/category/${catId}.html`, lastmod: new Date().toISOString().split('T')[0] });
+
+    // Index category hubs and apply priority boost for self-hosting guides
+    searchIndex.push({
+      slug: catId,
+      url: `/category/${catId}.html`,
+      title: `${categories[catId].name} Hub & Guides`,
+      lastmod: new Date().toISOString().split('T')[0],
+      category: 'Guides',
+      description: categories[catId].description,
+      isFeatured: catId === 'self-hosting'
+    });
+
+    catCount++;
+  });
+
+  // 4. Comparison Pages
+  let compCount = 0;
+
+  Object.keys(categories).forEach(catId => {
+    const catTools = Object.values(toolsData).filter(t => t.category === catId && t.stars > STARS_THRESHOLD);
+    for (let i = 0; i < catTools.length; i++) {
+      for (let j = i + 1; j < catTools.length; j++) {
+        const a = catTools[i].id;
+        const b = catTools[j].id;
+        const html = renderComparisonPage(a, b);
+        if (html) {
+          imageUrls.push({ loc: `/compare/${a}-vs-${b}.html`, img: `/og/${a}-vs-${b}-og.svg`, title: `${a} vs ${b}` });
+          fs.writeFileSync(path.join(compDir, `${a}-vs-${b}.html`), html);
+          sitemaps.comparisons.push({ loc: `/compare/${a}-vs-${b}.html`, lastmod: new Date().toISOString().split('T')[0] });
+          compCount++;
+        }
+      }
+    }
+  });
+
+  // 5. Multilingual Generation & Search Index
+  if (fs.existsSync(translationCacheFile)) {
+    try {
+      translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
+    } catch (e) {
+      console.warn('⚠️ Could not load translation-cache.json');
+    }
   }
 
-  // --- Main Build Execution ---
-  async function build() {
-    console.log('🚀 Generating Freemium.Services v2...');
+  const allSitemapUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
 
-    const toolsDir = path.join(outDir, 'tools');
-    const catDir = path.join(outDir, 'category');
-    const compDir = path.join(outDir, 'compare');
-    const jsDir = path.join(outDir, 'js');
-
-    [toolsDir, catDir, compDir, jsDir].forEach(d => {
-      if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
-    });
-
-    // Copy JS files for external linking
-    fs.writeFileSync(path.join(jsDir, 'chat-widget.js'), chatJsContent);
-    fs.writeFileSync(path.join(jsDir, 'search.js'), searchJsContent);
-    fs.writeFileSync(path.join(jsDir, 'newsletter.js'), newsletterJsContent);
-
-    const sitemaps = {
-      core: [],
-      knowledge: [],
-      tools: [],
-      categories: [],
-      comparisons: []
-    };
-    const imageUrls = [];
-    const searchIndex = [];
-
-    // Calculate featured tools for freshness signals
-    const featuredTools = Object.values(toolsData)
-      .sort((a, b) => (b.stars || 0) - (a.stars || 0))
-      .slice(0, 3);
-    const featuredIds = new Set(featuredTools.map(t => t.id));
-
-    // 1. Homepage
-    fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools));
-    imageUrls.push({ loc: '/', img: '/og/home-og.svg', title: 'Freemium Services - Home' });
-    sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
-
-    // 1b. Knowledge Hub
-    const hubHtml = renderKnowledgeHub();
-    fs.writeFileSync(path.join(outDir, 'knowledge-hub.html'), hubHtml);
-    sitemaps.knowledge.push({ loc: '/knowledge-hub.html', lastmod: new Date().toISOString().split('T')[0], priority: '1.0' });
-
-    // Add Docs to search index with a priority boost
-    searchIndex.push({
-      slug: 'knowledge-hub',
-      url: '/knowledge-hub.html',
-      title: 'Docs: Open Source & Self-Hosting Hub',
-      lastmod: new Date().toISOString().split('T')[0],
-      category: 'Documentation',
-      description: 'The definitive master resource for decentralized infrastructure, privacy-first automation, and local AI stacks.',
-      isFeatured: true
-    });
-    imageUrls.push({ loc: '/knowledge-hub.html', img: '/og/knowledge-hub-og.svg', title: 'Docs' });
-
-    // 2. Tool Pages
-    let toolsCount = 0;
-    Object.values(toolsData).forEach(t => {
-      imageUrls.push({ loc: `/tools/${t.id}.html`, img: `/og/${t.id}-og.svg`, title: t.name });
-      fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t));
-
-      // Featured tools get the current build date to boost freshness signals
-      const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
-      sitemaps.tools.push({ loc: `/tools/${t.id}.html`, lastmod });
-
-      searchIndex.push({
-        slug: t.id,
-        title: t.name,
-        category: t.category,
-        lastmod: lastmod,
-        description: t.description.replace(/[#*`]/g, '').slice(0, 100),
-        isFeatured: featuredIds.has(t.id),
-        alternatives: t.alternatives || [],
-        install: t.install || ''
-      });
-      toolsCount++;
-    });
-
-    // 3. Category Pages
-    let catCount = 0;
-    Object.keys(categories).forEach(catId => {
-      imageUrls.push({ loc: `/category/${catId}.html`, img: `/og/${catId}-og.svg`, title: categories[catId].name });
-      fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId]));
-      sitemaps.categories.push({ loc: `/category/${catId}.html`, lastmod: new Date().toISOString().split('T')[0] });
-
-      // Index category hubs and apply priority boost for self-hosting guides
-      searchIndex.push({
-        slug: catId,
-        url: `/category/${catId}.html`,
-        title: `${categories[catId].name} Hub & Guides`,
-        lastmod: new Date().toISOString().split('T')[0],
-        category: 'Guides',
-        description: categories[catId].description,
-        isFeatured: catId === 'self-hosting'
-      });
-
-      catCount++;
-    });
-
-    // 4. Comparison Pages
-    let compCount = 0;
-
-    Object.keys(categories).forEach(catId => {
-      const catTools = Object.values(toolsData).filter(t => t.category === catId && t.stars > STARS_THRESHOLD);
-      for (let i = 0; i < catTools.length; i++) {
-        for (let j = i + 1; j < catTools.length; j++) {
-          const a = catTools[i].id;
-          const b = catTools[j].id;
-          const html = renderComparisonPage(a, b);
-          if (html) {
-            imageUrls.push({ loc: `/compare/${a}-vs-${b}.html`, img: `/og/${a}-vs-${b}-og.svg`, title: `${a} vs ${b}` });
-            fs.writeFileSync(path.join(compDir, `${a}-vs-${b}.html`), html);
-            sitemaps.comparisons.push({ loc: `/compare/${a}-vs-${b}.html`, lastmod: new Date().toISOString().split('T')[0] });
-            compCount++;
-          }
-        }
-      }
-    });
-
-    // 5. Search Index
-    let translationCache = {};
-    if (fs.existsSync(translationCacheFile)) {
-      try {
-        translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
-      } catch (e) {
-        console.warn('⚠️ Could not load translation-cache.json');
-      }
+  for (const lang of LANGUAGES) {
+    const langOutDir = lang === 'en' ? outDir : path.join(outDir, lang);
+    if (lang !== 'en' && !fs.existsSync(langOutDir)) {
+      fs.mkdirSync(langOutDir, { recursive: true });
+      fs.mkdirSync(path.join(langOutDir, 'tools'), { recursive: true });
+      fs.mkdirSync(path.join(langOutDir, 'category'), { recursive: true });
+      fs.mkdirSync(path.join(langOutDir, 'compare'), { recursive: true });
     }
 
-    for (const lang of LANGUAGES) {
-      if (lang === 'en') {
-        fs.writeFileSync(path.join(outDir, `search-index-en.json`), JSON.stringify(searchIndex));
-      } else {
-        console.log(`🌍 Localizing search index for: ${lang}...`);
-        const localizedIndex = [];
+    if (lang === 'en') {
+      fs.writeFileSync(path.join(outDir, `search-index-en.json`), JSON.stringify(searchIndex));
+    } else {
+      console.log(`🌍 Generating localized site for: ${lang}...`);
+      
+      // Localize Homepage
+      fs.writeFileSync(path.join(langOutDir, 'index.html'), renderHomepage(featuredTools, lang));
 
-        // Sequential processing to respect rate limits and handle cache safely
-        for (const item of searchIndex) {
-          const hash = crypto.createHash('md5').update(item.description).digest('hex');
-          const cacheKey = `${lang}:${hash}`;
+      // Localize Knowledge Hub
+      fs.writeFileSync(path.join(langOutDir, 'knowledge-hub.html'), renderKnowledgeHub(lang));
 
-          let translatedDesc;
-          if (translationCache[cacheKey]) {
-            translatedDesc = translationCache[cacheKey];
-          } else {
-            translatedDesc = await translateText(item.description, lang);
-            translationCache[cacheKey] = translatedDesc;
-            // Persist cache immediately to disk to prevent data loss on build failure
-            fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
-          }
-          localizedIndex.push({ ...item, description: translatedDesc });
-        }
-        fs.writeFileSync(path.join(outDir, `search-index-${lang}.json`), JSON.stringify(localizedIndex));
+      // Localize Tools
+      for (const t of Object.values(toolsData)) {
+        const localizedTool = await getLocalizedTool(t, lang, translationCache);
+        fs.writeFileSync(path.join(langOutDir, 'tools', `${t.id}.html`), renderToolPage(localizedTool, lang));
       }
-    }
-    fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
 
-    // 6. Sitemaps (Split for Scalable Indexing and Regional Targeting)
-    const writeSitemap = (urls, filename, langPrefix = '') => {
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+      // Localize Categories
+      for (const catId of Object.keys(categories)) {
+        const localizedCat = await getLocalizedCategory(categories[catId], lang, translationCache);
+        fs.writeFileSync(path.join(langOutDir, 'category', `${catId}.html`), renderCategoryPage(catId, localizedCat, lang));
+      }
+
+      // Localize Search Index
+      const localizedIndex = [];
+      const translationPromisesForIndex = searchIndex.map(item =>
+        getTranslated(item.description, lang, translationCache)
+      );
+      const translatedDescriptions = await Promise.all(translationPromisesForIndex);
+
+      for (let i = 0; i < searchIndex.length; i++) {
+        localizedIndex.push({ ...searchIndex[i], description: translatedDescriptions[i] });
+      }
+      fs.writeFileSync(path.join(outDir, `search-index-${lang}.json`), JSON.stringify(localizedIndex));
+    }
+  }
+  fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
+
+  // 6. Sitemaps
+  const writeSitemap = (urls, filename, langPrefix = '') => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.map(u => `  <url>
     <loc>${SITE_URL}${langPrefix ? `/${langPrefix}` : ''}${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
 ${u.priority ? `    <priority>${u.priority}</priority>\n` : ''}${LANGUAGES.map(lang => {
-        const lp = lang === 'en' ? '' : `/${lang}`;
-        return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}${lp}${u.loc}" />`;
-      }).join('\n')}
+      const lp = lang === 'en' ? '' : `/${lang}`;
+      return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}${lp}${u.loc}" />`;
+    }).join('\n')}
   </url>`).join('\n')}
 </urlset>`;
-      fs.writeFileSync(path.join(outDir, filename), xml);
-    };
+    fs.writeFileSync(path.join(outDir, filename), xml);
+  };
 
-    const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
+  writeSitemap(sitemaps.core, 'sitemap-core.xml');
+  writeSitemap(sitemaps.knowledge, 'sitemap-knowledge.xml');
+  writeSitemap(sitemaps.tools, 'sitemap-tools.xml');
+  writeSitemap(sitemaps.categories, 'sitemap-categories.xml');
+  writeSitemap(sitemaps.comparisons, 'sitemap-comparisons.xml');
+  writeSitemap(allSitemapUrls, 'sitemap.xml');
 
-    writeSitemap(sitemaps.core, 'sitemap-core.xml');
-    writeSitemap(sitemaps.knowledge, 'sitemap-knowledge.xml');
-    writeSitemap(sitemaps.tools, 'sitemap-tools.xml');
-    writeSitemap(sitemaps.categories, 'sitemap-categories.xml');
-    writeSitemap(sitemaps.comparisons, 'sitemap-comparisons.xml');
-    // Legacy fallback
-    writeSitemap(totalUrls, 'sitemap.xml');
-
-    // 6b. Image Sitemap
-    const imgXml = `<?xml version="1.0" encoding="UTF-8"?>
+  // 6b. Image Sitemap
+  const imgXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${imageUrls.map(item => `  <url>
     <loc>${SITE_URL}${item.loc}</loc>
@@ -1020,26 +1013,27 @@ ${imageUrls.map(item => `  <url>
     </image:image>
   </url>`).join('\n')}
 </urlset>`;
-    fs.writeFileSync(path.join(outDir, 'sitemap-images.xml'), imgXml);
+  fs.writeFileSync(path.join(outDir, 'sitemap-images.xml'), imgXml);
 
-    // 6e. Multilingual Sitemaps (Regional targeting for Indian developer market)
-    LANGUAGES.filter(l => l !== 'en').forEach(lang => {
-      writeSitemap(totalUrls, `sitemap-${lang}.xml`, lang);
-    });
+  // 6e. Multilingual Sitemaps (Regional targeting for Indian developer market)
+  LANGUAGES.filter(l => l !== 'en').forEach(lang => {
+    // For multilingual sitemaps, we need to pass all URLs, not just a subset.
+    writeSitemap(allSitemapUrls, `sitemap-${lang}.xml`, lang);
+  });
 
-    // 6f. Blog, Features, News Fallbacks (Copy static or generate placeholder)
-    ['blog', 'features', 'news'].forEach(type => {
-      const filename = `sitemap-${type}.xml`;
-      const sourcePath = path.join(__dirname, filename);
-      if (fs.existsSync(sourcePath)) {
-        fs.copyFileSync(sourcePath, path.join(outDir, filename));
-      } else {
-        writeSitemap([], filename);
-      }
-    });
+  // 6f. Blog, Features, News Fallbacks (Copy static or generate placeholder)
+  ['blog', 'features', 'news'].forEach(type => {
+    const filename = `sitemap-${type}.xml`;
+    const sourcePath = path.join(__dirname, filename);
+    if (fs.existsSync(sourcePath)) {
+      fs.copyFileSync(sourcePath, path.join(outDir, filename));
+    } else {
+      writeSitemap([], filename);
+    }
+  });
 
-    // 6c. Sitemap Index (The Master Link for GSC)
-    const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+  // 6c. Sitemap Index (The Master Link for GSC)
+  const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap><loc>${SITE_URL}/sitemap-core.xml</loc></sitemap>
   <sitemap><loc>${SITE_URL}/sitemap-categories.xml</loc></sitemap>
@@ -1053,10 +1047,10 @@ ${imageUrls.map(item => `  <url>
   ${LANGUAGES.filter(l => l !== 'en').map(l => `<sitemap><loc>${SITE_URL}/sitemap-${l}.xml</loc></sitemap>`).join('\n  ')}
   <sitemap><loc>${SITE_URL}/sitemap.xml</loc></sitemap>
 </sitemapindex>`;
-    fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), sitemapIndex);
+  fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), sitemapIndex);
 
-    // 6d. Expert Robots.txt Integration (Preventing Regression)
-    const expertRobots = `# ============================================================
+  // 6d. Expert Robots.txt Integration (Preventing Regression)
+  const expertRobots = `# ============================================================
 # freemium.services — robots.txt (Programmatically Generated)
 # Strategy  : Maximum crawlability for ALL bots
 # ============================================================
@@ -1122,32 +1116,31 @@ Sitemap: ${SITE_URL}/sitemap-ml.xml
 Sitemap: ${SITE_URL}/sitemap.xml
 
 Host: freemium.services`;
-    fs.writeFileSync(path.join(outDir, 'robots.txt'), expertRobots);
+  fs.writeFileSync(path.join(outDir, 'robots.txt'), expertRobots);
 
-    // 7. Performance Budget Check
-    const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
-    const totalPages = totalUrls.length;
-    if (totalPages > 5000) {
-      console.warn(`\x1b[33m⚠️ Warning: Total pages (${totalPages}) approaching crawl budget limits.\x1b[0m`);
-    }
-
-    totalUrls.forEach(u => {
-      const filePath = path.join(outDir, u.loc.replace(/^\//, ''));
-      if (fs.existsSync(filePath) && fs.statSync(filePath).size > (MAX_PAGE_SIZE_KB * 1024)) {
-        console.warn(`\x1b[33m⚠️ Performance Alert: ${u.loc} exceeds ${MAX_PAGE_SIZE_KB}KB. Check content depth.\x1b[0m`);
-      }
-    });
-
-    // 7. Build Report Metrics
-    const buildReport = {
-      tools: toolsCount, categories: catCount, comparisonPages: compCount,
-      localizedPages: totalPages * LANGUAGES.length,
-      generatedAt: new Date().toISOString()
-    };
-    fs.writeFileSync(path.join(outDir, 'build-report.json'), JSON.stringify(buildReport, null, 2));
-
-    console.log('✅ Build Complete: 50+ Future-Proof Features Integrated.');
-    console.log(`📊 Report generated at: public/build-report.json`);
+  // 7. Performance Budget Check
+  const totalPages = allSitemapUrls.length;
+  if (totalPages > 5000) {
+    console.warn(`\x1b[33m⚠️ Warning: Total pages (${totalPages}) approaching crawl budget limits.\x1b[0m`);
   }
 
-  build().catch(err => { console.error('❌ Build failed:', err); process.exit(1); });
+  allSitemapUrls.forEach(u => {
+    const filePath = path.join(outDir, u.loc.replace(/^\//, ''));
+    if (fs.existsSync(filePath) && fs.statSync(filePath).size > (MAX_PAGE_SIZE_KB * 1024)) {
+      console.warn(`\x1b[33m⚠️ Performance Alert: ${u.loc} exceeds ${MAX_PAGE_SIZE_KB}KB. Check content depth.\x1b[0m`);
+    }
+  });
+
+  // 7. Build Report Metrics
+  const buildReport = {
+    tools: toolsCount, categories: catCount, comparisonPages: compCount,
+    localizedPages: totalPages * LANGUAGES.length,
+    generatedAt: new Date().toISOString()
+  };
+  fs.writeFileSync(path.join(outDir, 'build-report.json'), JSON.stringify(buildReport, null, 2));
+
+  console.log('✅ Build Complete: 50+ Future-Proof Features Integrated.');
+  console.log(`📊 Report generated at: public/build-report.json`);
+}
+
+build().catch(err => { console.error('❌ Build failed:', err); process.exit(1); });

@@ -9,7 +9,7 @@ We welcome contributions to the directory! Whether you're adding a new open-sour
 
 **Requirements for Tool Acceptance:**
 - Must be Open Source (MIT, Apache, AGPL, etc.) OR offer a highly generous Freemium tier that does not vendor-lock data.
-- The `description` field **must** be at least 800 words long to satisfy our SEO depth requirements. It should cover what the tool is, why developers use it in 2026, and its architectural benefits.
+- The `description` field **must** be at least 2000 words long to satisfy our SEO depth requirements. It should cover what the tool is, why developers use it in 2026, and its architectural benefits.
 - Include a working `install` snippet (preferably a Docker command or `docker-compose` equivalent).
 - Include an array of at least 3 `features`.
 - Include an array of at least 2 `faq` items.
