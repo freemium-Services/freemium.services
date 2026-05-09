@@ -20,3 +20,4 @@ final_deploy_v2.log
 site_build.log
 
 # Temporary files
+temp/
