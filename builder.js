@@ -134,7 +134,11 @@ try {
 
 // --- Helpers ---
 function generateHreflangTags(pagePath) {
-  return LANGUAGES.map(lang => `<link rel="alternate" hreflang="${lang}" href="${SITE_URL}/${lang}${pagePath}">`).join('\n  ');
+  return LANGUAGES.map(lang => {
+    // The 'en' version is hosted at root, others in subdirectories
+    const langPath = lang === 'en' ? pagePath : `/${lang}${pagePath}`;
+    return `<link rel="alternate" hreflang="${lang}" href="${SITE_URL}${langPath}">`;
+  }).join('\n  ');
 }
 
 function getBreadcrumbSchema(items) {
@@ -804,7 +808,10 @@ async function build() {
 ${urls.map(u => `  <url>
     <loc>${SITE_URL}${langPrefix ? `/${langPrefix}` : ''}${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
-${u.priority ? `    <priority>${u.priority}</priority>\n` : ''}${LANGUAGES.map(lang => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}/${lang}${u.loc}" />`).join('\n')}
+${u.priority ? `    <priority>${u.priority}</priority>\n` : ''}${LANGUAGES.map(lang => {
+      const lp = lang === 'en' ? '' : `/${lang}`;
+      return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}${lp}${u.loc}" />`;
+    }).join('\n')}
   </url>`).join('\n')}
 </urlset>`;
     fs.writeFileSync(path.join(outDir, filename), xml);
