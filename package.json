@@ -10,7 +10,8 @@
     "verify:sitemaps": "node scripts/verify-sitemaps.js"
   },
   "dependencies": {
-    "marked": "^12.0.0"
+    "marked": "^12.0.0",
+    "workflow": "^4.2.4"
   },
   "engines": {
     "node": ">=18.0.0"
