@@ -845,7 +845,7 @@ async function build() {
   const featuredIds = new Set(featuredTools.map(t => t.id));
 
   // 1. Homepage
-  fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools));
+  fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools, 'en'));
   imageUrls.push({ loc: '/', img: '/og/home-og.svg', title: 'Freemium Services - Home' });
   sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
 
@@ -979,8 +979,12 @@ async function build() {
     }
   }
 
-  // Save updated cache to avoid re-translating on next build
-  fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
+  // Save updated cache to avoid re-translating on next build (Optional for CI/CD environments)
+  try {
+    fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
+  } catch (e) {
+    console.warn('⚠️ Could not save translation-cache.json (This is expected in some CI environments)');
+  }
   fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
 
   // 6. Sitemaps
