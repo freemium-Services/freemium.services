@@ -1,0 +1,20 @@
+.vercel
+.env*.local
+.codebuddy
+node_modules/
+
+# Build artifacts
+build/
+public/
+
+# Log files
+*.log
+alias.log
+alias_v2.log
+build.log
+deploy.log
+deploy_v2.log
+domains.log
+final_deploy.log
+final_deploy_v2.log
+site_build.log

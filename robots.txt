@@ -1,0 +1,521 @@
+# ============================================================
+# freemium.services — robots.txt
+# ============================================================
+# Strategy  : Maximum crawlability for ALL bots
+# Updated   : 2026-04-10
+# Coverage  : Search engines + AI crawlers + Social media bots
+# Sitemaps  : 12 sitemap files via sitemap index
+# Standards : robots.txt (robotstxt.org) + Google best practices
+# ============================================================
+
+# ────────────────────────────────────────────────────────────
+# SECTION 1 — GLOBAL DEFAULT
+# Allow everything. Be explicit below for blocked paths only.
+# ────────────────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# ────────────────────────────────────────────────────────────
+# SECTION 2 — GOOGLE BOTS (No crawl-delay — trust Google)
+# Googlebot         : Main web crawler
+# Googlebot-Image   : Image search indexer
+# Googlebot-Video   : Video search indexer
+# Googlebot-News    : Google News crawler
+# Google-Read-Aloud : Voice search / Assistant
+# APIs-Google       : Google APIs crawler
+# AdsBot-Google     : Google Ads quality check
+# Storebot-Google   : Google Shopping
+# Google-InspectionTool : Manual URL inspection
+# ────────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /img/
+Allow: /tools/
+Allow: /ai-tools/
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-News
+Allow: /blog/
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Video
+Allow: /
+Crawl-delay: 0
+
+User-agent: Google-Read-Aloud
+Allow: /
+Crawl-delay: 0
+
+User-agent: APIs-Google
+Allow: /
+Crawl-delay: 0
+
+User-agent: AdsBot-Google
+Allow: /
+Crawl-delay: 0
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+Crawl-delay: 0
+
+User-agent: Storebot-Google
+Allow: /
+Crawl-delay: 0
+
+User-agent: Google-InspectionTool
+Allow: /
+Crawl-delay: 0
+
+User-agent: GoogleOther
+Allow: /
+Crawl-delay: 0
+
+User-agent: Google-Extended
+Allow: /
+# Google-Extended: AI training crawler for Gemini/Vertex AI
+# Explicitly ALLOWING to be indexed in AI search results
+
+# ────────────────────────────────────────────────────────────
+# SECTION 3 — BING / MICROSOFT BOTS
+# Bingbot           : Main Bing web crawler
+# MSNBot            : Legacy Microsoft crawler
+# MSNBot-Media      : Bing image/video crawler
+# AdIdxBot          : Bing Ads quality crawler
+# BingPreview       : Rich snippet previewer
+# ────────────────────────────────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: MSNBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: MSNBot-Media
+Allow: /
+Crawl-delay: 1
+
+User-agent: AdIdxBot
+Allow: /
+Crawl-delay: 0
+
+User-agent: BingPreview
+Allow: /
+Crawl-delay: 0
+
+User-agent: msnbot
+Allow: /
+Crawl-delay: 1
+
+# ────────────────────────────────────────────────────────────
+# SECTION 4 — AI LANGUAGE MODEL CRAWLERS
+# These crawlers feed AI training datasets and RAG systems.
+# Explicitly ALLOWED for maximum AI visibility.
+#
+# GPTBot            : OpenAI ChatGPT training data
+# ChatGPT-User      : ChatGPT real-time browsing
+# OAI-SearchBot     : OpenAI search indexer
+# ClaudeBot         : Anthropic Claude training
+# Claude-Web        : Anthropic real-time web access
+# anthropic-ai      : Anthropic general crawler
+# PerplexityBot     : Perplexity AI search
+# YouBot            : You.com AI search engine
+# cohere-ai         : Cohere LLM training data
+# Omgilibot         : Data crawl for AI/ML datasets
+# Diffbot           : AI-powered structured data
+# CCBot             : Common Crawl (AI training base)
+# Bytespider        : ByteDance / TikTok AI crawler
+# PetalBot          : Huawei Petal Search
+# Meta-ExternalAgent: Meta AI Llama crawlers
+# FacebookBot       : Meta AI / Llama
+# Applebot          : Apple Intelligence / Siri
+# applebot-extended : Apple AI model training
+# ────────────────────────────────────────────────────────────
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 0
+
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 0
+
+User-agent: OAI-SearchBot
+Allow: /
+Crawl-delay: 0
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Claude-Web
+Allow: /
+Crawl-delay: 0
+
+User-agent: anthropic-ai
+Allow: /
+Crawl-delay: 0
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 0
+
+# You.com
+User-agent: YouBot
+Allow: /
+Crawl-delay: 1
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+Crawl-delay: 1
+
+# Meta AI / LLaMA
+User-agent: FacebookBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Crawl-delay: 1
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+Crawl-delay: 1
+
+# Apple Intelligence / Siri
+User-agent: Applebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Applebot-Extended
+Allow: /
+# applebot-extended: Used for Apple Intelligence model training
+# Explicitly ALLOWING to appear in Apple Intelligence results
+
+# ByteDance / TikTok
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 2
+
+# Huawei Petal Search
+User-agent: PetalBot
+Allow: /
+Crawl-delay: 2
+
+# Diffbot (structured AI data extraction)
+User-agent: Diffbot
+Allow: /
+Crawl-delay: 1
+
+# Common Crawl (base training data for GPT, Claude, Llama)
+User-agent: CCBot
+Allow: /
+Crawl-delay: 1
+
+# Omgili / Webz.io AI training data
+User-agent: omgili
+Allow: /
+Crawl-delay: 2
+
+User-agent: omgilibot
+Allow: /
+Crawl-delay: 2
+
+# Amazon AI
+User-agent: Amazonbot
+Allow: /
+Crawl-delay: 1
+
+# Timpibot (European search/AI)
+User-agent: Timpibot
+Allow: /
+Crawl-delay: 2
+
+# Img2Dataset (AI vision training)
+User-agent: img2dataset
+Allow: /img/
+Crawl-delay: 3
+
+# DataForSEO (SEO API, also feeds AI tools)
+User-agent: DataForSeoBot
+Allow: /
+Crawl-delay: 2
+
+# Exa AI (semantic search / Exa.ai)
+User-agent: ExaBot
+Allow: /
+Crawl-delay: 1
+
+# Brave Search AI
+User-agent: BraveBot
+Allow: /
+Crawl-delay: 0
+
+# Mistral AI crawler
+User-agent: MistralBot
+Allow: /
+Crawl-delay: 1
+
+# Grok / xAI (Twitter/X)
+User-agent: xai-grok
+Allow: /
+Crawl-delay: 1
+
+# ────────────────────────────────────────────────────────────
+# SECTION 5 — OTHER MAJOR SEARCH ENGINES
+# ────────────────────────────────────────────────────────────
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexImages
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexNews
+Allow: /blog/
+Crawl-delay: 2
+
+User-agent: YandexMobileBot
+Allow: /
+Crawl-delay: 2
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider-image
+Allow: /
+Crawl-delay: 3
+
+User-agent: Baiduspider-news
+Allow: /blog/
+Crawl-delay: 3
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckGo-Favicons-Bot
+Allow: /
+Crawl-delay: 2
+
+# Ecosia (green search engine)
+User-agent: Ecosiabot
+Allow: /
+Crawl-delay: 2
+
+# Sogou (China)
+User-agent: Sogou
+Allow: /
+Crawl-delay: 3
+
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 3
+
+# Naver (South Korea)
+User-agent: Yeti
+Allow: /
+Crawl-delay: 2
+
+# Seznam (Czech)
+User-agent: SeznamBot
+Allow: /
+Crawl-delay: 2
+
+# Archive.org (Wayback Machine)
+User-agent: ia_archiver
+Allow: /
+Crawl-delay: 5
+
+# ────────────────────────────────────────────────────────────
+# SECTION 6 — SOCIAL MEDIA & RICH PREVIEW BOTS
+# Allow all for maximum rich link previews (OG, cards)
+# ────────────────────────────────────────────────────────────
+
+# Twitter / X
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 1
+
+# LinkedIn
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 1
+
+# Slack
+User-agent: Slackbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+Crawl-delay: 1
+
+# Discord
+User-agent: Discordbot
+Allow: /
+Crawl-delay: 1
+
+# Telegram
+User-agent: TelegramBot
+Allow: /
+Crawl-delay: 1
+
+# WhatsApp
+User-agent: WhatsApp
+Allow: /
+Crawl-delay: 2
+
+# Facebook / Meta
+User-agent: facebot
+Allow: /
+Crawl-delay: 2
+
+# Pinterest
+User-agent: Pinterest
+Allow: /
+Crawl-delay: 2
+
+# Mastodon
+User-agent: Mastodon
+Allow: /
+Crawl-delay: 2
+
+# ────────────────────────────────────────────────────────────
+# SECTION 7 — SEO TOOLS & AUDIT BOTS
+# Allow all major SEO tools for backlink tracking, audits
+# ────────────────────────────────────────────────────────────
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: MJ12bot
+Allow: /
+Crawl-delay: 3
+
+User-agent: DotBot
+Allow: /
+Crawl-delay: 3
+
+User-agent: BLEXBot
+Allow: /
+Crawl-delay: 3
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+Crawl-delay: 2
+
+User-agent: rogerbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: SiteAuditBot
+Allow: /
+Crawl-delay: 2
+
+# ────────────────────────────────────────────────────────────
+# SECTION 8 — INDEXNOW (AUTO-INDEXING PROTOCOL)
+# Note: IndexNow key should be placed at /indexnow-key.txt
+# Supported by: Bing, Yandex, Naver, Seznam, Sogou
+# Endpoint: https://api.indexnow.org/indexnow
+# ────────────────────────────────────────────────────────────
+# IndexNow-Key: YOUR_32_CHAR_INDEXNOW_KEY_HERE
+# File: /YOUR_32_CHAR_INDEXNOW_KEY_HERE.txt (content = same key)
+
+# ────────────────────────────────────────────────────────────
+# SECTION 9 — BLOCKED PATHS
+# Admin, auth, API internals, and duplicate content
+# ────────────────────────────────────────────────────────────
+User-agent: *
+Disallow: /admin/
+Disallow: /api/private/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /cdn-cgi/
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /*?ref=*
+Disallow: /*?utm_source=*
+Disallow: /*?utm_medium=*
+Disallow: /*?utm_campaign=*
+Disallow: /*?session=*
+Disallow: /*?token=*
+Disallow: /*&print=*
+Disallow: /search/?s=
+Disallow: /404/
+Disallow: /500/
+
+# ────────────────────────────────────────────────────────────
+# SECTION 10 — SITEMAP DECLARATIONS
+# All 12 sitemap files registered here for maximum coverage
+# ────────────────────────────────────────────────────────────
+
+# Master Sitemap Index (submit THIS to GSC + Bing)
+Sitemap: https://freemium.services/sitemap-index.xml
+
+# Individual sitemaps (direct fallback for engines that don't parse indexes)
+Sitemap: https://freemium.services/sitemap-core.xml
+Sitemap: https://freemium.services/sitemap-categories.xml
+Sitemap: https://freemium.services/sitemap-tools.xml
+Sitemap: https://freemium.services/sitemap-knowledge.xml
+Sitemap: https://freemium.services/sitemap-comparisons.xml
+Sitemap: https://freemium.services/sitemap-blog.xml
+Sitemap: https://freemium.services/sitemap-features.xml
+Sitemap: https://freemium.services/sitemap-news.xml
+Sitemap: https://freemium.services/sitemap-images.xml
+Sitemap: https://freemium.services/sitemap-hi.xml
+Sitemap: https://freemium.services/sitemap-ta.xml
+Sitemap: https://freemium.services/sitemap-ml.xml
+
+# ────────────────────────────────────────────────────────────
+# SECTION 11 — CRAWL HOST DECLARATIONS
+# Helps Yandex understand canonical host
+# ────────────────────────────────────────────────────────────
+Host: freemium.services
+
+# ────────────────────────────────────────────────────────────
+# SECTION 12 — INDEXNOW PING COMMANDS
+# Run these after any page update to trigger instant indexing:
+#
+# Google:
+# curl "https://www.google.com/ping?sitemap=https://freemium.services/sitemap-index.xml"
+#
+# Bing + Yandex via IndexNow:
+# curl -X POST "https://api.indexnow.org/indexnow" \
+#   -H "Content-Type: application/json" \
+#   -d '{"host":"freemium.services","key":"YOUR_KEY","urlList":["https://freemium.services/NEW_PAGE/"]}'
+#
+# Bing direct:
+# curl "https://www.bing.com/ping?sitemap=https://freemium.services/sitemap-index.xml"
+#
+# Yandex direct:
+# curl "https://www.yandex.com/ping?sitemap=https://freemium.services/sitemap-index.xml"
+#
+# Baidu (requires verification):
+# http://data.zz.baidu.com/urls?site=freemium.services&token=YOUR_TOKEN
+# ────────────────────────────────────────────────────────────

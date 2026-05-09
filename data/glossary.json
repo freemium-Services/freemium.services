@@ -1,0 +1,47 @@
+{
+  "docker": {
+    "term": "Docker",
+    "def": "An open-source platform that automates the deployment, scaling, and management of applications using containerization.",
+    "related": [
+      "Self-Hosting",
+      "Kubernetes",
+      "Containerization"
+    ]
+  },
+  "rag": {
+    "term": "RAG",
+    "def": "Retrieval-Augmented Generation (RAG) is a technique that grants LLMs access to real-time, external data sources to improve factual accuracy.",
+    "related": [
+      "LLM",
+      "Vector Database",
+      "Embeddings"
+    ]
+  },
+  "depin": {
+    "term": "DePIN",
+    "def": "Decentralized Physical Infrastructure Networks (DePIN) use blockchain and token incentives to build and maintain real-world hardware networks.",
+    "related": [
+      "TurboQuant",
+      "Edge Compute",
+      "Decentralization"
+    ]
+  },
+  "llm": {
+    "term": "LLM",
+    "def": "Large Language Models are AI systems trained on massive datasets to understand, generate, and manipulate human language.",
+    "related": [
+      "Ollama",
+      "Generative AI",
+      "RAG"
+    ]
+  },
+  "saas": {
+    "term": "SaaS",
+    "def": "Software as a Service is a software licensing and delivery model in which software is licensed on a subscription basis and is centrally hosted.",
+    "related": [
+      "Freemium",
+      "Self-Hosting",
+      "Vendor Lock-in"
+    ]
+  }
+}

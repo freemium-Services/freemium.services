@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- freemium.services — MALAYALAM SITEMAP (/ml/) -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://freemium.services/ml/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.88</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ml/ai-tools/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/ai-tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ai-tools/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ml/self-hosting/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/self-hosting/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/self-hosting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/self-hosting/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ml/tools/n8n/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/n8n/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/tools/n8n/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/n8n/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ml/tools/ollama/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/tools/ollama/"/>
+    <xhtml:link rel="alternate" hreflang="ml"        href="https://freemium.services/ml/tools/ollama/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/tools/ollama/"/>
+  </url>
+
+</urlset>

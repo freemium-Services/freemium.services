@@ -1,0 +1,186 @@
+{
+  "n8n": {
+    "id": "n8n",
+    "name": "n8n - Open Source Workflow Automation",
+    "category": "automation-tools",
+    "emoji": "🔄",
+    "license": "Fair-code (Apache 2.0)",
+    "stars": 42000,
+    "description": "n8n is a powerful, self-hostable workflow automation platform that serves as a direct alternative to Zapier and Make. It allows developers to interconnect APIs, databases, and LLM services without paying per-task execution fees. In 2026, it is the standard for building enterprise-grade, data-sovereign automation logic. Unlike traditional SaaS automation tools, n8n provides a 'fair-code' model that allows free self-hosting for internal usage with unlimited workflows and executions. The platform offers a visual node-based editor that appeals to both technical engineers and operational teams, featuring over 400 native integrations ranging from Stripe and Salesforce to deep OpenAI and local Ollama integrations. Its advanced AI features include built-in agentic nodes, memory management, and RAG capabilities, allowing you to visually construct LangChain-style applications with zero code. By self-hosting n8n on Docker or via Kubernetes, businesses can eliminate tens of thousands of dollars in annual integration costs while keeping all proprietary data completely isolated within their own networks.",
+    "install": "docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n",
+    "features": [
+      "400+ native integrations with modern SaaS and databases",
+      "Built-in AI agent and LangChain integration nodes",
+      "Unlimited executions and workflows when self-hosted",
+      "Code nodes for custom JavaScript and Python logic",
+      "Visual debugging and execution history tracking"
+    ],
+    "alternatives": ["activepieces", "windmill", "pipedream"],
+    "faq": [
+      {"q": "Can n8n run completely offline?", "a": "Yes. As long as you provide it with the necessary internal network access, n8n does not require an active internet connection to run, making it ideal for highly secure enterprise environments."},
+      {"q": "How many concurrent executions can n8n handle?", "a": "When deployed using its queue mode with Redis and PostgreSQL, n8n can scale horizontally to handle thousands of concurrent executions per second, comparable to enterprise iPaaS solutions."}
+    ],
+    "ogImage": "/og/n8n.png"
+  },
+  "ollama": {
+    "id": "ollama",
+    "name": "Ollama - Run Local LLMs",
+    "category": "ai-tools",
+    "emoji": "🦙",
+    "license": "MIT",
+    "stars": 94000,
+    "description": "Ollama is a lightweight, extensible framework for running, managing, and interacting with large language models locally on your own hardware. By abstracting the complex CUDA, Metal, and ROCm dependencies, Ollama allows developers to pull and run models like Llama 3, Mistral, Gemma, and DeepSeek in seconds with a single CLI command. It has become the de facto standard for private AI inference in 2026, replacing reliance on closed OpenAI APIs for sensitive data tasks. Ollama automatically optimizes model execution for your specific hardware, utilizing GPU acceleration on Macs (Apple Silicon), NVIDIA, and AMD cards, while falling back to CPU execution when necessary. It provides an OpenAI-compatible REST API, meaning existing applications built around ChatGPT can be instantly redirected to use local, private models by simply changing the base URL. For developers building RAG systems or agentic workflows, Ollama offers a free, high-performance inference engine that completely eliminates API costs and data privacy concerns.",
+    "install": "curl -fsSL https://ollama.com/install.sh | sh && ollama run llama3",
+    "features": [
+      "One-command installation and model pulling",
+      "OpenAI-compatible REST API server built-in",
+      "Automatic hardware acceleration (CUDA, Metal, ROCm)",
+      "Support for custom Modelfiles to tune behavior",
+      "Cross-platform support (macOS, Windows, Linux)"
+    ],
+    "alternatives": ["open-webui", "lmstudio", "vllm"],
+    "faq": [
+      {"q": "What hardware do I need to run Ollama smoothly?", "a": "A standard 8B parameter model (like Llama 3 8B) requires around 8GB of unified memory or VRAM to run quickly. 16GB is recommended for context-heavy RAG workloads, and 32GB+ for running larger 30B+ models."},
+      {"q": "Is Ollama suitable for production deployments?", "a": "Yes, while originally built for local dev, Ollama's API can be containerized and scaled behind a load balancer for production inference. However, for extreme high-throughput enterprise use, specialized inference engines like vLLM might be preferred."}
+    ],
+    "ogImage": "/og/ollama.png"
+  },
+  "dify": {
+    "id": "dify",
+    "name": "Dify - Open Source LLM Platform",
+    "category": "ai-tools",
+    "emoji": "🌊",
+    "license": "Apache 2.0",
+    "stars": 52000,
+    "description": "Dify is a comprehensive, open-source LLM application development platform that combines AI workflow orchestration, RAG pipelines, and agent capabilities into a cohesive visual interface. It serves as a self-hostable alternative to platforms like Coze or LangSmith. In 2026, Dify is widely adopted by engineering teams that need to deploy production-ready AI applications rapidly without getting bogged down in boilerplate code. The platform seamlessly connects to hundreds of LLMs—both cloud providers like Anthropic and OpenAI, and local models via Ollama. It offers an advanced Prompt IDE, sophisticated RAG engine with built-in vector store support (Qdrant, Milvus, Weaviate), and a flexible visual builder for multi-step agentic workflows. By self-hosting Dify via Docker Compose, organizations can provide their teams with a powerful internal AI toolset while ensuring that proprietary documents uploaded for retrieval never leave the corporate firewall.",
+    "install": "git clone https://github.com/langgenius/dify.git && cd dify/docker && docker-compose up -d",
+    "features": [
+      "Visual orchestration of complex LLM applications",
+      "Enterprise-grade RAG engine with document parsing",
+      "Support for 100+ commercial and local LLMs",
+      "Built-in API generation and frontend deployment",
+      "Detailed observability, logging, and token usage tracking"
+    ],
+    "alternatives": ["langflow", "flowise", "anythingllm"],
+    "faq": [
+      {"q": "Does Dify include a vector database?", "a": "Yes, the standard Docker Compose installation includes Weaviate or Qdrant by default for immediate out-of-the-box RAG capabilities, though you can easily configure it to use an external vector database."},
+      {"q": "Can I use Dify to build internal tools for my company?", "a": "Absolutely. Dify allows you to quickly publish AI applications as standalone web apps or integrate them into your existing infrastructure via its automatically generated REST APIs."}
+    ],
+    "ogImage": "/og/dify.png"
+  },
+  "langflow": {
+    "id": "langflow",
+    "name": "Langflow - Visual RAG & Agent Builder",
+    "category": "rag-tools",
+    "emoji": "🔗",
+    "license": "MIT",
+    "stars": 38000,
+    "description": "Langflow is a highly customizable, drag-and-drop visual builder for creating advanced LLM applications, RAG pipelines, and autonomous agents. Built natively on top of the popular LangChain framework, it democratizes AI development by allowing both technical and non-technical users to quickly prototype and deploy complex generative AI workflows. In the 2026 ecosystem, Langflow excels in its modularity and immediate feedback loop. Users can drag components—such as LLMs, vector stores, text splitters, and custom API tools—onto a canvas, connect them, and test the pipeline instantly via an integrated chat interface. Once the workflow is perfected, it can be exported as a JSON configuration or immediately accessed via Langflow's REST API, bridging the gap between no-code prototyping and production-grade deployment. Its MIT license and simple Docker deployment make it an essential tool for self-hosted AI labs.",
+    "install": "pip install langflow && langflow run",
+    "features": [
+      "Intuitive drag-and-drop LangChain component builder",
+      "Real-time testing and debugging of AI workflows",
+      "One-click export to REST API endpoints",
+      "Native integration with local LLMs and vector databases",
+      "Custom Python component creation for advanced logic"
+    ],
+    "alternatives": ["dify", "flowise", "n8n"],
+    "faq": [
+      {"q": "Is Langflow only for prototyping?", "a": "No, while excellent for prototyping, Langflow is increasingly used in production. Workflows can be deployed via its API, and it supports robust error handling and custom Python nodes for complex, stable logic."},
+      {"q": "Can I use Langflow completely offline?", "a": "Yes, by configuring Langflow to use local embeddings (like HuggingFace) and local LLMs (via Ollama or Llama.cpp), your entire visual workflow will run without internet access."}
+    ],
+    "ogImage": "/og/langflow.png"
+  },
+  "open-webui": {
+    "id": "open-webui",
+    "name": "Open WebUI - Self-Hosted AI Interface",
+    "category": "assistants",
+    "emoji": "💬",
+    "license": "MIT",
+    "stars": 52000,
+    "description": "Open WebUI is a highly feature-rich, self-hosted frontend interface originally built for Ollama, but now supporting all OpenAI-compatible APIs. It provides a polished, ChatGPT-like experience with massive extensions tailored for privacy-first AI deployments. In 2026, it is the premier choice for organizations replacing commercial SaaS AI subscriptions with self-hosted alternatives. Open WebUI goes far beyond simple chat; it includes built-in multi-modal capabilities (vision, audio generation), document uploading for seamless local RAG, web search integration, and multi-model concurrent querying. It features a robust role-based access control (RBAC) system, making it perfect for deploying across a company where different departments need access to different models or knowledge bases. With its offline-first architecture, beautiful responsive design, and MIT license, Open WebUI brings enterprise-grade AI interactions entirely under your control.",
+    "install": "docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=http://host.docker.internal:11434 -v open-webui:/app/backend/data ghcr.io/open-webui/open-webui:main",
+    "features": [
+      "Polished, responsive ChatGPT-style interface",
+      "Native local RAG support with document uploading",
+      "Multi-modal support (images, speech-to-text, TTS)",
+      "Role-based access control and multi-user support",
+      "Web search integration and custom tool/plugin execution"
+    ],
+    "alternatives": ["librechat", "anythingllm", "lobechat"],
+    "faq": [
+      {"q": "Can Open WebUI connect to cloud APIs as well?", "a": "Yes, while optimized for Ollama, Open WebUI natively supports any OpenAI-compatible API, allowing you to use Claude, ChatGPT, or Groq alongside your local models."},
+      {"q": "How does the document upload (RAG) work securely?", "a": "Open WebUI uses local embedding models to process and store your documents within its own local vector database. None of the document data is sent externally unless you are specifically using a cloud LLM."}
+    ],
+    "ogImage": "/og/open-webui.png"
+  },
+  "activepieces": {
+    "id": "activepieces",
+    "name": "Activepieces - Open Source No-Code",
+    "category": "automation-tools",
+    "emoji": "🧩",
+    "license": "MIT",
+    "stars": 118000,
+    "description": "Activepieces is an MIT-licensed, open-source business automation tool designed as a direct, user-friendly alternative to Zapier. Written in TypeScript, it offers a remarkably clean and modern interface that empowers non-technical users to build complex workflows while providing developers the flexibility to write custom code pieces when needed. In the 2026 self-hosting landscape, Activepieces stands out for its high performance, ease of use, and permissive MIT licensing, which makes it highly attractive for embedding into other SaaS applications. It boasts hundreds of pre-built 'pieces' (integrations) for popular apps and natively supports AI components. Its self-hosted version unlocks unlimited tasks, eliminating the prohibitive pricing tiers of cloud automation platforms. Activepieces represents the perfect middle ground: intuitive enough for marketing teams, yet robust enough for engineering deployments.",
+    "install": "docker run -it -p 8080:80 activepieces/activepieces:latest",
+    "features": [
+      "Clean, modern, highly intuitive visual workflow builder",
+      "MIT-licensed, allowing deep embedding and commercial use",
+      "TypeScript-native piece development",
+      "Built-in AI operations and API webhook triggers",
+      "Unlimited tasks and executions in self-hosted mode"
+    ],
+    "alternatives": ["n8n", "windmill", "pipedream"],
+    "faq": [
+      {"q": "How does Activepieces compare to n8n?", "a": "Activepieces is generally considered more user-friendly and 'Zapier-like', making it better for non-technical teams. n8n is more powerful for complex data transformations and developers. Activepieces also has a more permissive MIT license."},
+      {"q": "Can I write custom code in Activepieces?", "a": "Yes, you can write custom TypeScript snippets directly within your workflows to handle specific data transformations that aren't covered by the pre-built pieces."}
+    ],
+    "ogImage": "/og/activepieces.png"
+  },
+  "windmill": {
+    "id": "windmill",
+    "name": "Windmill - Developer Automation",
+    "category": "developer-tools",
+    "emoji": "⚙️",
+    "license": "AGPLv3",
+    "stars": 9800,
+    "description": "Windmill is an open-source developer platform for turning scripts into internal tools, APIs, and complex automated workflows. Unlike Zapier or n8n which focus on API connectivity via visual nodes, Windmill is deeply developer-centric. It allows you to write raw Python, TypeScript, Go, or Bash scripts and instantly orchestrate them into UI dashboards, cron jobs, or webhook endpoints. In 2026, engineering teams rely on Windmill to rapidly deploy internal tooling without the overhead of building full-stack applications. Windmill's architecture is built in Rust, making its worker execution incredibly fast and efficient. It automatically generates UI forms based on your script's parameters and provides granular access control. For developers needing to glue infrastructure together, run database migrations, or orchestrate high-performance CI/CD extensions, Windmill provides an unparalleled, self-hostable solution.",
+    "install": "curl -sL https://github.com/windmill-labs/windmill/releases/latest/download/docker-compose.yml > docker-compose.yml && docker-compose up -d",
+    "features": [
+      "Native execution of Python, TypeScript, Go, and Bash",
+      "Instant UI generation from script parameters",
+      "Ultra-fast Rust-based orchestration engine",
+      "Complex flow builder with branching and error handling",
+      "Granular permission system for enterprise deployment"
+    ],
+    "alternatives": ["retool", "pipedream", "temporal"],
+    "faq": [
+      {"q": "Is Windmill suitable for non-developers?", "a": "Windmill is primarily designed for developers to create tools that non-developers can then use. The creation of scripts requires coding knowledge, but the resulting UIs are accessible to anyone."},
+      {"q": "Can Windmill handle long-running background jobs?", "a": "Yes, Windmill is an excellent orchestration engine for long-running scripts, providing logging, retry logic, and asynchronous execution tracking out of the box."}
+    ],
+    "ogImage": "/og/windmill.png"
+  },
+  "coolify": {
+    "id": "coolify",
+    "name": "Coolify - Open Source PaaS",
+    "category": "self-hosting",
+    "emoji": "🐳",
+    "license": "Apache 2.0",
+    "stars": 34000,
+    "description": "Coolify is a powerful, open-source, self-hostable alternative to PaaS solutions like Heroku, Netlify, and Vercel. It allows developers to seamlessly deploy applications, databases, and services to their own servers with a single click. In 2026, as cloud costs continue to rise, Coolify has become the cornerstone of modern self-hosting and DePIN edge compute deployments. By installing Coolify on a standard VPS (like Hetzner or DigitalOcean), users gain an elegant web dashboard to manage Git-push-to-deploy workflows, automatic SSL certificate generation via Let's Encrypt, zero-downtime deployments, and integrated database backups. Coolify supports deploying static sites, Node.js/Python apps, Docker images, and complex Docker Compose stacks. It effectively turns any bare-metal hardware into a fully managed, private cloud platform, drastically cutting infrastructure costs while maintaining developer velocity.",
+    "install": "curl -fsSL https://get.coollabs.io/coolify/install.sh | bash",
+    "features": [
+      "Git push-to-deploy for modern web frameworks",
+      "One-click deployment for popular open-source databases and tools",
+      "Automatic SSL provisioning and domain routing",
+      "Zero-downtime deployments and container management",
+      "Multi-server management from a single dashboard"
+    ],
+    "alternatives": ["dokku", "caprover", "vercel"],
+    "faq": [
+      {"q": "Does Coolify lock me into their ecosystem?", "a": "No, Coolify simply orchestrates standard Docker containers on your server. If you uninstall Coolify, your containers and reverse proxies will continue to run normally."},
+      {"q": "Can I manage multiple servers with one Coolify instance?", "a": "Yes, Coolify allows you to connect multiple remote servers via SSH, enabling you to deploy different applications to different nodes from a unified central dashboard."}
+    ],
+    "ogImage": "/og/coolify.png"
+  }
+}

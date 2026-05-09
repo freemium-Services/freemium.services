@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  freemium.services — CORE PAGES SITEMAP
+  Priority 0.9 – 1.0 pages · Crawled daily–weekly
+  Includes: hreflang alternate links (en/hi/ta/ml)
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══════════════════════════════════════
+       HOMEPAGE — Priority 1.0
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <!-- hreflang: multilingual signals for Google -->
+    <xhtml:link rel="alternate" hreflang="en"         href="https://freemium.services/"/>
+    <xhtml:link rel="alternate" hreflang="hi"         href="https://freemium.services/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ta"         href="https://freemium.services/ta/"/>
+    <xhtml:link rel="alternate" hreflang="ml"         href="https://freemium.services/ml/"/>
+    <xhtml:link rel="alternate" hreflang="x-default"  href="https://freemium.services/"/>
+    <image:image>
+      <image:loc>https://freemium.services/og.png</image:loc>
+      <image:title>Freemium Services — World's Largest Open-Source Directory</image:title>
+      <image:caption>20,000+ verified freemium and open-source tools with self-hosting guides and TurboQuant DePIN deployment</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       DIRECTORY & NAVIGATION
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/directory/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.97</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/directory/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/directory/"/>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       KNOWLEDGE HUB INDEX
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/quickstart/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/quickstart/"/>
+    <xhtml:link rel="alternate" hreflang="hi"        href="https://freemium.services/hi/quickstart/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/quickstart/"/>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       SPECIAL FEATURE HUBS
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/ai-kanban/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ai-kanban/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ai-kanban/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/ides/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/ides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/ides/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/coding/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/coding/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/coding/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/assistants/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/assistants/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/assistants/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/compare/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/compare/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/compare/"/>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/blog/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://freemium.services/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://freemium.services/blog/"/>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       UTILITY PAGES
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/submit/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/search/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/depin-guide/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/tq-integration/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/changelog/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/html-sitemap/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       LEGAL
+  ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://freemium.services/privacy/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://freemium.services/terms/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+</urlset>
