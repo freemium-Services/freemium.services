@@ -66,6 +66,65 @@ let newsletterJsContent = fs.existsSync(newsletterJsFile) ? fs.readFileSync(news
 let glossary = {};
 try { glossary = JSON.parse(fs.readFileSync(glossaryFile, 'utf8')); } catch (e) { }
 
+function getLocalizedUrl(urlPath, lang) {
+  return lang === 'en' ? urlPath : `/${lang}${urlPath}`;
+}
+
+async function getTranslated(text, lang, cache) {
+  if (lang === 'en' || !text) return text;
+  const hash = crypto.createHash('md5').update(text).digest('hex');
+  const cacheKey = `${lang}:${hash}`;
+  if (cache[cacheKey]) return cache[cacheKey];
+  const translated = await translateText(text, lang);
+  cache[cacheKey] = translated;
+  return translated;
+}
+
+async function getLocalizedTool(tool, lang, cache) {
+  if (lang === 'en') return tool;
+  return {
+    ...tool,
+    name: await getTranslated(tool.name, lang, cache),
+    description: await getTranslated(tool.description, lang, cache),
+    features: await Promise.all((tool.features || []).map(f => getTranslated(f, lang, cache))),
+    faq: await Promise.all((tool.faq || []).map(async f => ({
+      q: await getTranslated(f.q, lang, cache),
+      a: await getTranslated(f.a, lang, cache)
+    }))),
+    install: tool.install // Commands usually stay in English for terminal use
+  };
+}
+
+async function getLocalizedCategory(catInfo, lang, cache) {
+  if (lang === 'en') return catInfo;
+  return {
+    ...catInfo,
+    name: await getTranslated(catInfo.name, lang, cache),
+    description: await getTranslated(catInfo.description, lang, cache),
+    longDesc: await getTranslated(catInfo.longDesc, lang, cache)
+  };
+}
+
+async function getLocalizedFaqBank(bank, lang, cache) {
+  if (lang === 'en') return bank;
+  return Promise.all(bank.map(async f => ({
+    q: await getTranslated(f.q, lang, cache),
+    a: await getTranslated(f.a, lang, cache)
+  })));
+}
+
+async function getLocalizedGlossary(gloss, lang, cache) {
+  if (lang === 'en') return gloss;
+  const localized = {};
+  for (const key in gloss) {
+    localized[key] = {
+      term: await getTranslated(gloss[key].term, lang, cache),
+      def: await getTranslated(gloss[key].def, lang, cache)
+    };
+  }
+  return localized;
+}
+
 // --- SEO Internal Linking Engine (#8) ---
 function linkify(text) {
   let linkedText = text;
@@ -78,7 +137,7 @@ function linkify(text) {
   return linkedText;
 }
 
-const categories = {
+let categories = {
   'automation-tools': {
     name: 'Automation Tools',
     description: 'Open-source and freemium workflow automation.',
@@ -174,12 +233,12 @@ function generateSvgOgImage(title, category, filename) {
   return `/og/${filename}`;
 }
 
-function getBaseLayout(title, desc, canonicalPath, content, headInject = '', bodyInject = '', ogImagePath = '/og-default.png', lastUpdated = '') {
+function getBaseLayout(title, desc, canonicalPath, content, lang = 'en', headInject = '', bodyInject = '', ogImagePath = '/og-default.png', lastUpdated = '') {
   const hreflangTags = generateHreflangTags(canonicalPath);
   const freshnessMeta = lastUpdated ? `<meta property="article:modified_time" content="${lastUpdated}">` : '';
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${lang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -216,11 +275,11 @@ function getBaseLayout(title, desc, canonicalPath, content, headInject = '', bod
 <body>
   <nav>
       <div class="nav-inner">
-          <a href="/" class="logo" data-analytics="nav-home">freemium<span>.services</span></a>
+          <a href="${getLocalizedUrl('/', lang)}" class="logo" data-analytics="nav-home">freemium<span>.services</span></a>
           <div class="nav-links" style="display: flex; gap: 1.5rem; margin-left: auto; align-items: center;">
-            <a href="/category/ai-tools.html" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">AI Tools</a>
-            <a href="/category/automation-tools.html" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Automation</a>
-            <a href="/knowledge-hub.html" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Docs</a>
+            <a href="${getLocalizedUrl('/category/ai-tools.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">AI Tools</a>
+            <a href="${getLocalizedUrl('/category/automation-tools.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Automation</a>
+            <a href="${getLocalizedUrl('/knowledge-hub.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Docs</a>
             <a href="${TQ_URL}" target="_blank" style="text-decoration: none; color: var(--accent); font-size: 0.9rem;">TurboQuant ↗</a>
           </div>
           <button id="search-trigger" class="btn-search-trigger">
@@ -270,11 +329,11 @@ function getBaseLayout(title, desc, canonicalPath, content, headInject = '', bod
 }
 
 // --- Generators ---
-function renderToolPage(t) {
+function renderToolPage(t, lang) {
   const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + "/" },
-    { name: categories[t.category]?.name || t.category, url: SITE_URL + `/category/${t.category}.html` },
-    { name: t.name, url: SITE_URL + `/tools/${t.id}.html` }
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: categories[t.category]?.name || t.category, url: SITE_URL + getLocalizedUrl(`/category/${t.category}.html`, lang) },
+    { name: t.name, url: SITE_URL + getLocalizedUrl(`/tools/${t.id}.html`, lang) }
   ];
 
   const schema = {
@@ -304,13 +363,13 @@ function renderToolPage(t) {
   const sameCategoryTools = Object.values(toolsData).filter(tool => tool.category === t.category && tool.id !== t.id).slice(0, 3);
 
   const alternativesHtml = sameCategoryTools.map(altTool => {
-    return `<a href="/compare/${t.id}-vs-${altTool.id}.html" class="tool-card" data-analytics="compare-click" data-target="${altTool.id}">
+    return `<a href="${getLocalizedUrl(`/compare/${t.id}-vs-${altTool.id}.html`, lang)}" class="tool-card" data-analytics="compare-click" data-target="${altTool.id}">
       <h3>${altTool.emoji} ${altTool.name}</h3><p>Compare ${t.name} vs ${altTool.name} →</p>
     </a>`;
   }).join('');
 
   const relatedHtml = sameCategoryTools.map(rel => {
-    return `<a href="/tools/${rel.id}.html" class="tool-card" data-analytics="related-click" data-target="${rel.id}">
+    return `<a href="${getLocalizedUrl(`/tools/${rel.id}.html`, lang)}" class="tool-card" data-analytics="related-click" data-target="${rel.id}">
       <h3>${rel.emoji} ${rel.name}</h3>
     </a>`;
   }).join('');
@@ -324,7 +383,7 @@ function renderToolPage(t) {
     <div class="container">
       <nav class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <a href="/">Home</a> › <a href="/category/${t.category}.html">${categories[t.category]?.name || t.category}</a> › <span>${t.name}</span>
+          <a href="${getLocalizedUrl('/', lang)}">Home</a> › <a href="${getLocalizedUrl(`/category/${t.category}.html`, lang)}">${categories[t.category]?.name || t.category}</a> › <span>${t.name}</span>
         </div>
         <a href="https://github.com/freemium-Services/freemium.services/edit/main/data/tools.json" target="_blank" rel="noopener noreferrer" style="font-size: 0.75rem; color: var(--text3); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: 6px; transition: all 0.2s;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -387,20 +446,20 @@ function renderToolPage(t) {
     <script type="application/ld+json">${JSON.stringify(faq)}</script>
   `;
 
-  return getBaseLayout(`${t.name} - Open Source Guide`, t.description, `/tools/${t.id}.html`, content, headInject, `<script defer src="/js/chat-widget.js"></script>`, ogImagePath, t.lastUpdated);
+  return getBaseLayout(`${t.name} - Open Source Guide`, t.description, `/tools/${t.id}.html`, content, lang, headInject, `<script defer src="/js/chat-widget.js"></script>`, ogImagePath, t.lastUpdated);
 }
 
-function renderCategoryPage(catId, catInfo) {
+function renderCategoryPage(catId, catInfo, lang) {
   const catTools = Object.values(toolsData).filter(t => t.category === catId);
-  const toolsHtml = catTools.map(t => `<a href="/tools/${t.id}.html" class="tool-card" data-analytics="category-tool-click" data-target="${t.id}">
+  const toolsHtml = catTools.map(t => `<a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card" data-analytics="category-tool-click" data-target="${t.id}">
     <h3>${t.emoji} ${t.name}</h3><p>${t.description.replace(/[#*`]/g, '').slice(0, 100)}...</p>
   </a>`).join('');
 
   const faqBankHtml = faqBank.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join('');
 
   const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + "/" },
-    { name: catInfo.name, url: SITE_URL + `/category/${catId}.html` }
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: catInfo.name, url: SITE_URL + getLocalizedUrl(`/category/${catId}.html`, lang) }
   ];
 
   const itemListSchema = {
@@ -418,7 +477,7 @@ function renderCategoryPage(catId, catInfo) {
   const content = `
     <div class="container">
       <nav class="breadcrumbs">
-        <a href="/">Home</a> › <span>${catInfo.name}</span>
+        <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>${catInfo.name}</span>
       </nav>
       <h1>${catInfo.name}</h1>
       <p class="lead">${linkify(catInfo.description)}</p>
@@ -442,12 +501,12 @@ function renderCategoryPage(catId, catInfo) {
     <script type="application/ld+json">${JSON.stringify(itemListSchema)}</script>
   `;
 
-  return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, `/category/${catId}.html`, content, headInject, '', ogImagePath);
+  return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, `/category/${catId}.html`, content, lang, headInject, '', ogImagePath);
 }
 
-function renderHomepage(featuredTools) {
+function renderHomepage(featuredTools, lang) {
   const featuredHtml = featuredTools.map(t => `
-    <a href="/tools/${t.id}.html" class="tool-card featured-card">
+    <a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card featured-card">
       <div style="position: absolute; top: 1rem; right: 1rem; color: var(--yellow); font-family: var(--font-mono); font-size: 0.75rem;">★ ${t.stars.toLocaleString()}</div>
       <h3>${t.emoji} ${t.name}</h3>
       <p>${t.description.replace(/[#*`]/g, '').slice(0, 100)}...</p>
@@ -470,7 +529,7 @@ function renderHomepage(featuredTools) {
       <h2 style="margin-bottom: 2rem; font-family: var(--font-display); font-size: 1.5rem;">Browse by Category</h2>
       <div class="grid" style="text-align: left; margin-top: 4rem;">
         ${Object.keys(categories).map(catId => `
-          <a href="/category/${catId}.html" class="tool-card" style="border-color: var(--accent);" data-analytics="home-category-click" data-target="${catId}">
+          <a href="${getLocalizedUrl(`/category/${catId}.html`, lang)}" class="tool-card" style="border-color: var(--accent);" data-analytics="home-category-click" data-target="${catId}">
             <h3>${categories[catId].name}</h3>
             <p>${categories[catId].description}</p>
           </a>
@@ -494,18 +553,18 @@ function renderHomepage(featuredTools) {
 
   const ogImagePath = generateSvgOgImage("Freemium Services", "Verified Open Source Directory", `home-og.svg`);
 
-  return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
+  return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, lang, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
 }
 
-function renderComparisonPage(aId, bId) {
+function renderComparisonPage(aId, bId, lang) {
   const a = toolsData[aId];
   const b = toolsData[bId];
   if (!a || !b) return null;
 
   const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + "/" },
-    { name: categories[a.category]?.name || a.category, url: SITE_URL + `/category/${a.category}.html` },
-    { name: `${a.name} vs ${b.name}`, url: SITE_URL + `/compare/${a.id}-vs-${b.id}.html` }
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: categories[a.category]?.name || a.category, url: SITE_URL + getLocalizedUrl(`/category/${a.category}.html`, lang) },
+    { name: `${a.name} vs ${b.name}`, url: SITE_URL + getLocalizedUrl(`/compare/${a.id}-vs-${b.id}.html`, lang) }
   ];
 
   const ogImagePath = generateSvgOgImage(`${a.name} vs ${b.name}`, 'Technical Comparison', `${a.id}-vs-${b.id}-og.svg`);
@@ -515,7 +574,7 @@ function renderComparisonPage(aId, bId) {
   const content = `
     <div class="container">
       <nav class="breadcrumbs">
-        <a href="/">Home</a> › <a href="/category/${a.category}.html">${categories[a.category]?.name || a.category}</a> › <span>${a.name} vs ${b.name}</span>
+        <a href="${getLocalizedUrl('/', lang)}">Home</a> › <a href="${getLocalizedUrl(`/category/${a.category}.html`, lang)}">${categories[a.category]?.name || a.category}</a> › <span>${a.name} vs ${b.name}</span>
       </nav>
       <h1>${a.emoji} ${a.name} vs ${b.emoji} ${b.name}</h1>
       <p class="lead">Detailed 2026 technical comparison between ${a.name} and ${b.name} for self-hosting and enterprise deployment.</p>
@@ -525,12 +584,12 @@ function renderComparisonPage(aId, bId) {
           <div class="tool-card" style="border-color: var(--accent);">
             <h3>${a.emoji} Best for Advanced Logic</h3>
             <p>${a.name} excels when complex integrations are required. ${a.description.replace(/[#*`]/g, '').slice(0, 120)}...</p>
-            <a href="/tools/${a.id}.html" class="btn-primary" style="margin-top:1rem;" data-analytics="compare-winner-click" data-target="${a.id}">View ${a.name}</a>
+            <a href="${getLocalizedUrl(`/tools/${a.id}.html`, lang)}" class="btn-primary" style="margin-top:1rem;" data-analytics="compare-winner-click" data-target="${a.id}">View ${a.name}</a>
           </div>
           <div class="tool-card" style="border-color: var(--green);">
             <h3>${b.emoji} Best for Rapid Prototyping</h3>
             <p>${b.name} offers incredible speed to deployment. ${b.description.replace(/[#*`]/g, '').slice(0, 120)}...</p>
-            <a href="/tools/${b.id}.html" class="btn-primary" style="margin-top:1rem; background:var(--green);" data-analytics="compare-winner-click" data-target="${b.id}">View ${b.name}</a>
+            <a href="${getLocalizedUrl(`/tools/${b.id}.html`, lang)}" class="btn-primary" style="margin-top:1rem; background:var(--green);" data-analytics="compare-winner-click" data-target="${b.id}">View ${b.name}</a>
           </div>
         </div>
       </section>
@@ -564,11 +623,11 @@ function renderComparisonPage(aId, bId) {
   return getBaseLayout(`${a.name} vs ${b.name} - Detailed Comparison`, `Compare ${a.name} and ${b.name} to see which open-source tool fits your self-hosting needs.`, `/compare/${a.id}-vs-${b.id}.html`, content, `
     <script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>
     <script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>
-  `, '', ogImagePath);
+  `, lang, '', ogImagePath);
 }
 
 // --- Knowledge Hub Generator ---
-function renderKnowledgeHub() {
+function renderKnowledgeHub(lang) {
   const pillarHtml = Object.keys(categories)
     .filter(catId => categories[catId].longDesc)
     .map(catId => `
@@ -593,8 +652,8 @@ function renderKnowledgeHub() {
   `).join('');
 
   const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + "/" },
-    { name: "Docs", url: SITE_URL + "/knowledge-hub.html" }
+    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+    { name: "Docs", url: SITE_URL + getLocalizedUrl("/knowledge-hub.html", lang) }
   ];
 
   const ogImagePath = generateSvgOgImage("Docs & Technical Glossary", "Expert Resource Bank", "knowledge-hub-og.svg");
@@ -602,7 +661,7 @@ function renderKnowledgeHub() {
   const content = `
     <div class="container">
       <nav class="breadcrumbs">
-        <a href="/">Home</a> › <span>Docs</span>
+        <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>Docs</span>
       </nav>
       <h1 style="margin-bottom: 1.5rem;">Docs: Open Source & Self-Hosting Hub</h1>
       <p class="lead">The definitive master resource for decentralized infrastructure, privacy-first automation, and local AI stacks.</p>
@@ -640,7 +699,7 @@ function renderKnowledgeHub() {
   const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqBank.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
   const headInject = `<script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>\n  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
-  return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, headInject, '', ogImagePath);
+  return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, lang, headInject, '', ogImagePath);
 }
 
 // --- Main Build Execution ---
