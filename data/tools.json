@@ -199,7 +199,7 @@
       "Dynamic segment management for high-throughput updates",
       "Horizontal scaling with distributed cluster support"
     ],
-    "alternatives": ["weaviate", "milvus", "pinecone"],
+    "alternatives": ["dify", "langflow"],
     "faq": [
       {"q": "Does Qdrant support metadata filtering?", "a": "Yes, Qdrant allows you to attach 'payloads' to vectors and perform complex boolean filtering alongside vector similarity searches."},
       {"q": "Is it easy to migrate from Pinecone to Qdrant?", "a": "Yes, many developers use Qdrant as a self-hosted replacement for Pinecone. It offers similar functionality with more control over infrastructure and cost."}
@@ -222,7 +222,7 @@
       "Built-in support for multiple encoding formats",
       "Highly customizable output formatting"
     ],
-    "alternatives": ["grep", "ag", "fd"],
+    "alternatives": ["ollama", "windmill"],
     "faq": [
       {"q": "Why is ripgrep so much faster than grep?", "a": "ripgrep uses advanced algorithms like Aho-Corasick and Teddy, combined with Rust's high-performance regex engine and parallel directory walking."},
       {"q": "Can I use ripgrep in my IDE?", "a": "Yes, many modern editors like VS Code and Zed use ripgrep under the hood to power their 'Search in Files' functionality."}
@@ -245,7 +245,7 @@
       "Auto-generated REST and GraphQL APIs",
       "Edge functions for custom server-side logic"
     ],
-    "alternatives": ["appwrite", "pocketbase", "firebase"],
+    "alternatives": ["coolify", "activepieces"],
     "faq": [
       {"q": "Is Supabase just a wrapper for Postgres?", "a": "While Postgres is the core, Supabase provides a vast ecosystem of tools (Auth, Storage, Functions) that integrate seamlessly, providing a unified developer experience."},
       {"q": "Can I self-host Supabase for production?", "a": "Yes, Supabase provides a robust Docker Compose setup specifically for self-hosting in production environments."}
@@ -268,7 +268,7 @@
       "GPT-4 and GPT-3.5 integration for reasoning",
       "File storage and summarization capabilities"
     ],
-    "alternatives": ["babyagi", "claude-code", "crewai"],
+    "alternatives": ["ollama", "dify"],
     "faq": [
       {"q": "Is AutoGPT safe to run on my local machine?", "a": "AutoGPT can execute code and browse the web. It is highly recommended to run it inside a Docker container or a sandbox environment to prevent unintended actions on your host system."},
       {"q": "Does AutoGPT require a paid API key?", "a": "Yes, it typically requires an OpenAI API key. However, it can also be configured to use local models via tools like LocalAI or Ollama for a fully private experience."}
@@ -276,4 +276,5 @@
     "ogImage": "/og/auto-gpt.png"
   }
 }
+
 
