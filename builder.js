@@ -366,6 +366,7 @@ function getBaseLayout(title, desc, canonicalPath, content, lang = 'en', headInj
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="google-site-verification" content="Q4e3BbSfoLN1IFyXjIR4m4klvi1gXjKF_KdIdU4CJG0">
   <title>${title} | Freemium.Services</title>
   <meta name="description" content="${desc.slice(0, 160)}">
   <link rel="canonical" href="${SITE_URL}${canonicalPath}">
