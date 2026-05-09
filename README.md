@@ -40,7 +40,7 @@ npx serve public
 
 ## Architecture
 
-The entire site is powered by the `data/tools.json` file. The schema enforces a minimum of ~800 words of rich content per tool, guaranteeing that every generated page passes strict SEO content-depth audits.
+The entire site is powered by the `data/tools.json` file. The schema enforces a minimum of ~2000 words of rich content per tool, guaranteeing that every generated page passes strict SEO content-depth audits.
 
 * `builder.js` - The master generator script.
 * `data/tools.json` - The core database for all tools.

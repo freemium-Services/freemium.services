@@ -17,6 +17,8 @@ if (!repoPath || !category) {
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Optional, but prevents rate limiting
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const toolsDataPath = path.join(__dirname, '..', 'data', 'tools.json');
+const tempPath = path.join(__dirname, '..', 'temp');
+if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath, { recursive: true });
 
 const githubHeaders = {
   'User-Agent': 'Freemium.Services-Ingest-Bot/1.0',
@@ -25,6 +27,24 @@ const githubHeaders = {
 
 if (GITHUB_TOKEN) {
   githubHeaders['Authorization'] = `token ${GITHUB_TOKEN}`;
+}
+
+function fixJson(str) {
+  // Remove markdown code blocks if present
+  let cleaned = str.replace(/```json/g, '').replace(/```/g, '').trim();
+
+  // Remove trailing commas in objects and arrays
+  // This handles ,} and ,]
+  cleaned = cleaned.replace(/,\s*([}\]])/g, '$1');
+
+  // Remove potential non-json content before/after the main block
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+
+  return cleaned;
 }
 
 function fetchGithubData(repo) {
@@ -49,10 +69,38 @@ function fetchGithubData(repo) {
   });
 }
 
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const response = await fetch(url, options);
+
+      // Retry on Rate Limit (429) or Server Errors (5xx)
+      if (response.status === 429 || (response.status >= 500 && response.status < 600)) {
+        const delay = Math.pow(2, i) * 2000; // Exponential backoff: 2s, 4s, 8s
+        console.warn(`⚠️ API responded with ${response.status}. Retrying in ${delay}ms (Attempt ${i + 1}/${maxRetries})...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      return response;
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      const delay = Math.pow(2, i) * 2000;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
 async function generateAIContent(repoData, cat) {
-  const prompt = `
+  const maxAttempts = 3;
+  let attempts = 0;
+  let lastResult;
+
+  while (attempts < maxAttempts) {
+    attempts++;
+    const prompt = `
     You are an expert technical writer and SEO specialist. 
-    Write a comprehensive, 800+ word deep-dive for a technical directory about the GitHub project "${repoData.full_name}".
+    Write a comprehensive, 2000+ word deep-dive for a technical directory about the GitHub project "${repoData.full_name}".
+    ${attempts > 1 ? `\nIMPORTANT: The previous response was too short. You MUST provide a much more detailed "description" that is strictly over 2000 words long. Dive deeper into technical internals, comparison details, and deployment nuances.` : ''}
     
     Target Category: ${cat}
     Repository Description: ${repoData.description}
@@ -60,7 +108,7 @@ async function generateAIContent(repoData, cat) {
     License: ${repoData.license?.name || 'Open Source'}
 
     Requirements:
-    1. DESCRIPTION: Write a long, insightful, and unique description (800+ words). 
+    1. DESCRIPTION: Write a long, insightful, and unique description (2000+ words). 
        Focus on:
        - What specific problem it solves in the 2026 tech landscape.
        - Architectural benefits (it's built in ${repoData.language || 'software'}).
@@ -81,7 +129,7 @@ async function generateAIContent(repoData, cat) {
       "emoji": "string",
       "license": "string",
       "stars": number,
-      "description": "string (the full 800+ word content)",
+      "description": "string (the full 2000+ word content)",
       "install": "string",
       "features": ["string", "string", "string", "string", "string"],
       "alternatives": ["string", "string", "string"],
@@ -93,25 +141,49 @@ async function generateAIContent(repoData, cat) {
     }
   `;
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { response_mime_type: "application/json" }
-    })
-  });
+    const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { response_mime_type: "application/json" }
+      })
+    });
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Gemini API Error: ${response.status} - ${errorBody}`);
+    if (!response.ok) {
+      const errorBody = await response.text();
+      throw new Error(`Gemini API Error: ${response.status} - ${errorBody}`);
+    }
+
+    const responseText = await response.text();
+    fs.writeFileSync(path.join(tempPath, 'last_gemini_content_raw.json'), responseText);
+
+    const json = JSON.parse(responseText);
+    if (!json.candidates?.[0]?.content?.parts?.[0]?.text) {
+      throw new Error("Invalid response structure from Gemini API");
+    }
+
+    const toolContent = json.candidates[0].content.parts[0].text;
+    fs.writeFileSync(path.join(tempPath, 'last_tool_json_extracted.json'), toolContent);
+
+    try {
+      const result = JSON.parse(fixJson(toolContent));
+      lastResult = result;
+      const wordCount = result.description.split(/\s+/).filter(word => word.length > 0).length;
+      if (wordCount >= 2000) {
+        return result;
+      }
+      console.warn(`\x1b[33m⚠️ Attempt ${attempts}: Generated description for '${result.name}' is only ${wordCount} words. (Requirement: 2000+). Retrying...\x1b[0m`);
+    } catch (e) {
+      if (attempts === maxAttempts) {
+        console.error("❌ Failed to parse JSON even after fix attempt. Content saved to temp/last_tool_json_extracted.json");
+        throw e;
+      }
+      console.warn(`⚠️ Attempt ${attempts}: JSON parsing failed. Retrying...`);
+    }
   }
 
-  const json = await response.json();
-  if (!json.candidates?.[0]?.content?.parts?.[0]?.text) {
-    throw new Error("Invalid response structure from Gemini API");
-  }
-  return JSON.parse(json.candidates[0].content.parts[0].text);
+  return lastResult;
 }
 
 async function translateText(text, targetLang) {
@@ -124,14 +196,17 @@ async function translateText(text, targetLang) {
   Text: ${text}`;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+    const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
       })
     });
-    const json = await response.json();
+    const responseText = await response.text();
+    fs.writeFileSync(path.join(tempPath, 'last_gemini_translation_raw.json'), responseText);
+
+    const json = JSON.parse(responseText);
     return json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || text;
   } catch (e) {
     return text;

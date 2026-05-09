@@ -67,3 +67,48 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+  commit-metadata:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Regenerate SEO Metadata
+        run: |
+          npm install
+          npm run build
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Verify Metadata Content
+        run: |
+          if [ ! -s "public/sitemap-index.xml" ]; then
+            echo "Error: sitemap-index.xml is missing or empty."
+            exit 1
+          fi
+          if [ ! -s "public/robots.txt" ]; then
+            echo "Error: robots.txt is missing or empty."
+            exit 1
+          fi
+          grep -q "<sitemapindex" public/sitemap-index.xml || { echo "Error: Invalid sitemap-index.xml format"; exit 1; }
+          grep -q "User-agent:" public/robots.txt || { echo "Error: Invalid robots.txt format"; exit 1; }
+
+      - name: Commit Updated Metadata
+        run: |
+          cp public/sitemap-index.xml ./sitemap-index.xml
+          cp public/robots.txt ./robots.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sitemap-index.xml robots.txt
+          git commit -m "chore: sync SEO metadata from successful deploy [skip ci]" || echo "No changes to commit"
+          git push
