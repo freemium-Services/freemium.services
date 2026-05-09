@@ -20,7 +20,7 @@ try {
 let errorsFound = 0;
 
 function validateTool(tool) {
-    const required = ['id', 'name', 'category', 'description', 'features', 'faq', 'alternatives'];
+    const required = ['id', 'name', 'category', 'description', 'features', 'faq', 'alternatives', 'license', 'emoji'];
     for (const field of required) {
         if (!tool[field]) {
             console.error(`❌ Tool Validation Error: Missing required field '${field}' in tool '${tool.id || 'unknown'}'`);
@@ -41,6 +41,12 @@ function validateTool(tool) {
         }
     }
 
+    // Ensure features is an array with at least 3 items for SEO depth
+    if (!Array.isArray(tool.features) || tool.features.length < 3) {
+        console.error(`❌ Tool Validation Error: Tool '${tool.id}' must have at least 3 features for SEO depth.`);
+        errorsFound++;
+    }
+
     // Ensure category exists
     if (!CATEGORY_IDS.includes(tool.category)) {
         console.error(`❌ Tool Validation Error: Tool '${tool.id}' references unknown category '${tool.category}'. Valid categories are: ${CATEGORY_IDS.join(', ')}`);
@@ -51,6 +57,12 @@ function validateTool(tool) {
     const wordCount = tool.description.split(/\s+/).filter(word => word.length > 0).length;
     if (wordCount < 2000) {
         console.warn(`⚠️ Tool Validation Warning: Description for '${tool.id}' is only ${wordCount} words. (Required: 2000+)`);
+    }
+
+    // License standardization check
+    const VALID_LICENSES = ['MIT', 'Apache 2.0', 'GPL-3.0', 'AGPL-3.0', 'BSD', 'MIT / Unlicense'];
+    if (tool.license && !VALID_LICENSES.some(l => tool.license.includes(l))) {
+        console.warn(`⚠️ Tool Validation Warning: Tool '${tool.id}' uses non-standard license: ${tool.license}`);
     }
 }
 
