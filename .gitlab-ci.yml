@@ -6,9 +6,10 @@ stages:
   - deploy
 
 variables:
-  GEMINI_API_KEY: $GEMINI_API_KEY
+  GEMINI_API_KEY: "$GEMINI_API_KEY"
 
 cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
 
@@ -31,9 +32,9 @@ build-site:
 pages:
   stage: deploy
   script:
-    - echo "Deploying to GitLab Pages..."
+    - echo "Publishing GitLab Pages..."
   artifacts:
     paths:
       - public/
-  only:
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
