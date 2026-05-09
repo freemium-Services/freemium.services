@@ -148,9 +148,8 @@
       "Web search integration and custom tool/plugin execution"
     ],
     "alternatives": [
-      "librechat",
-      "anythingllm",
-      "lobechat"
+      "ollama",
+      "dify"
     ],
     "faq": [
       {
