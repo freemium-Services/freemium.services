@@ -144,6 +144,19 @@ async function getLocalizedGlossary(gloss, lang, cache) {
   return localized;
 }
 
+function mapToolToSearchEntry(tool, lastmod, isFeatured) {
+  return {
+    slug: tool.id,
+    title: tool.name,
+    category: tool.category,
+    lastmod: lastmod,
+    description: tool.description.replace(/[#*`]/g, '').slice(0, 100),
+    isFeatured: isFeatured,
+    alternatives: tool.alternatives || [],
+    install: tool.install || ''
+  };
+}
+
 // --- SEO Internal Linking Engine (#8) ---
 function linkify(text) {
   let linkedText = text;
@@ -385,14 +398,14 @@ function getBaseLayout(title, desc, canonicalPath, content, lang = 'en', headInj
 <body>
   <nav>
       <div class="nav-inner">
-          <a href="${getLocalizedUrl('/', lang)}" class="logo">freemium<span>.services</span></a>
+          <a href="${getLocalizedUrl('/', lang)}" class="logo" aria-label="Freemium Services Home">freemium<span style="color: #00ffaa;">.services</span></a>
           <div class="nav-links">
             <a href="${getLocalizedUrl('/category/ai-tools.html', lang)}">AI Tools</a>
             <a href="${getLocalizedUrl('/category/automation-tools.html', lang)}">Automation</a>
             <a href="${getLocalizedUrl('/knowledge-hub.html', lang)}">Docs</a>
             <a href="${TQ_URL}" target="_blank" class="tq-link">TurboQuant ↗</a>
           </div>
-          <div style="display: flex; gap: 1rem; align-items: center;">
+          <div class="nav-actions" style="display: flex; gap: 0.5rem; align-items: center;">
             <button id="search-trigger" class="btn-search-trigger">
               <span>Search...</span>
               <span class="search-kbd">⌘K</span>
@@ -494,22 +507,22 @@ function renderToolPage(t, lang) {
 
   const content = `
     <div class="container">
-      <nav class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
+      <nav class="breadcrumbs">
+        <div class="breadcrumb-links">
           <a href="${getLocalizedUrl('/', lang)}">Home</a> › <a href="${getLocalizedUrl(`/category/${t.category}.html`, lang)}">${categories[t.category]?.name || t.category}</a> › <span>${t.name}</span>
         </div>
-        <a href="https://github.com/freemium-Services/freemium.services/edit/main/data/tools.json" target="_blank" rel="noopener noreferrer" style="font-size: 0.75rem; color: var(--text3); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: 6px; transition: all 0.2s;">
+        <a href="https://github.com/freemium-Services/freemium.services/edit/main/data/tools.json" target="_blank" rel="noopener noreferrer" class="btn-github-edit">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
           Edit on GitHub
         </a>
       </nav>
       
       <h1>${t.emoji} ${t.name}</h1>
-      <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text3); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <span>Last Updated: ${t.lastUpdated}</span> • 
+      <div class="tool-meta-bar">
+        <span style="color: var(--plasma); font-weight: 700;">Last Updated: ${t.lastUpdated}</span> •
         <span>${t.stars.toLocaleString()} GitHub Stars</span> • 
         <span>License: ${t.license}</span>
-        <span style="background: rgba(0, 255, 136, 0.1); color: var(--green); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 800; font-size: 0.7rem; border: 1px solid var(--green);">VERIFIED FOR 2026</span>
+        <span class="badge-verified">VERIFIED FOR 2026</span>
       </div>
       
       <div class="prose lead">${marked.parse(linkify(t.description))}</div>
@@ -539,16 +552,15 @@ function renderToolPage(t, lang) {
         ${faqHtml}
       </section>
 
-      <section class="cta" style="display: flex; gap: 1rem; align-items: center; justify-content: center;">
+      <section class="cta-actions">
         <a href="${TQ_URL}" target="_blank" class="btn-primary" data-analytics="outbound-deploy" data-target="${t.id}">Deploy on TurboQuant →</a>
-        <a href="/go/${t.id}" target="_blank" rel="nofollow" class="btn-secondary" style="border: 1px solid var(--border); padding: 1rem 2rem; border-radius: 12px; text-decoration: none; color: var(--text); font-weight: 700;">Visit Official Site ↗</a>
+        <a href="/go/${t.id}" target="_blank" rel="nofollow" class="btn-secondary">Visit Official Site ↗</a>
       </section>
       
-      <!-- #16 Job Board Integration Suggestion -->
-      <div style="margin-top: 3rem; background: rgba(0,212,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px dashed var(--accent); text-align: center;">
-        <h4 style="margin-bottom: 0.5rem; color: var(--accent);">Looking for a ${t.name} Expert?</h4>
-        <p style="font-size: 0.85rem; color: var(--text2);">Hire verified DevOps and Open Source specialists to deploy ${t.name} for your organization.</p>
-        <a href="mailto:experts@freemium.services?subject=Hire ${t.name} Expert" style="display: inline-block; margin-top: 1rem; color: var(--accent); font-size: 0.9rem; font-weight: bold;">Contact Consulting Team →</a>
+      <div class="consulting-card">
+        <h4>Looking for a ${t.name} Expert?</h4>
+        <p>Hire verified DevOps and Open Source specialists to deploy ${t.name} for your organization.</p>
+        <a href="mailto:experts@freemium.services?subject=Hire ${t.name} Expert" class="btn-consulting">Contact Consulting Team →</a>
       </div>
     </div>
   `;
@@ -898,16 +910,7 @@ async function build() {
     const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
     sitemaps.tools.push({ loc: `/tools/${t.id}.html`, lastmod });
 
-    searchIndex.push({
-      slug: t.id,
-      title: t.name,
-      category: t.category,
-      lastmod: lastmod,
-      description: t.description.replace(/[#*`]/g, '').slice(0, 100),
-      isFeatured: featuredIds.has(t.id),
-      alternatives: t.alternatives || [],
-      install: t.install || ''
-    });
+    searchIndex.push(mapToolToSearchEntry(t, lastmod, featuredIds.has(t.id)));
     toolsCount++;
   });
 
@@ -1173,4 +1176,15 @@ Host: freemium.services`;
   console.log(`📊 Report generated at: public/build-report.json`);
 }
 
-build().catch(err => { console.error('❌ Build failed:', err); process.exit(1); });
+if (require.main === module) {
+  build().catch(err => {
+    console.error('❌ Build failed:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  mapToolToSearchEntry,
+  validateTool,
+  linkify
+};

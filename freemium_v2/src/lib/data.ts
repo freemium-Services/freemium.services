@@ -12,6 +12,14 @@ export interface Tool {
   selfHostingGuide?: string;
   alternatives: string[];
   stars?: string;
+  starsCount?: number;
+  maintenanceLevel?: 'low' | 'medium' | 'high';
+  scalingDifficulty?: number; // 1-10
+  ramMin?: number; // MB
+  gpuRequired?: boolean;
+  k8sSupport?: boolean;
+  dockerSupport?: boolean;
+  privacyScore?: number; // 1-10
   badge?: string;
   faqs: { question: string; answer: string }[];
   seoTitle: string;
@@ -29,7 +37,96 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
-  { id: 'ai-tools', name: 'AI Tools', icon: 'Bot', toolCount: 240, description: 'LLMs, image gen, coding assistants, and intelligent productivity tools.', pillarContent: '### The AI Tool Landscape in 2026\nGenerative AI has moved from novelty to necessity. Whether you are a developer needing a coding assistant or a team needing private AI chat, the open-source ecosystem offers incredible value.\n\n### Why Open-Source AI?\n1. **Privacy**: Your data never leaves your infrastructure\n2. **Cost**: Zero per-token costs at scale\n3. **Control**: Fine-tune and modify models as needed', faqs: [{ question: 'What is the best free AI tool for developers?', answer: 'Claude Code, Cursor free tier, and Ollama (local inference) are top picks for developers. Ollama is free forever with no token limits.' }, { question: 'Can I run LLMs locally for free?', answer: 'Yes. Ollama runs Llama 3.3, Mistral, DeepSeek-R1, and 150+ models completely free on your own hardware.' }] },
+  {
+    id: 'ai-tools',
+    name: 'AI Tools',
+    icon: 'Bot',
+    toolCount: 240,
+    description: 'The world\'s most comprehensive directory of verified open-source AI tools, LLMs, RAG frameworks, and agentic assistants.',
+    pillarContent: `
+# The Sovereign AI Revolution: A Comprehensive Guide to Open-Source AI Tools in 2026
+
+In 2026, the landscape of Artificial Intelligence has undergone a tectonic shift. The era of total reliance on monolithic, closed-source SaaS providers is ending, replaced by the **Sovereign AI Revolution**. This pillar page serves as your definitive guide to the open-source AI ecosystem, providing deep operational intelligence on how to build, deploy, and scale private AI infrastructure.
+
+## 1. Why Open Source AI is the Strategic Standard
+Organizations are no longer asking *if* they should use AI, but *where* that AI lives. Open-source AI tools offer three non-negotiable advantages for the modern enterprise:
+
+*   **Data Sovereignty & Privacy:** By utilizing local inference engines like **Ollama** or **vLLM**, proprietary data never leaves your infrastructure. This is critical for HIPAA, GDPR, and SOC2 compliance.
+*   **Uncapped Scalability:** Zero per-token costs. Once you own the compute (or use a DePIN network like **TurboQuant**), your marginal cost for AI inference drops to nearly zero.
+*   **Model Transparency:** Unlike "black box" commercial APIs, open-source weights allow for full auditing of biases, safety filters, and reasoning paths.
+
+## 2. The Core Architecture of a Private AI Stack
+A production-grade, self-hosted AI stack in 2026 typically consists of four specialized layers:
+
+### A. The Inference Engine (The Brain)
+This is the runtime that hosts the Large Language Model (LLM).
+*   **Ollama:** The industry standard for local, single-node inference. It abstracts complex CUDA/Metal dependencies into a simple CLI and REST API.
+*   **vLLM:** The go-to choice for high-throughput, multi-GPU production environments, utilizing PagedAttention to maximize concurrency.
+*   **Llama.cpp:** The foundation for running high-quantization models on consumer-grade hardware, including Apple Silicon and standard CPUs.
+
+### B. Retrieval-Augmented Generation (The Memory)
+LLMs are only as good as the data they can access. RAG is the architecture that connects models to your private documents.
+*   **Vector Databases:** Tools like **Qdrant** and **Weaviate** store "embeddings"—mathematical representations of your data—allowing the AI to perform semantic searches in milliseconds.
+*   **Orchestrators:** **Dify** and **AnythingLLM** provide the visual or programmatic glue that connects the user's query to the vector store and then to the LLM.
+
+### C. The User Interface (The Interaction)
+A polished UI is essential for team adoption.
+*   **Open WebUI:** Provides a feature-rich, ChatGPT-like experience with built-in RAG support, multi-user management, and multi-modal capabilities.
+*   **LibreChat:** An enterprise-grade frontend that supports every major LLM provider and local inference engine simultaneously.
+
+### D. Agentic Workflows (The Action)
+The transition from "Chat" to "Do". Agents are AI systems that can use tools, browse the web, and execute code.
+*   **CrewAI & AutoGen:** Frameworks for multi-agent collaboration where specialized agents (e.g., a "Researcher" and a "Coder") work together to solve complex goals.
+
+## 3. Hardware Requirements & Operational Intelligence
+Running AI locally requires specific hardware considerations. In 2026, we categorize deployment needs into three tiers:
+
+1.  **Starter Tier (7B - 14B Models):**
+    *   *Hardware:* 16GB RAM / VRAM (e.g., RTX 3060 or Mac M2/M3).
+    *   *Use Case:* Personal coding assistants, simple document Q&A.
+2.  **Professional Tier (30B - 70B Models):**
+    *   *Hardware:* 48GB - 64GB VRAM (e.g., Dual RTX 3090/4090s or Mac Studio).
+    *   *Use Case:* Complex reasoning, agentic workflows, high-precision RAG.
+3.  **Enterprise Tier (100B+ Models):**
+    *   *Hardware:* Multi-node A100/H100 clusters or decentralized DePIN compute.
+    *   *Use Case:* Fine-tuning, massive-scale search, and autonomous department-wide agents.
+
+## 4. The Rise of "Thinking" Models (Reasoning-First)
+2026 marks the dominance of reasoning models like **DeepSeek-R1** and **QwQ**. These models don't just predict the next word; they utilize "Chain of Thought" processing to verify their own logic before outputting a response. For developers, this means significantly fewer bugs in AI-generated code and more reliable architectural advice.
+
+## 5. Deployment Strategies: Docker to DePIN
+While Docker remains the standard for local deployment, the **TurboQuant DePIN** network has introduced a third path. You can now deploy your self-hosted AI tools across a decentralized network of edge nodes, gaining the privacy of self-hosting with the elastic scalability of the cloud.
+
+*Conclusion: The future of AI is open, local, and sovereign. By mastering these tools today, you are building the resilient, private infrastructure of tomorrow.*
+`,
+    faqs: [
+      { question: 'What are Open Source AI Tools?', answer: 'Open Source AI Tools are software applications and models whose source code and weights are available for anyone to inspect, modify, and enhance. In 2026, this includes inference engines like Ollama, LLMs like Llama 3, and platforms like Dify.' },
+      { question: 'Is self-hosted AI actually better for privacy?', answer: 'Yes. When you self-host AI using tools like Ollama or Open WebUI, your data remains entirely within your local network or private cloud. No data is sent to external servers for training or monitoring, ensuring total privacy.' },
+      { question: 'Can I run a Large Language Model (LLM) on my local laptop?', answer: 'Absolutely. Using Ollama or LM Studio, you can run optimized models (like Llama 3.2 3B or Mistral) on most modern laptops with 8GB+ of RAM. For Apple Silicon Macs, performance is even better due to unified memory.' },
+      { question: 'What is Ollama and why is it so popular?', answer: 'Ollama is a lightweight tool that allows you to download and run LLMs locally with a single command. It handles the complex setup of hardware acceleration and provides a local API that mirrors OpenAI\'s format.' },
+      { question: 'What does RAG stand for in AI?', answer: 'RAG stands for Retrieval-Augmented Generation. it is a technique where the AI searches your own documents to find relevant information before answering a question, which prevents "hallucinations" and provides cited answers.' },
+      { question: 'What is the best open-source alternative to ChatGPT?', answer: 'For a UI experience, Open WebUI is the top choice. When paired with a strong model like DeepSeek-R1 or Llama 3.3 via Ollama, it provides a feature-complete alternative to ChatGPT with better privacy.' },
+      { question: 'How can I deploy AI tools on a limited budget?', answer: 'The most cost-effective way is self-hosting on existing hardware or a low-cost VPS (like Hetzner). Alternatively, using DePIN networks like TurboQuant allows you to rent edge compute at a fraction of the cost of AWS or GCP.' },
+      { question: 'What hardware do I need to run Llama 3.3 70B?', answer: 'A 70B model typically requires 40GB-48GB of VRAM or Unified Memory. This is best handled by dual RTX 3090/4090 GPUs, an Apple Mac Studio with 64GB+ RAM, or dedicated server hardware.' },
+      { question: 'What is the difference between an AI API and local inference?', answer: 'An AI API (like OpenAI) is a "pay-per-use" service where data is processed on their servers. Local inference (like Ollama) runs on your hardware, meaning zero per-token costs and absolute data control.' },
+      { question: 'What is Dify used for?', answer: 'Dify is an open-source LLMOps platform. It allows you to visually build complex AI applications, RAG pipelines, and agents, and then deploy them via an API or a ready-made web interface.' },
+      { question: 'How does a vector database help an AI?', answer: 'Vector databases (like Qdrant) store data as mathematical coordinates. This allows the AI to perform "semantic search"—finding information based on meaning rather than just keywords—which is the heart of RAG systems.' },
+      { question: 'Is Open WebUI completely free?', answer: 'Yes, Open WebUI is open-source (MIT licensed) and free to use. You can host it yourself and connect it to any local or cloud-based AI model.' },
+      { question: 'Can I host AI tools on a standard VPS?', answer: 'Yes, but for "chat" models, you need a VPS with significant RAM. For "inference" (generating text), you ideally need a VPS with GPU support, or use highly quantized models that can run on a CPU.' },
+      { question: 'What are AI Agents?', answer: 'AI Agents are autonomous systems that use an LLM as a "brain" to use tools (like a web browser or terminal) to complete multi-step tasks without human intervention.' },
+      { question: 'What is the best AI code editor in 2026?', answer: 'Cursor remains the most popular for UX, but Zed (Rust-based) and the VS Code + Cline extension are the top open-source/open-weight contenders for 2026.' },
+      { question: 'What is DeepSeek-R1?', answer: 'DeepSeek-R1 is a state-of-the-art reasoning model that uses reinforcement learning to "think" through complex math and coding problems, rivaling the performance of closed models like OpenAI\'s o1.' },
+      { question: 'How can I reduce latency in my self-hosted AI?', answer: 'Latency can be reduced by using smaller models, increasing VRAM, utilizing "speculative decoding," or deploying models on edge nodes closer to your users via DePIN networks.' },
+      { question: 'What is DePIN in the context of AI?', answer: 'DePIN stands for Decentralized Physical Infrastructure Networks. In AI, it allows users to contribute or rent GPU power from a global network (like TurboQuant), making AI compute cheaper and more resilient.' },
+      { question: 'Can I use local AI for professional software development?', answer: 'Yes. By using tools like Claude Code or Aider with a local Ollama endpoint, you can perform full-codebase refactors and feature implementations with zero data leakage.' },
+      { question: 'What is an embedding model?', answer: 'An embedding model is a specialized AI that turns text into a long list of numbers (a vector). These vectors are what allow vector databases to perform semantic search.' },
+      { question: 'How do I update my self-hosted AI tools?', answer: 'Most tools like n8n, Dify, and Open WebUI are deployed via Docker. Updating is as simple as running "docker compose pull" and "docker compose up -d".' },
+      { question: 'Is open-source AI as good as GPT-4 or Claude 3.5?', answer: 'In 2026, the gap is almost non-existent. Models like Llama 3.3 and DeepSeek-R1 match or beat GPT-4o and Claude 3.5 Sonnet in many coding and reasoning benchmarks.' },
+      { question: 'What is a "Thinking Model"?', answer: 'Thinking models (like R1 or o1) use internal chain-of-thought processing to evaluate multiple solutions before outputting a final answer, leading to much higher accuracy in complex tasks.' },
+      { question: 'How do I secure my self-hosted AI interface?', answer: 'Always use a reverse proxy (like Nginx or Caddy) with SSL, enable multi-factor authentication (MFA), and keep your inference engine behind a firewall or VPN.' },
+      { question: 'How can I contribute to the open-source AI community?', answer: 'You can contribute by reporting bugs on GitHub, writing documentation, sharing custom "Modelfiles" for Ollama, or developing new "pieces" for automation tools like Activepieces.' }
+    ]
+  },
   { id: 'open-source', name: 'Open Source', icon: 'Github', toolCount: 580, description: 'Verified open-source software with full source code and community backing.', pillarContent: 'Open source is the backbone of modern technology. Full control, no vendor lock-in.', faqs: [{ question: 'Is open source software secure?', answer: 'Generally yes -- the many-eyes principle means more community review. Projects with active maintainers patch issues faster.' }] },
   { id: 'self-hosting', name: 'Self-Hosting', icon: 'Cpu', toolCount: 320, description: 'Privacy-first, self-hostable applications. Own your data, own your stack.', pillarContent: 'Self-hosting is the ultimate way to ensure privacy, reduce costs, and maintain full control of your data.', faqs: [{ question: 'What hardware do I need to self-host?', answer: 'A $20/mo VPS with 2 vCPUs and 4GB RAM handles most services. For AI inference, 16GB+ RAM is recommended.' }] },
   { id: 'automation-tools', name: 'Automation', icon: 'Zap', toolCount: 95, description: 'Workflow automation and integration platforms to eliminate repetitive work.', pillarContent: 'Automation platforms save thousands of hours. Explore alternatives to Zapier and Make with full self-hosting support.', faqs: [{ question: 'Best open-source Zapier alternative?', answer: 'n8n is the most powerful with 400+ integrations. Activepieces is more beginner-friendly. Both fully self-hostable.' }] },
@@ -232,7 +329,7 @@ export const KNOWLEDGE_HUB = [
   { id: 'embeddings', title: 'Embeddings 101: The Foundation of Semantic AI', content: `## What Are Embeddings?\n\nEmbeddings convert text into vectors where semantically similar content clusters together. The invisible layer that makes AI search and memory work.\n\n### Best Open-Source Embedding Models (2026)\n- **nomic-embed-text**: Best general-purpose via Ollama\n- **BGE-M3**: Best multilingual performance\n- **mxbai-embed-large**: Excellent MTEB benchmarks\n- **jina-embeddings-v3**: Best for long documents\n\n### Qdrant Production Best Practices\nUse HNSW indexing, ef=128 for speed/recall balance. Enable payload indexing for filtered retrieval. Shard at 100k+ vectors.`, seoTitle: 'Embeddings Guide: Semantic Search Foundation | Freemium Services', seoDescription: 'Complete guide to text embeddings for RAG and semantic search. Best models, vector DBs, and tips.' },
   { id: 'ai-agents-guide', title: 'AI Agents: From Prototype to Production', content: `## The Agent Architecture\n\nEvery agent runs the same loop: Perceive -> Reason -> Act -> Observe -> Repeat.\n\n### Best Open-Source Agent Frameworks\n- **Dify**: Best for visual building\n- **n8n AI agents**: Best for automation-heavy workflows\n- **CrewAI**: Best for multi-agent collaboration\n- **AutoGen**: Best for research and complex chains\n\n### Production Requirements\nRate limiting, error recovery, cost management, and human-in-the-loop checkpoints are non-negotiable.\n\n### Agent Memory\nCombine Qdrant (long-term memory) with Redis (working memory) for agents that learn and remember across sessions.`, seoTitle: 'AI Agents Production Guide | Freemium Services', seoDescription: 'Build production AI agents with open-source tools. Architecture, frameworks, and best practices.' },
   { id: 'self-hosting-101', title: 'Self-Hosting 101: Your First Production Server', content: `## Getting Started with Self-Hosting\n\n### Recommended Hardware\n$20/mo VPS: 4 vCPU, 8GB RAM, 100GB SSD from Hetzner or DigitalOcean.\n\n### Base Stack\n- Ubuntu 22.04 LTS\n- Docker + Docker Compose\n- Coolify (deployments + SSL)\n- Cloudflare (DNS + CDN)\n\n### First 5 Services to Deploy\n1. **Uptime Kuma** -- Monitor everything\n2. **Vaultwarden** -- Private password manager\n3. **n8n** -- Workflow automation\n4. **Ollama + Open WebUI** -- Private AI chat\n5. **Qdrant** -- Vector search\n\n### Security Essentials\n- SSH keys only (disable passwords)\n- UFW firewall (80, 443, 22 only)\n- Fail2ban for brute-force protection\n- Automated daily backups to S3`, seoTitle: 'Self-Hosting 101: First Production Server | Freemium Services', seoDescription: 'Beginner guide to self-hosting. Setup Docker, SSL, and 5+ essential services on your own server.' },
-    { id: 'tool-calling', title: 'LLM Tool Calling: Making AI Act in the Real World', content: 'Tool calling lets LLMs trigger real-world actions -- searching the web, querying databases, executing code, calling APIs. Define tools as JSON schemas with a name, description, and input_schema. The model decides when to call them. Stacks: Ollama + LangChain for local models, Dify for visual pipelines, n8n for automation-first agents.', seoTitle: 'LLM Tool Calling Guide 2026 | Freemium Services', seoDescription: 'Master LLM tool calling. Build agents that interact with real APIs and databases.' },
-    { id: 'vision', title: 'Open-Source Computer Vision in 2026', content: 'Vision models are now accessible to everyone. Top models: YOLO v11 for real-time object detection (runs on CPU), SAM 2 from Meta for segmentation, Florence 2 as a versatile vision-language model, and Llama 3.2 Vision for multimodal chat via Ollama. Run vision models locally with zero cloud dependency using Ollama with llama3.2-vision. Applications include document OCR, defect detection, security analysis, and medical pre-screening.', seoTitle: 'Open-Source Computer Vision 2026 | Freemium Services', seoDescription: 'Best open-source vision models running locally via Ollama.' },
+  { id: 'tool-calling', title: 'LLM Tool Calling: Making AI Act in the Real World', content: 'Tool calling lets LLMs trigger real-world actions -- searching the web, querying databases, executing code, calling APIs. Define tools as JSON schemas with a name, description, and input_schema. The model decides when to call them. Stacks: Ollama + LangChain for local models, Dify for visual pipelines, n8n for automation-first agents.', seoTitle: 'LLM Tool Calling Guide 2026 | Freemium Services', seoDescription: 'Master LLM tool calling. Build agents that interact with real APIs and databases.' },
+  { id: 'vision', title: 'Open-Source Computer Vision in 2026', content: 'Vision models are now accessible to everyone. Top models: YOLO v11 for real-time object detection (runs on CPU), SAM 2 from Meta for segmentation, Florence 2 as a versatile vision-language model, and Llama 3.2 Vision for multimodal chat via Ollama. Run vision models locally with zero cloud dependency using Ollama with llama3.2-vision. Applications include document OCR, defect detection, security analysis, and medical pre-screening.', seoTitle: 'Open-Source Computer Vision 2026 | Freemium Services', seoDescription: 'Best open-source vision models running locally via Ollama.' },
   { id: 'integrations', title: 'Integration Architecture for Self-Hosted Stacks', content: `## Connecting Your Open-Source Stack\n\n### The Integration Pyramid\n**Level 1 -- Webhooks**: HTTP callbacks. Every tool supports them. Simple, reliable.\n\n**Level 2 -- n8n/Activepieces**: Handles 80% of integration needs without code.\n\n**Level 3 -- Custom microservices**: FastAPI for complex logic that visual builders cannot express.\n\n### Event-Driven Architecture\nRedpanda (Kafka-compatible) as your event bus decouples services and enables reliable async processing at scale.\n\n### API Gateway\nTraefik handles internal routing. Kong or Nginx with API key validation for external-facing APIs.\n\n### The TurboQuant Integration Hub\nDeploy your integration middleware on TurboQuant for maximum uptime and global edge distribution.`, seoTitle: 'Integration Architecture for Open-Source Stacks | Freemium Services', seoDescription: 'Design resilient integrations for your self-hosted stack. n8n, webhooks, and event-driven patterns.' },
 ];

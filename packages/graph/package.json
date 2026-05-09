@@ -1,0 +1,10 @@
+{
+  "name": "@freemium/graph",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "@freemium/types": "*"
+  }
+}

@@ -1,29 +1,24 @@
 {
-  "name": "freemium-services",
-  "version": "2.0.0",
-  "description": "Static site generator for Freemium.Services — verified directory of freemium & open-source tools",
-  "main": "builder.js",
-  "scripts": {
-    "build": "node builder.js",
-    "test:tools": "node scripts/validate-tools.js",
-    "start": "node builder.js",
-    "verify:sitemaps": "node scripts/verify-sitemaps.js",
-    "sync:all": "node scripts/sync-all.js"
-  },
-  "dependencies": {
-    "marked": "^12.0.0",
-    "workflow": "^4.2.4"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "keywords": [
-    "static-site-generator",
-    "seo",
-    "open-source-directory",
-    "freemium",
-    "self-hosting"
+  "name": "freemium-services-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
   ],
-  "author": "Freemium Services",
-  "license": "MIT"
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "node --test tests/**/*.test.js",
+    "test:tools": "node tests/tools.test.js",
+    "test:builder": "node --test tests/builder.test.js",
+    "test:all": "npm run test:tools && npm run test",
+    "db:push": "npx prisma db push",
+    "db:generate": "npx prisma generate",
+    "db:seed": "npx prisma db seed"
+  },
+  "devDependencies": {
+    "prisma": "^6.0.0",
+    "typescript": "^5.0.0"
+  }
 }

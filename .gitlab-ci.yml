@@ -1,5 +1,6 @@
 image: node:20
 
+# Define the stages of the pipeline
 stages:
   - test
   - build
@@ -8,33 +9,48 @@ stages:
 variables:
   GEMINI_API_KEY: "$GEMINI_API_KEY"
 
+# Cache node_modules to speed up builds.
+# The cache is invalidated whenever package-lock.json changes.
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key:
+    files:
+      - package-lock.json
   paths:
     - node_modules/
+
+# Commands to run before every job (ensures dependencies are present)
+before_script:
+  - npm ci
 
 validate-tools:
   stage: test
   script:
-    - npm install
     - npm run test:tools
+    - npm run test:builder
+    - npm run test:all
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
 
 build-site:
   stage: build
   script:
-    - npm install
     - npm run build
   artifacts:
     paths:
       - public/
     expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
 
 pages:
   stage: deploy
   script:
-    - echo "Publishing GitLab Pages..."
+    - echo "Deploying static site to GitLab Pages..."
   artifacts:
     paths:
       - public/
+  dependencies:
+    - build-site
   rules:
     - if: $CI_COMMIT_BRANCH == "main"

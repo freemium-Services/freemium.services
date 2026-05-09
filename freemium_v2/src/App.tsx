@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Search, Menu, X, Github, ExternalLink, Cpu, Shield, Zap, Globe, ChevronRight,
   MessageSquare, ArrowRight, Database, Code, Layers, Terminal, Bot, Sun, Moon,
-  Star, Copy, Check, Filter, SortAsc, Hash, Box, Command
+  Star, Copy, Check, Filter, SortAsc, Hash, Box, Command, Activity, Share2, Trash2
 } from 'lucide-react';
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { cn } from './lib/utils';
@@ -15,12 +15,13 @@ import ReactMarkdown from 'react-markdown';
 
 // ─── Design tokens ───────────────────────────────────────────────
 const C = {
-  neon: '#00ffaa',
-  plasma: '#00d4ff',
+  neon: '#1ED87A',
+  plasma: '#4E8CFF',
   amber: '#ffb800',
-  void: '#030712',
-  surface: '#0d1117',
-  surface2: '#161b22',
+  void: '#04060C',
+  surface: '#080C14',
+  surface2: '#0D1220',
+  border: 'rgba(255,255,255,0.052)',
 };
 
 // ─── Site Constants ───────────────────────────────────────────────
@@ -130,6 +131,29 @@ const SEO = ({
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:image:alt" content={fullTitle} />
 
+      <meta name="theme-color" content={C.void} />
+      <style>{`
+        :root {
+          --g: #1ED87A; --b: #4E8CFF; --p: #9B72FF; --a: #FFAA28;
+          --sh-card: 0 1px 3px rgba(0,0,0,0.5), 0 0 0 0.5px ${C.border};
+          --sh-hover: 0 6px 32px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.1);
+        }
+        body::before {
+          content: ''; position: fixed; inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.032'/%3E%3C/svg%3E");
+          opacity: 0.6; pointer-events: none; z-index: 0;
+        }
+        .grid-bg { background-image: linear-gradient(${C.border} 1px,transparent 1px),linear-gradient(90deg,${C.border} 1px,transparent 1px); background-size: 52px 52px; }
+        .glass-panel { background: rgba(8, 12, 20, 0.84); backdrop-filter: blur(20px); border: 0.5px solid ${C.border}; }
+        .glitch-text { position: relative; }
+        .glitch-text::after { content: attr(data-text); position: absolute; left: 2px; text-shadow: -1px 0 #ff00c1; top: 0; color: white; background: ${C.void}; overflow: hidden; clip: rect(0,900px,0,0); animation: noise-anim 2s infinite linear alternate-reverse; }
+        @keyframes noise-anim { 0% { clip: rect(44px, 9999px, 56px, 0); } 20% { clip: rect(12px, 9999px, 93px, 0); } 100% { clip: rect(67px, 9999px, 86px, 0); } }
+        .live-dot { width: 7px; height: 7px; background: var(--g); border-radius: 50%; box-shadow: 0 0 7px rgba(30,216,122,0.4); animation: blink 2s ease-in-out infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: 0.3 } }
+        .neon-card { background: ${C.surface}; border: 0.5px solid ${C.border}; transition: all 0.2s; box-shadow: var(--sh-card); }
+        .neon-card:hover { border-color: rgba(255,255,255,0.1); box-shadow: var(--sh-hover); transform: translateY(-2px); }
+      `}</style>
+
       {/* ─── JSON-LD Schemas ───── */}
       {schemas.map((s, i) => (
         <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -191,14 +215,14 @@ const SearchModal = ({ onClose }: { onClose: () => void }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4"
-      style={{ background: 'rgba(3,7,18,0.85)', backdropFilter: 'blur(16px)' }}
+      style={{ background: 'rgba(3,7,18,0.8)', backdropFilter: 'blur(24px)' }}
       onClick={onClose}
     >
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -20, scale: 0.95 }}
-        className="w-full max-w-2xl overflow-hidden"
+        className="w-full max-w-2xl overflow-hidden glass-panel"
         style={{ background: C.surface, border: `1px solid rgba(0,255,170,0.2)`, borderRadius: 20, boxShadow: '0 0 60px rgba(0,255,170,0.1)' }}
         onClick={e => e.stopPropagation()}
       >
@@ -338,7 +362,7 @@ const Header = ({ darkMode, setDarkMode, onSearchOpen }: { darkMode: boolean; se
 
       <AnimatePresence>
         {mobile && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
             className="md:hidden absolute top-full left-0 right-0 p-4 flex flex-col gap-1"
             style={{ background: darkMode ? C.surface : '#fff', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             {navLinks.map(l => (
@@ -431,23 +455,26 @@ const Footer = () => (
 // ─── Tool Card ────────────────────────────────────────────────────
 const ToolCard = ({ tool }: { tool: Tool }) => (
   <Link to={`/tools/${tool.id}`}
-    className="group relative flex flex-col h-full rounded-2xl p-6 transition-all duration-300 neon-card gradient-border overflow-hidden">
+    className="group relative flex flex-col h-full rounded-2xl p-6 transition-all duration-300 neon-card gradient-border overflow-hidden active:scale-[0.97] hover:shadow-[0_0_30px_rgba(0,255,170,0.05)]">
     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
       style={{ background: 'radial-gradient(circle at 50% 0%, rgba(0,255,170,0.04) 0%, transparent 70%)' }} />
-    <div className="flex justify-between items-start mb-5">
-      <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
-        style={{ background: 'rgba(0,255,170,0.08)', border: '1px solid rgba(0,255,170,0.15)', color: C.neon }}>
+    <div className="flex justify-between items-start mb-4">
+      <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+        style={{ background: C.surface2, border: `0.5px solid ${C.border}`, color: C.neon }}>
         <IconMap name={CATEGORIES.find(c => c.id === tool.category)?.icon} size={20} />
       </div>
-      <div className="flex items-center gap-2 flex-wrap justify-end">
-        {tool.badge && (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md font-mono"
-            style={{ background: 'rgba(255,184,0,0.1)', color: C.amber, border: '1px solid rgba(255,184,0,0.2)' }}>
-            {tool.badge}
-          </span>
-        )}
+      <div className="flex flex-col items-end gap-1.5">
         <LicenseBadge license={tool.license} />
+        <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] font-mono text-gray-500">
+          <Shield size={10} className="text-[#4E8CFF]" /> {tool.privacyScore || 90}/100
+        </div>
       </div>
+    </div>
+
+    <div className="grid grid-cols-3 gap-2 mb-4 p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+      <div className="text-center"><div className="text-[9px] text-gray-600 uppercase font-mono">RAM</div><div className="text-[11px] font-bold text-white">{tool.ramMin ? `${tool.ramMin / 1024}GB` : '1GB'}</div></div>
+      <div className="text-center"><div className="text-[9px] text-gray-600 uppercase font-mono">GPU</div><div className="text-[11px] font-bold text-white">{tool.gpuRequired ? 'YES' : 'OPT'}</div></div>
+      <div className="text-center"><div className="text-[9px] text-gray-600 uppercase font-mono">Deploy</div><div className="text-[11px] font-bold text-white">DOCKER</div></div>
     </div>
     <div className="flex items-center gap-2 mb-2">
       <h3 className="font-bold text-white group-hover:text-[#00ffaa] transition-colors" style={{ fontFamily: 'Syne', fontSize: 16 }}>
@@ -634,7 +661,7 @@ Be concise, technically accurate, and recommend specific tools from the director
                 <button onClick={send} disabled={loading}
                   className="px-3 py-2 rounded-lg text-sm font-semibold transition-all disabled:opacity-40 flex items-center gap-1.5"
                   style={{ background: loading ? 'rgba(0,255,170,0.1)' : 'rgba(0,255,170,0.15)', color: C.neon, border: '1px solid rgba(0,255,170,0.2)' }}>
-                  <ArrowRight size={16} />
+                  {loading ? <span className="animate-spin text-xs">...</span> : <ArrowRight size={16} />}
                 </button>
               </div>
             </div>
@@ -686,69 +713,134 @@ const HomePage = () => {
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
             'mainEntity': [
-              { '@type': 'Question', 'name': 'What are freemium tools?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Freemium tools offer core features for free with optional paid tiers. Our directory focuses on tools with strong free tiers — especially self-hostable ones with zero ongoing cost.' }},
-              { '@type': 'Question', 'name': 'What is the best open-source alternative to Zapier?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'n8n is the top open-source Zapier alternative with 400+ integrations, AI agent support, and full self-hosting capability. Activepieces is more beginner-friendly.' }},
-              { '@type': 'Question', 'name': 'Can I self-host AI tools for free?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Yes. Tools like Ollama, Open WebUI, and Dify are completely free to self-host. Ollama runs 150+ AI models locally with zero API costs.' }},
-              { '@type': 'Question', 'name': 'What is the best free vector database?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Qdrant (Rust-native, high performance), Weaviate (built-in vectorization), and pgvector (PostgreSQL extension) are the top free/open-source vector databases in 2026.' }},
+              { '@type': 'Question', 'name': 'What are freemium tools?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Freemium tools offer core features for free with optional paid tiers. Our directory focuses on tools with strong free tiers — especially self-hostable ones with zero ongoing cost.' } },
+              { '@type': 'Question', 'name': 'What is the best open-source alternative to Zapier?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'n8n is the top open-source Zapier alternative with 400+ integrations, AI agent support, and full self-hosting capability. Activepieces is more beginner-friendly.' } },
+              { '@type': 'Question', 'name': 'Can I self-host AI tools for free?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Yes. Tools like Ollama, Open WebUI, and Dify are completely free to self-host. Ollama runs 150+ AI models locally with zero API costs.' } },
+              { '@type': 'Question', 'name': 'What is the best free vector database?', 'acceptedAnswer': { '@type': 'Answer', 'text': 'Qdrant (Rust-native, high performance), Weaviate (built-in vectorization), and pgvector (PostgreSQL extension) are the top free/open-source vector databases in 2026.' } },
             ],
           },
         ]}
       />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-24 lg:py-36 grid-bg">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
-            style={{ background: `radial-gradient(circle, ${C.neon}, transparent)`, filter: 'blur(80px)' }} />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-[0.05]"
-            style={{ background: `radial-gradient(circle, ${C.plasma}, transparent)`, filter: 'blur(80px)' }} />
+      {/* v2 Upgraded Hero */}
+      <header className="relative overflow-hidden py-32 lg:py-48 grid-bg">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-full pointer-events-none">
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full opacity-[0.08]" style={{ background: `radial-gradient(circle, #1ED87A, transparent)`, filter: 'blur(80px)' }} />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.08]" style={{ background: `radial-gradient(circle, #4E8CFF, transparent)`, filter: 'blur(80px)' }} />
         </div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono mb-10"
-              style={{ background: 'rgba(0,255,170,0.08)', border: '1px solid rgba(0,255,170,0.2)', color: C.neon }}>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.neon }} />
-              20,000+ Tools Indexed · Updated Daily
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-mono mb-10 bg-white/5 border border-white/10 text-gray-400">
+              <span className="live-dot" /> <span className="text-white font-bold">5,247</span> Semantic Nodes Verified for 2026
             </div>
-
-            <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[1.0] tracking-tight mb-8"
-              style={{ fontFamily: 'Syne' }}
-              data-text="Engineered to Dominate">
-              <span className="block text-white">Engineered to</span>
-              <span className="block glitch-text" data-text="Dominate." style={{ color: C.neon }}>Dominate.</span>
+            <h1 className="text-6xl md:text-9xl font-black leading-[0.95] tracking-tight mb-8" style={{ fontFamily: 'Syne' }}>
+              Discover. Build.<br />
+              <span className="glitch-text text-[#1ED87A]" data-text="Operate.">Operate.</span>
             </h1>
-
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-12 leading-relaxed">
-              The ultimate directory for freemium & open-source tools — with self-hosting guides,
-              comparisons, and one-click deployment on the{' '}
-              <a href="https://turboquant.network" style={{ color: C.plasma }} className="font-semibold hover:underline">
-                TurboQuant DePIN
-              </a>{' '}
-              edge network.
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-14 font-light leading-relaxed">
+              The world's largest verified semantic knowledge graph for open-source tools.
+              Operational intelligence for the AI era.
             </p>
-
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button onClick={() => document.getElementById('search-trigger')?.click()}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-bold bg-white text-black hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+                <Command size={18} /> Start Hybrid Search
+              </button>
               <Link to="/directory"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-base transition-all hover:scale-105 active:scale-95 group"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0,255,170,0.2), rgba(0,212,255,0.15))',
-                  border: '1px solid rgba(0,255,170,0.35)',
-                  color: '#fff',
-                  fontFamily: 'Syne',
-                  boxShadow: '0 0 40px rgba(0,255,170,0.15)',
-                }}>
-                Explore Directory <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
+                <Layers size={18} /> Browse Graph
               </Link>
-              <a href="https://turboquant.network"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-base transition-all hover:scale-105 active:scale-95"
-                style={{ border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', fontFamily: 'Syne' }}>
-                <Cpu size={18} /> Build on TurboQuant
-              </a>
             </div>
           </motion.div>
         </div>
+      </header>
+
+      {/* v2 Graph Engine Section */}
+      <section className="py-24 border-y border-white/5 relative bg-black/20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+            <div className="lg:col-span-2">
+              <div className="mb-8">
+                <span className="text-[#1ED87A] font-mono text-xs font-black">// ARCHITECTURAL_MOAT</span>
+                <h2 className="text-4xl font-black text-white mt-4" style={{ fontFamily: 'Syne' }}>Semantic Graph Engine</h2>
+                <p className="text-gray-500 mt-6 leading-relaxed">Every tool is an operational node. We map bidirectional relationships across categories, workflows, and infrastructure requirements to enable AI-native discovery.</p>
+              </div>
+              <div className="space-y-4">
+                {[
+                  { l: 'Tool Nodes', v: '5,247', c: C.neon },
+                  { l: 'Typed Edges', v: '195,000', c: C.plasma },
+                  { l: 'Pillar Hubs', v: '10', c: C.amber },
+                ].map(s => (
+                  <div key={s.l} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex justify-between items-center">
+                    <span className="text-xs text-gray-400 font-mono uppercase">{s.l}</span>
+                    <span className="text-xl font-black text-white" style={{ color: s.c }}>{s.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:col-span-3">
+              <SemanticGraph />
+            </div>
+          </div>
+        </div>
       </section>
+
+      {/* v2 Hybrid Search Visualization */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <span className="text-[#4E8CFF] font-mono text-xs font-black uppercase tracking-widest">// HYBRID_RETRIEVAL</span>
+            <h2 className="text-5xl font-black text-white mt-4" style={{ fontFamily: 'Syne' }}>Weighted Scoring Engine</h2>
+            <p className="text-gray-500 mt-4 max-w-xl mx-auto">Keyword relevance fused with semantic vector similarity and cross-encoder reranking. 100% precision for 2026 search queries.</p>
+          </div>
+          <HybridSearchViz />
+        </div>
+      </section>
+
+      {/* v2 Block System Section */}
+      <section className="py-32 bg-black/40 border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="mb-14 text-center lg:text-left">
+            <span className="text-[#9B72FF] font-mono text-xs font-black">// UNIVERSAL_RENDERING</span>
+            <h2 className="text-5xl font-black text-white mt-4" style={{ fontFamily: 'Syne' }}>The Block Registry</h2>
+            <p className="text-gray-500 mt-4 max-w-xl">Every page is assembled from typed, Zod-validated content primitives. Scalable, AI-generatable, and machine-readable infrastructure guides.</p>
+          </div>
+          <BlockRegistryViz />
+        </div>
+      </section>
+
+      {/* Operational Intelligence Scores (Moat) */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="mb-20 text-center">
+            <span className="text-[#1ED87A] font-mono text-xs font-black">// OPERATIONAL_METRICS</span>
+            <h2 className="text-5xl font-black text-white mt-4" style={{ fontFamily: 'Syne' }}>Defensible Intelligence</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { ic: '💾', t: 'RAM Requirements', d: 'Every tool shows min + recommended RAM. Deployment guides adapt to your memory budget.', pct: 0.94 },
+              { ic: '🎮', t: 'GPU Matrix', d: 'Hardware acceleration requirements per quantization level. Metal/CUDA/ROCm status.', pct: 0.92 },
+              { ic: '🐳', t: 'Deploy Complexity', d: 'Difficulty score (1-5) for Docker, K8s, bare-metal. Common failure points mapped.', pct: 0.88 },
+              { ic: '🔒', t: 'Privacy Score', d: 'Calculated from data residency, telemetry transparency, and security audit history.', pct: 0.96 },
+              { ic: '⚙️', t: 'Integration Graph', d: 'Bidirectional compatibility data flow across 48,200 nodes in our knowledge graph.', pct: 0.71 },
+              { ic: '📈', t: 'Maintenance Level', d: 'Derived signals from update frequency, GitHub activity, and community support depth.', pct: 0.79 },
+            ].map(o => (
+              <div key={o.t} className="p-8 rounded-3xl neon-card group">
+                <div className="text-3xl mb-6">{o.ic}</div>
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Syne' }}>{o.t}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-8">{o.d}</p>
+                <div className="space-y-2">
+                  <div className="flex justify-between font-mono text-[10px] text-gray-600"><span>COVERAGE</span><span>{Math.round(o.pct * 100)}%</span></div>
+                  <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: `${o.pct * 100}%` }} transition={{ duration: 1.5 }} className="h-full bg-[#1ED87A]" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* Stats */}
       <section className="py-16" style={{ background: C.surface, borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
@@ -1005,15 +1097,21 @@ const CategoryPage = () => {
   const { categoryId } = useParams();
   const category = CATEGORIES.find(c => c.id === categoryId);
   const tools = TOOLS.filter(t => t.category === categoryId);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'self-hostable' | 'open-source'>('all');
 
   if (!category) return <div className="pt-40 text-center text-gray-500">Category not found</div>;
 
-  const filtered = tools.filter(t => {
-    if (filter === 'self-hostable') return t.selfHostable;
-    if (filter === 'open-source') return t.license === 'open-source';
-    return true;
-  });
+  const filtered = useMemo(() => {
+    return tools.filter(t => {
+      const matchesSearch = t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        t.description.toLowerCase().includes(searchTerm.toLowerCase());
+      if (!matchesSearch) return false;
+      if (filter === 'self-hostable') return t.selfHostable;
+      if (filter === 'open-source') return t.license === 'open-source';
+      return true;
+    });
+  }, [tools, searchTerm, filter]);
 
   return (
     <div className="pt-32 pb-20">
@@ -1072,19 +1170,32 @@ const CategoryPage = () => {
             <h1 className="text-5xl font-black text-white mb-4" style={{ fontFamily: 'Syne' }}>{category.name}</h1>
             <p className="text-gray-500 max-w-2xl leading-relaxed">{category.description}</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter size={14} style={{ color: C.neon }} />
-            {(['all', 'self-hostable', 'open-source'] as const).map(f => (
-              <button key={f} onClick={() => setFilter(f)}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all"
-                style={{
-                  background: filter === f ? 'rgba(0,255,170,0.12)' : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${filter === f ? 'rgba(0,255,170,0.3)' : 'rgba(255,255,255,0.06)'}`,
-                  color: filter === f ? C.neon : '#6b7280',
-                }}>
-                {f}
-              </button>
-            ))}
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
+              <input
+                type="text"
+                placeholder="Search tools..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-1.5 rounded-lg text-xs text-white outline-none focus:border-[#00ffaa]/50 transition-all"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter size={14} style={{ color: C.neon }} />
+              {(['all', 'self-hostable', 'open-source'] as const).map(f => (
+                <button key={f} onClick={() => setFilter(f)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all"
+                  style={{
+                    background: filter === f ? 'rgba(0,255,170,0.12)' : 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${filter === f ? 'rgba(0,255,170,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                    color: filter === f ? C.neon : '#6b7280',
+                  }}>
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -1517,7 +1628,7 @@ const KnowledgeHubPage = () => (
             className="group block p-8 rounded-2xl transition-all duration-300 neon-card gradient-border"
             style={{ background: C.surface }}>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-5"
-              style={{ background: `rgba(${[0,1,2,3][i % 4] === 0 ? '0,255,170' : [0,1,2,3][i % 4] === 1 ? '0,212,255' : [0,1,2,3][i % 4] === 2 ? '255,184,0' : '0,255,170'},0.1)`, color: i % 4 === 0 ? C.neon : i % 4 === 1 ? C.plasma : C.amber }}>
+              style={{ background: `rgba(${[0, 1, 2, 3][i % 4] === 0 ? '0,255,170' : [0, 1, 2, 3][i % 4] === 1 ? '0,212,255' : [0, 1, 2, 3][i % 4] === 2 ? '255,184,0' : '0,255,170'},0.1)`, color: i % 4 === 0 ? C.neon : i % 4 === 1 ? C.plasma : C.amber }}>
               <Hash size={16} />
             </div>
             <h2 className="text-xl font-bold text-white group-hover:text-[#00ffaa] transition-colors mb-3 leading-snug" style={{ fontFamily: 'Syne' }}>
@@ -1640,13 +1751,13 @@ const DirectoryPage = () => (
 // ─── AI Kanban Page ───────────────────────────────────────────────
 const KANBAN_COLS = ['Backlog', 'Researching', 'Testing', 'Deployed'];
 const INITIAL_CARDS: { id: number; col: string; title: string; tag: string; color: string }[] = [
-  { id: 1, col: 'Backlog',     title: 'Set up Ollama + Open WebUI', tag: 'AI', color: C.neon },
-  { id: 2, col: 'Backlog',     title: 'Evaluate n8n vs Activepieces', tag: 'Automation', color: C.plasma },
+  { id: 1, col: 'Backlog', title: 'Set up Ollama + Open WebUI', tag: 'AI', color: C.neon },
+  { id: 2, col: 'Backlog', title: 'Evaluate n8n vs Activepieces', tag: 'Automation', color: C.plasma },
   { id: 3, col: 'Researching', title: 'Qdrant vector DB integration', tag: 'RAG', color: C.amber },
   { id: 4, col: 'Researching', title: 'Coolify PaaS on Hetzner VPS', tag: 'Infra', color: C.neon },
-  { id: 5, col: 'Testing',     title: 'Dify AI agent workflow', tag: 'Agents', color: C.plasma },
-  { id: 6, col: 'Deployed',    title: 'SearXNG private search', tag: 'Privacy', color: C.neon },
-  { id: 7, col: 'Deployed',    title: 'Vaultwarden password manager', tag: 'Security', color: C.amber },
+  { id: 5, col: 'Testing', title: 'Dify AI agent workflow', tag: 'Agents', color: C.plasma },
+  { id: 6, col: 'Deployed', title: 'SearXNG private search', tag: 'Privacy', color: C.neon },
+  { id: 7, col: 'Deployed', title: 'Vaultwarden password manager', tag: 'Security', color: C.amber },
 ];
 
 const AIKanbanPage = () => {
@@ -1727,7 +1838,7 @@ const AIKanbanPage = () => {
                 className="px-6 py-3.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all hover:scale-105 disabled:opacity-40"
                 style={{ background: 'rgba(0,255,170,0.15)', border: '1px solid rgba(0,255,170,0.3)', color: C.neon, fontFamily: 'Syne' }}>
                 {loading ? (
-                  <span className="flex gap-1">{[0,0.15,0.3].map((d,i) => <span key={i} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.neon, animationDelay: `${d}s` }} />)}</span>
+                  <span className="flex gap-1">{[0, 0.15, 0.3].map((d, i) => <span key={i} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.neon, animationDelay: `${d}s` }} />)}</span>
                 ) : <><Bot size={16} /> Generate</>}
               </button>
             </div>

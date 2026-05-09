@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- CORE ENTITY GRAPH ---
+
+model Tool {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  emoji             String?
+  description       String   @db.Text
+  license           License
+  selfHostable      Boolean  @default(false)
+  website           String?
+  github            String?
+  stars             Int?     @default(0)
+  lastUpdated       DateTime @default(now())
+  
+  // Operational Intelligence Model
+  ramMin            Int?     // MB
+  ramRecommended    Int?     // MB
+  gpuRequired       Boolean  @default(false)
+  gpuMemoryMin      Int?     // MB
+  maintenanceLevel  Level    @default(LOW)
+  scalingDifficulty Int      @default(1) // 1-10
+  dockerSupport     Boolean  @default(true)
+  k8sSupport        Boolean  @default(false)
+  privacyScore      Int      @default(10) // 1-10
+  
+  // Relationships
+  category          Category @relation(fields: [categoryId], references: [id])
+  categoryId        String
+  
+  // Bidirectional Graph Links
+  alternatives      Tool[]   @relation("ToolAlternatives")
+  alternativesTo    Tool[]   @relation("ToolAlternatives")
+  
+  workflows         Workflow[]
+  stacks            Stack[]
+  comparisonsA      Comparison[] @relation("ToolA")
+  comparisonsB      Comparison[] @relation("ToolB")
+  
+  // Rendering System
+  contentPage       ContentPage? @relation(fields: [contentPageId], references: [id])
+  contentPageId     String?      @unique
+
+  faqs              FAQ[]
+  
+  // SEO Metadata
+  seo               SeoMetadata?
+}
+
+model Workflow {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  description       String   @db.Text
+  
+  // Relationships
+  tools             Tool[]
+  stacks            Stack[]
+  
+  // Operational Requirements
+  infraRequired     String?
+  targetPersona     String?
+  
+  // Rendering System
+  contentPage       ContentPage? @relation(fields: [contentPageId], references: [id])
+  contentPageId     String?      @unique
+
+  guides            String[] // Related guide slugs
+  
+  // SEO Metadata
+  seo               SeoMetadata?
+}
+
+model Comparison {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  verdict           String   @db.Text
+  
+  // Relationships
+  toolA             Tool     @relation("ToolA", fields: [toolAId], references: [id])
+  toolAId           String
+  toolB             Tool     @relation("ToolB", fields: [toolBId], references: [id])
+  toolBId           String
+  
+  // Metrics & Operational Benchmarks
+  metrics           Json?    // Performance benchmarks etc.
+  
+  // Rendering System
+  contentPage       ContentPage? @relation(fields: [contentPageId], references: [id])
+  contentPageId     String?      @unique
+
+  // SEO Metadata
+  seo               SeoMetadata?
+}
+
+model Stack {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  description       String?
+  estimatedCost     Float?
+  
+  // Relationships
+  tools             Tool[]
+  workflows         Workflow[]
+  
+  // Topology Data
+  deploymentTopology Json?   // Deployment nodes and layers
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  icon        String?
+  tools       Tool[]
+  
+  // Pillar Page Rendering
+  contentPage       ContentPage? @relation(fields: [contentPageId], references: [id])
+  contentPageId     String?      @unique
+
+  seo         SeoMetadata?
+}
+
+// --- BLOCK-BASED RENDERING ENGINE ---
+
+model ContentPage {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  type      String   // 'TOOL' | 'WORKFLOW' | 'PILLAR' | 'COMPARISON'
+  blocks    Block[]
+  
+  // Reverse lookups
+  tool      Tool?
+  workflow  Workflow?
+  comparison Comparison?
+  category  Category?
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  type      String   // Using String to allow flexible registry expansion
+  order     Int
+  data      Json     // Typed JSON data validated by Zod in the frontend/registry
+
+  contentPage   ContentPage @relation(fields: [contentPageId], references: [id], onDelete: Cascade)
+  contentPageId String
+
+  @@index([contentPageId])
+  @@index([type])
+}
+
+// --- AUXILIARY ENTITIES ---
+
+model FAQ {
+  id        String @id @default(cuid())
+  question  String
+  answer    String @db.Text
+  tool      Tool?  @relation(fields: [toolId], references: [id])
+  toolId    String?
+}
+
+model SeoMetadata {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  keywords    String[]
+  ogImage     String?
+  canonical   String?
+  
+  // Entity links
+  tool        Tool?    @relation(fields: [toolId], references: [id])
+  toolId      String?  @unique
+  workflow    Workflow? @relation(fields: [workflowId], references: [id])
+  workflowId  String?  @unique
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?  @unique
+  comparison  Comparison? @relation(fields: [comparisonId], references: [id])
+  comparisonId String?  @unique
+}
+
+// --- ENUMS ---
+
+enum License {
+  FREE
+  FREEMIUM
+  OPEN_SOURCE
+}
+
+enum Level {
+  LOW
+  MEDIUM
+  HIGH
+}
