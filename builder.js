@@ -385,17 +385,20 @@ function getBaseLayout(title, desc, canonicalPath, content, lang = 'en', headInj
 <body>
   <nav>
       <div class="nav-inner">
-          <a href="${getLocalizedUrl('/', lang)}" class="logo" data-analytics="nav-home">freemium<span>.services</span></a>
-          <div class="nav-links" style="display: flex; gap: 1.5rem; margin-left: auto; align-items: center;">
-            <a href="${getLocalizedUrl('/category/ai-tools.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">AI Tools</a>
-            <a href="${getLocalizedUrl('/category/automation-tools.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Automation</a>
-            <a href="${getLocalizedUrl('/knowledge-hub.html', lang)}" style="text-decoration: none; color: var(--text2); font-size: 0.9rem;">Docs</a>
-            <a href="${TQ_URL}" target="_blank" style="text-decoration: none; color: var(--accent); font-size: 0.9rem;">TurboQuant ↗</a>
+          <a href="${getLocalizedUrl('/', lang)}" class="logo">freemium<span>.services</span></a>
+          <div class="nav-links">
+            <a href="${getLocalizedUrl('/category/ai-tools.html', lang)}">AI Tools</a>
+            <a href="${getLocalizedUrl('/category/automation-tools.html', lang)}">Automation</a>
+            <a href="${getLocalizedUrl('/knowledge-hub.html', lang)}">Docs</a>
+            <a href="${TQ_URL}" target="_blank" class="tq-link">TurboQuant ↗</a>
           </div>
-          <button id="search-trigger" class="btn-search-trigger">
-            <span>Search tools...</span>
-            <span class="search-kbd">⌘K</span>
-          </button>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <button id="search-trigger" class="btn-search-trigger">
+              <span>Search...</span>
+              <span class="search-kbd">⌘K</span>
+            </button>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+          </div>
       </div>
   </nav>
   ${content}
@@ -561,9 +564,7 @@ function renderToolPage(t, lang) {
 
 function renderCategoryPage(catId, catInfo, lang) {
   const catTools = Object.values(toolsData).filter(t => t.category === catId);
-  const toolsHtml = catTools.map(t => `<a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card" data-analytics="category-tool-click" data-target="${t.id}">
-    <h3>${t.emoji} ${t.name}</h3><p>${t.description.replace(/[#*`]/g, '').slice(0, 100)}...</p>
-  </a>`).join('');
+  const toolsHtml = catTools.map(t => renderToolCard(t, lang)).join('');
 
   const faqBankHtml = faqBank.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join('');
 
@@ -594,9 +595,9 @@ function renderCategoryPage(catId, catInfo, lang) {
 
       ${catInfo.longDesc ? `<div class="prose" style="margin-top: 3rem; margin-bottom: 3rem;">${marked.parse(linkify(catInfo.longDesc))}</div>` : ''}
 
-      <section class="grid" style="margin-top: 2rem;">
-        <h2>Verified ${catInfo.name}</h2>
-        <div class="grid">${toolsHtml}</div>
+      <section>
+        <h2 class="section-title">Verified ${catInfo.name}</h2>
+        <div class="tool-grid">${toolsHtml}</div>
       </section>
 
       <section class="faq" style="margin-top: 6rem;">
@@ -615,32 +616,50 @@ function renderCategoryPage(catId, catInfo, lang) {
   return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, canonicalPath, content, lang, headInject, '', ogImagePath);
 }
 
-function renderHomepage(featuredTools, lang) {
-  const featuredHtml = featuredTools.map(t => `
-    <a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card featured-card">
-      <div style="position: absolute; top: 1rem; right: 1rem; color: var(--yellow); font-family: var(--font-mono); font-size: 0.75rem;">★ ${t.stars.toLocaleString()}</div>
+function renderToolCard(t, lang, isFeatured = false) {
+  return `
+    <a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card ${isFeatured ? 'featured-card' : ''}">
+      <div class="card-meta">
+        <span class="stars">⭐ ${t.stars.toLocaleString()}</span>
+        <span class="license">${t.license}</span>
+      </div>
       <h3>${t.emoji} ${t.name}</h3>
       <p>${t.description.replace(/[#*`]/g, '').slice(0, 100)}...</p>
-      <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text3); font-family: var(--font-mono);">Last Updated: ${t.lastUpdated}</div>
+      <div class="card-footer">
+        <span class="update">Updated: ${t.lastUpdated}</span>
+      </div>
     </a>
-  `).join('');
+  `;
+}
+
+function renderHomepage(featuredTools, lang) {
+  const featuredHtml = featuredTools.map(t => renderToolCard(t, lang, true)).join('');
 
   const content = `
-    <div class="container" style="text-align:center; padding-top: 6rem;">
-      <h1>Discover, Build, & Dominate Workflows.</h1>
-      <p class="lead" style="margin: 0 auto 3rem;">The world's largest verified directory of freemium & open-source tools — featuring step-by-step self-hosting guides and powered by DePIN-style edge compute networks.</p>
-      
-      <section style="margin-bottom: 5rem;">
-        <h2 class="featured-card-title" style="margin-bottom: 2rem; font-family: var(--font-display); font-size: 1.5rem; color: var(--green);">✨ Tools of the Week</h2>
-        <div class="grid" style="text-align: left;">
+    <header class="hero">
+      <div class="container">
+        <h1>Discover, Build, & Dominate Workflows.</h1>
+        <p class="lead">The world's largest verified directory of open-source tools — featuring step-by-step self-hosting guides and powered by DePIN-style edge compute networks.</p>
+        <div class="hero-actions">
+           <a href="#browse" class="btn-primary">Browse Categories</a>
+           <a href="${getLocalizedUrl('/knowledge-hub.html', lang)}" class="btn-secondary">Technical Docs</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="featured">
+        <h2 class="section-title">✨ Tools of the Week</h2>
+        <div class="tool-grid">
           ${featuredHtml}
         </div>
       </section>
 
-      <h2 style="margin-bottom: 2rem; font-family: var(--font-display); font-size: 1.5rem;">Browse by Category</h2>
-      <div class="grid" style="text-align: left; margin-top: 4rem;">
+      <section id="browse">
+        <h2 class="section-title">Browse by Category</h2>
+        <div class="tool-grid">
         ${Object.keys(categories).map(catId => `
-          <a href="${getLocalizedUrl(`/category/${catId}.html`, lang)}" class="tool-card" style="border-color: var(--accent);" data-analytics="home-category-click" data-target="${catId}">
+          <a href="${getLocalizedUrl(`/category/${catId}.html`, lang)}" class="tool-card" data-analytics="home-category-click" data-target="${catId}">
             <h3>${categories[catId].name}</h3>
             <p>${categories[catId].description}</p>
           </a>
