@@ -23,6 +23,15 @@ const LANGUAGES = ['en', 'hi', 'ml', 'ta']; // Supported hreflang languages
 const STARS_THRESHOLD = 5000; // Algorithmic Control: Only generate comparisons for popular tools
 const MAX_PAGE_SIZE_KB = 150;
 
+let translationCache = {};
+if (fs.existsSync(translationCacheFile)) {
+  try {
+    translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
+  } catch (e) {
+    console.warn('⚠️ Could not load translation-cache.json');
+  }
+}
+
 // --- Validation & Loading ---
 let toolsData = {};
 try {
@@ -922,14 +931,6 @@ async function build() {
   });
 
   // 5. Multilingual Generation & Search Index
-  if (fs.existsSync(translationCacheFile)) {
-    try {
-      translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
-    } catch (e) {
-      console.warn('⚠️ Could not load translation-cache.json');
-    }
-  }
-
   const allSitemapUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
 
   for (const lang of LANGUAGES) {
@@ -945,7 +946,7 @@ async function build() {
       fs.writeFileSync(path.join(outDir, `search-index-en.json`), JSON.stringify(searchIndex));
     } else {
       console.log(`🌍 Generating localized site for: ${lang}...`);
-      
+
       // Localize Homepage
       fs.writeFileSync(path.join(langOutDir, 'index.html'), renderHomepage(featuredTools, lang));
 
@@ -977,6 +978,9 @@ async function build() {
       fs.writeFileSync(path.join(outDir, `search-index-${lang}.json`), JSON.stringify(localizedIndex));
     }
   }
+
+  // Save updated cache to avoid re-translating on next build
+  fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
   fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
 
   // 6. Sitemaps

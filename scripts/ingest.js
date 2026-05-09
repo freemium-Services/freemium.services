@@ -100,7 +100,7 @@ async function generateAIContent(repoData, cat) {
     const prompt = `
     You are an expert technical writer and SEO specialist. 
     Write a comprehensive, 2000+ word deep-dive for a technical directory about the GitHub project "${repoData.full_name}".
-    ${attempts > 1 ? `\nIMPORTANT: The previous response was too short. You MUST provide a much more detailed "description" that is strictly over 2000 words long. Dive deeper into technical internals, comparison details, and deployment nuances.` : ''}
+    ${attempts > 1 ? `\nCRITICAL: The previous attempt was only ${lastResult?.description.split(/\s+/).length || 'a few'} words. To reach 2000+ words, you MUST expand significantly on the 'Architectural Benefits', 'Real-world deployment scenarios', and 'Comparison with alternatives' sections. Provide granular technical details.` : ''}
     
     Target Category: ${cat}
     Repository Description: ${repoData.description}
