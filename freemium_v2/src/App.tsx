@@ -1099,7 +1099,7 @@ const CategoryPage = () => {
         {/* Pillar content */}
         <div className="p-8 lg:p-12 rounded-3xl" style={{ background: C.surface, border: '1px solid rgba(255,255,255,0.05)' }}>
           <h2 className="text-3xl font-black text-white mb-8" style={{ fontFamily: 'Syne' }}>About {category.name}</h2>
-          <div className="prose-dark">
+          <div className="prose-dark overflow-hidden">
             <ReactMarkdown>{category.pillarContent}</ReactMarkdown>
           </div>
           {category.faqs.length > 0 && (
@@ -1202,8 +1202,8 @@ const ToolPage = () => {
           <span className="text-white">{tool.id}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 overflow-hidden">
+          <div className="lg:col-span-2 space-y-10 min-w-0">
             {/* Hero */}
             <div className="p-8 rounded-3xl relative overflow-hidden" style={{ background: C.surface, border: '1px solid rgba(0,255,170,0.12)' }}>
               <div className="absolute inset-0 pointer-events-none"
@@ -1584,7 +1584,7 @@ const ArticlePage = () => {
           <span className="text-white">{article.id}</span>
         </nav>
         <h1 className="text-4xl lg:text-5xl font-black text-white mb-10 leading-tight" style={{ fontFamily: 'Syne' }}>{article.title}</h1>
-        <div className="prose-dark">
+        <div className="prose-dark overflow-hidden">
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
         <div className="mt-16 p-8 rounded-3xl" style={{ background: C.surface, border: '1px solid rgba(0,212,255,0.15)' }}>

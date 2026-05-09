@@ -59,6 +59,16 @@ function validateTool(tool) {
 // Validate all tools before proceeding
 Object.values(toolsData).forEach(validateTool);
 
+function validateCategories() {
+  const toolCategories = new Set(Object.values(toolsData).map(t => t.category));
+  Object.keys(categories).forEach(catId => {
+    if (!toolCategories.has(catId)) {
+      throw new Error(`Build Failed: Category '${catId}' defined in builder.js has no associated tools in tools.json.`);
+    }
+  });
+}
+validateCategories();
+
 let cssContent = fs.existsSync(cssFile) ? fs.readFileSync(cssFile, 'utf8') : '';
 let chatJsContent = fs.existsSync(chatJsFile) ? fs.readFileSync(chatJsFile, 'utf8') : '';
 let searchJsContent = fs.existsSync(searchJsFile) ? fs.readFileSync(searchJsFile, 'utf8') : '';
@@ -138,19 +148,6 @@ function linkify(text) {
 }
 
 let categories = {
-  'automation-tools': {
-    name: 'Automation Tools',
-    description: 'Open-source and freemium workflow automation.',
-    longDesc: `
-## Building Resilient Automation Architectures
-Workflow automation is the glue of modern digital business. However, relying on proprietary platforms like Zapier creates significant risk through vendor lock-in and high task-based costs. Our directory focuses on fair-code and open-source alternatives that prioritize efficiency and flexibility.
-
-### 1. The iPaaS Revolution
-Modern Integration Platform as a Service (iPaaS) solutions like **n8n** provide a visual interface for connecting over 400 applications. Because these tools can be self-hosted on the **TurboQuant DePIN** network, you can run thousands of execution steps for the price of raw compute, rather than paying per-task premiums.
-
-### 2. Event-Driven Architectures
-Leveraging webhooks and cron triggers allows your infrastructure to react in real-time to external signals. Whether it is processing a new Stripe payment or reacting to a GitHub pull request, open-source automation nodes ensure your data flows smoothly across your entire tech stack.`
-  },
   'ai-tools': {
     name: 'AI Tools',
     description: 'Local LLMs, inference engines, and platforms.',
@@ -167,9 +164,19 @@ RAG pipelines have become the standard for grounding LLMs in reality. Instead of
 ### 3. Autonomous Agents and Workflow Automation
 The next frontier is agentic workflows. Autonomous agents can now use tools, execute bash commands, and iterate on complex multi-step goals. Integrating **Claude Code** with **n8n** allows developers to automate entire software development lifecycles (SDLC) with zero human intervention in the loop.`
   },
-  'rag-tools': { name: 'RAG Tools', description: 'Retrieval-Augmented Generation visual builders.' },
-  'assistants': { name: 'AI Assistants', description: 'Self-hosted AI chat interfaces.' },
-  'developer-tools': { name: 'Developer Tools', description: 'Tools built to accelerate engineering.' },
+  'automation-tools': {
+    name: 'Automation Tools',
+    description: 'Open-source and freemium workflow automation.',
+    longDesc: `
+## Building Resilient Automation Architectures
+Workflow automation is the glue of modern digital business. However, relying on proprietary platforms like Zapier creates significant risk through vendor lock-in and high task-based costs. Our directory focuses on fair-code and open-source alternatives that prioritize efficiency and flexibility.
+
+### 1. The iPaaS Revolution
+Modern Integration Platform as a Service (iPaaS) solutions like **n8n** provide a visual interface for connecting over 400 applications. Because these tools can be self-hosted on the **TurboQuant DePIN** network, you can run thousands of execution steps for the price of raw compute, rather than paying per-task premiums.
+
+### 2. Event-Driven Architectures
+Leveraging webhooks and cron triggers allows your infrastructure to react in real-time to external signals. Whether it is processing a new Stripe payment or reacting to a GitHub pull request, open-source automation nodes ensure your data flows smoothly across your entire tech stack.`
+  },
   'self-hosting': {
     name: 'Self-Hosting',
     description: 'PaaS and deployment tools for your own infrastructure.',
@@ -182,6 +189,97 @@ The standard for modern self-hosting is containerization. **Docker** allows you 
 
 ### 2. Infrastructure as Code (IaC)
 Managing servers manually is a thing of the past. Using tools like **Coolify** or custom Ansible playbooks, you can treat your hardware as code, ensuring that your deployments are reproducible, secure, and easily backable.`
+  },
+  'rag-tools': {
+    name: 'RAG Tools',
+    description: 'Retrieval-Augmented Generation visual builders and frameworks.',
+    longDesc: `
+## Mastering Retrieval-Augmented Generation (RAG)
+RAG has emerged as the definitive architecture for grounding LLMs in proprietary data. By connecting your models to a live knowledge base, you eliminate hallucinations and ensure your AI provides cited, accurate information.
+
+### 1. The RAG Pipeline Architecture
+A production-ready RAG pipeline consists of several key stages: document ingestion, chunking strategies, embedding generation, and vector storage. Tools like **LlamaIndex** and **LangChain** provide the primitive building blocks, while platforms like **Dify** offer a visual orchestration layer.
+
+### 2. Hybrid Search and Re-ranking
+In 2026, simple semantic search is no longer enough. Leading RAG implementations use hybrid search—combining vector similarity with keyword matching (BM25). Integrating a re-ranker stage ensures that the most relevant context is injected into the LLM prompt, significantly improving output quality.`
+  },
+  'ai-agents': {
+    name: 'AI Agents',
+    description: 'Autonomous systems that plan, reason, and execute tasks.',
+    longDesc: `
+## The Era of Agentic Workflows
+AI Agents represent the transition from "Chat" to "Do". These autonomous systems use LLMs to plan multi-step actions, call APIs, and browse the web to complete complex goals with minimal human intervention.
+
+### 1. Autonomous Task Execution
+Unlike simple chatbots, agents like **AutoGPT** or **Claude Code** can interact with their environment. They can read your codebase, write tests, and refactor files. This autonomy is powered by advanced reasoning capabilities and tool-calling protocols.
+
+### 2. Multi-Agent Orchestration
+The next frontier is teams of specialized agents working together. Frameworks like **CrewAI** allow you to define distinct roles (e.g., a "Researcher" and a "Writer") that collaborate to deliver high-quality results.`
+  },
+  'developer-tools': {
+    name: 'Developer Tools',
+    description: 'Essential utilities, frameworks, and platforms for modern engineering.',
+    longDesc: `
+## Building the Modern Developer Stack
+The tools developers use daily have seen a massive performance revolution. From ultra-fast editors to local-first databases, the 2026 developer stack prioritizes speed, efficiency, and deep AI integration.
+
+### 1. High-Performance Infrastructure
+Tools like **Zed** and **Meilisearch** are rewriting the rules of software performance. By utilizing systems-level languages and GPU acceleration, these tools provide an instantaneous feedback loop that was previously impossible.
+
+### 2. Open-Source Backend Platforms (BaaS)
+Moving away from proprietary cloud services, developers are adopting self-hostable alternatives like **Supabase** and **Appwrite**. These platforms provide Postgres, Auth, and Storage out of the box.`
+  },
+  'vector-databases': {
+    name: 'Vector Databases',
+    description: 'The memory layer for modern AI and semantic search.',
+    longDesc: `
+## The Foundation of Semantic Memory
+Vector databases are specialized storage engines designed to handle high-dimensional embeddings. They enable fast similarity search, making them the essential "memory" component for RAG pipelines.
+
+### 1. Efficient Similarity Search
+Standard SQL databases are not optimized for vector math. Dedicated engines like **Qdrant** and **Weaviate** use advanced indexing algorithms (like HNSW) to perform sub-millisecond searches across millions of vectors.
+
+### 2. Choosing the Right Vector Store
+When selecting a vector database, consider your scale and performance requirements. **pgvector** is excellent for teams already using PostgreSQL, while **Milvus** is preferred for billion-scale production workloads.`
+  },
+  'cli-tools': {
+    name: 'CLI Tools',
+    description: 'Terminal utilities and command-line interfaces for power users.',
+    longDesc: `
+## The Terminal Renaissance
+The command line remains the most powerful interface for developers. Modern CLI tools, often written in Rust or Go, are replacing legacy Unix defaults with faster, more ergonomic alternatives.
+
+### 1. AI-Powered Terminal Workflows
+Command-line agents like **Ollama** and **Aider** allow you to bring generative AI directly into your shell. You can run models, edit code, and manage infrastructure without ever leaving the terminal.
+
+### 2. Essential Productivity Utilities
+Upgrade your terminal with modern replacements: use **ripgrep** for searching, **fzf** for fuzzy finding, and **lazygit** for visual git management.`
+  },
+  'assistants': {
+    name: 'AI Assistants',
+    description: 'Self-hosted and private alternatives to commercial chatbots.',
+    longDesc: `
+## Reclaiming Privacy with Self-Hosted AI
+Commercial AI assistants often come with privacy concerns. The open-source community has responded with powerful, local-first alternatives that give you full control over your data and model choices.
+
+### 1. Polished User Interfaces
+Interfaces like **Open WebUI** provide a polished, ChatGPT-like experience while running entirely on your hardware. They support RAG, web search, and multi-user access control.
+
+### 2. Local Inference Engines
+By pairing a frontend with inference engines like **Ollama**, you can run the latest open-source models (like Llama 3 or Mistral) with zero API costs. This ensures your conversations remain private.`
+  },
+  'open-source': {
+    name: 'Open Source',
+    description: 'The definitive directory of community-backed, free-to-use software.',
+    longDesc: `
+## The Power of Community-Driven Software
+Open-source software is the backbone of the internet. It offers transparency, security, and the freedom to modify and distribute code without the constraints of proprietary licensing.
+
+### 1. Why Open Source Wins in 2026
+In an era of vendor lock-in and rising SaaS costs, open source provides a sustainable path forward. Verified projects on Freemium.Services ensure that you have access to high-quality code.
+
+### 2. Contributing to the Ecosystem
+Open source thrives on contribution. Whether it's reporting bugs or writing documentation, being part of the community helps improve the tools we all rely on.`
   }
 };
 let faqBank = [];
@@ -462,50 +560,75 @@ function renderCategoryPage(catId, catInfo, lang) {
     { name: catInfo.name, url: SITE_URL + getLocalizedUrl(`/category/${catId}.html`, lang) }
   ];
 
+  if (currentPage > 1) {
+    breadcrumbItems.push({ name: `Page ${currentPage}`, url: SITE_URL + getLocalizedUrl(`/category/${catId}-page-${currentPage}.html`, lang) });
+  }
+
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "itemListElement": catTools.map((t, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "url": `${SITE_URL}/tools/${t.id}.html`
-    }))
-  };
+      "itemListElement": tools.map((t, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${SITE_URL}/tools/${t.id}.html`
+      }))
+    };
 
-  const ogImagePath = generateSvgOgImage(catInfo.name, 'Category Hub', `${catId}-og.svg`);
+    const ogImagePath = generateSvgOgImage(catInfo.name, 'Category Hub', `${catId}-og.svg`);
+    const ogImagePath = generateSvgOgImage(catInfo.name, `Category Hub ${currentPage > 1 ? `- Page ${currentPage}` : ''}`, `${catId}${currentPage > 1 ? `-p${currentPage}` : ''}-og.svg`);
 
-  const content = `
+    const paginationHtml = totalPages > 1 ? `
+    <div class="pagination" style="margin-top: 4rem; display: flex; gap: 0.75rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+      ${Array.from({ length: totalPages }, (_, idx) => {
+      const p = idx + 1;
+      const pUrl = p === 1 ? `/category/${catId}.html` : `/category/${catId}-page-${p}.html`;
+      const active = p === currentPage;
+      return `<a href="${getLocalizedUrl(pUrl, lang)}" style="padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-family: var(--font-mono); font-size: 0.9rem; transition: all 0.2s; ${active ? 'background: var(--accent); color: var(--bg); border: 1px solid var(--accent);' : 'border: 1px solid var(--border); color: var(--text2);'}">${p}</a>`;
+    }).join('')}
+    </div>` : '';
+
+    const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>${catInfo.name}</span>
+        <a href="${getLocalizedUrl('/', lang)}">Home</a> › ${currentPage === 1 ? `<span>${catInfo.name}</span>` : `<a href="${getLocalizedUrl(`/category/${catId}.html`, lang)}">${catInfo.name}</a> › <span>Page ${currentPage}</span>`}
       </nav>
       <h1>${catInfo.name}</h1>
+      <h1>${catInfo.name} ${currentPage > 1 ? `<span style="font-size: 0.6em; opacity: 0.6;">(Page ${currentPage})</span>` : ''}</h1>
       <p class="lead">${linkify(catInfo.description)}</p>
 
       ${catInfo.longDesc ? `<div class="prose" style="margin-top: 3rem; margin-bottom: 3rem;">${marked.parse(linkify(catInfo.longDesc))}</div>` : ''}
+      ${catInfo.longDesc && currentPage === 1 ? `<div class="prose" style="margin-top: 3rem; margin-bottom: 3rem;">${marked.parse(linkify(catInfo.longDesc))}</div>` : ''}
 
       <section class="grid" style="margin-top: 2rem;">
         <h2>Verified ${catInfo.name}</h2>
         <div class="grid">${toolsHtml}</div>
+        ${paginationHtml}
       </section>
 
+      ${currentPage === 1 ? `
       <section class="faq" style="margin-top: 6rem;">
         <h2>Expert FAQ — ${catInfo.name} & Open Source Mastery</h2>
         ${faqBankHtml}
       </section>
+      </section>` : ''}
     </div>
   `;
 
-  const headInject = `
+    const headInject = `
     <script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>
     <script type="application/ld+json">${JSON.stringify(itemListSchema)}</script>
   `;
 
-  return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, `/category/${catId}.html`, content, lang, headInject, '', ogImagePath);
-}
+    return getBaseLayout(`${catInfo.name} - Open Source Tools`, catInfo.description, `/category/${catId}.html`, content, lang, headInject, '', ogImagePath);
+    const canonicalPath = currentPage === 1 ? `/category/${catId}.html` : `/category/${catId}-page-${currentPage}.html`;
 
-function renderHomepage(featuredTools, lang) {
-  const featuredHtml = featuredTools.map(t => `
+    return getBaseLayout(`${catInfo.name} - Open Source Tools ${currentPage > 1 ? `- Page ${currentPage}` : ''}`, catInfo.description, canonicalPath, content, lang, headInject, '', ogImagePath);
+  }
+
+  function renderHomepage(featuredTools, lang) {
+    const featuredHtml = featuredTools.map(t => `
     <a href="${getLocalizedUrl(`/tools/${t.id}.html`, lang)}" class="tool-card featured-card">
       <div style="position: absolute; top: 1rem; right: 1rem; color: var(--yellow); font-family: var(--font-mono); font-size: 0.75rem;">★ ${t.stars.toLocaleString()}</div>
       <h3>${t.emoji} ${t.name}</h3>
@@ -514,7 +637,7 @@ function renderHomepage(featuredTools, lang) {
     </a>
   `).join('');
 
-  const content = `
+    const content = `
     <div class="container" style="text-align:center; padding-top: 6rem;">
       <h1>Discover, Build, & Dominate Workflows.</h1>
       <p class="lead" style="margin: 0 auto 3rem;">The world's largest verified directory of freemium & open-source tools — featuring step-by-step self-hosting guides and powered by DePIN-style edge compute networks.</p>
@@ -544,34 +667,34 @@ function renderHomepage(featuredTools, lang) {
     </section>
   `;
 
-  const webpageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Freemium Services",
-    "description": "Verified directory of freemium & open-source tools."
-  };
+    const webpageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Freemium Services",
+      "description": "Verified directory of freemium & open-source tools."
+    };
 
-  const ogImagePath = generateSvgOgImage("Freemium Services", "Verified Open Source Directory", `home-og.svg`);
+    const ogImagePath = generateSvgOgImage("Freemium Services", "Verified Open Source Directory", `home-og.svg`);
 
-  return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, lang, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
-}
+    return getBaseLayout('Home - Best Free & Open Source Tools', 'Verified directory of freemium & open-source tools with DePIN edge compute self-hosting guides.', '/index.html', content, lang, `<script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>`, '', ogImagePath);
+  }
 
-function renderComparisonPage(aId, bId, lang) {
-  const a = toolsData[aId];
-  const b = toolsData[bId];
-  if (!a || !b) return null;
+  function renderComparisonPage(aId, bId, lang) {
+    const a = toolsData[aId];
+    const b = toolsData[bId];
+    if (!a || !b) return null;
 
-  const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
-    { name: categories[a.category]?.name || a.category, url: SITE_URL + getLocalizedUrl(`/category/${a.category}.html`, lang) },
-    { name: `${a.name} vs ${b.name}`, url: SITE_URL + getLocalizedUrl(`/compare/${a.id}-vs-${b.id}.html`, lang) }
-  ];
+    const breadcrumbItems = [
+      { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+      { name: categories[a.category]?.name || a.category, url: SITE_URL + getLocalizedUrl(`/category/${a.category}.html`, lang) },
+      { name: `${a.name} vs ${b.name}`, url: SITE_URL + getLocalizedUrl(`/compare/${a.id}-vs-${b.id}.html`, lang) }
+    ];
 
-  const ogImagePath = generateSvgOgImage(`${a.name} vs ${b.name}`, 'Technical Comparison', `${a.id}-vs-${b.id}-og.svg`);
+    const ogImagePath = generateSvgOgImage(`${a.name} vs ${b.name}`, 'Technical Comparison', `${a.id}-vs-${b.id}-og.svg`);
 
-  const twitterIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this 2026 technical comparison: ${a.name} vs ${b.name} on Freemium.Services`)}&url=${encodeURIComponent(`${SITE_URL}/compare/${a.id}-vs-${b.id}.html`)}`;
+    const twitterIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this 2026 technical comparison: ${a.name} vs ${b.name} on Freemium.Services`)}&url=${encodeURIComponent(`${SITE_URL}/compare/${a.id}-vs-${b.id}.html`)}`;
 
-  const content = `
+    const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <a href="${getLocalizedUrl(`/category/${a.category}.html`, lang)}">${categories[a.category]?.name || a.category}</a> › <span>${a.name} vs ${b.name}</span>
@@ -613,52 +736,52 @@ function renderComparisonPage(aId, bId, lang) {
     </div>
   `;
 
-  const webpageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": `${a.name} vs ${b.name} Comparison`,
-    "description": `Technical comparison of ${a.name} and ${b.name}.`
-  };
+    const webpageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": `${a.name} vs ${b.name} Comparison`,
+      "description": `Technical comparison of ${a.name} and ${b.name}.`
+    };
 
-  return getBaseLayout(`${a.name} vs ${b.name} - Detailed Comparison`, `Compare ${a.name} and ${b.name} to see which open-source tool fits your self-hosting needs.`, `/compare/${a.id}-vs-${b.id}.html`, content, `
+    return getBaseLayout(`${a.name} vs ${b.name} - Detailed Comparison`, `Compare ${a.name} and ${b.name} to see which open-source tool fits your self-hosting needs.`, `/compare/${a.id}-vs-${b.id}.html`, content, `
     <script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>
     <script type="application/ld+json">${JSON.stringify(webpageSchema)}</script>
   `, lang, '', ogImagePath);
-}
+  }
 
-// --- Knowledge Hub Generator ---
-function renderKnowledgeHub(lang) {
-  const pillarHtml = Object.keys(categories)
-    .filter(catId => categories[catId].longDesc)
-    .map(catId => `
+  // --- Knowledge Hub Generator ---
+  function renderKnowledgeHub(lang) {
+    const pillarHtml = Object.keys(categories)
+      .filter(catId => categories[catId].longDesc)
+      .map(catId => `
       <section id="${catId}-guide" style="margin-bottom: 4rem;">
         <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">${categories[catId].name} Master Guide</h2>
         <div class="prose">${marked.parse(linkify(categories[catId].longDesc))}</div>
       </section>
     `).join('');
 
-  const glossaryHtml = Object.keys(glossary).map(key => `
+    const glossaryHtml = Object.keys(glossary).map(key => `
       <section id="${key.toLowerCase()}" style="margin-bottom: 2.5rem; border-left: 2px solid var(--accent); padding-left: 1.5rem;">
         <h3 style="color: var(--text); font-family: var(--font-display); margin-bottom: 0.5rem;">${glossary[key].term}</h3>
         <p style="color: var(--text2); font-size: 0.95rem; line-height: 1.6;">${glossary[key].def}</p>
       </section>
     `).join('');
 
-  const faqHtml = faqBank.map(f => `
+    const faqHtml = faqBank.map(f => `
     <div class="faq-item" style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
       <h3 style="color: var(--text); margin-bottom: 1rem; font-family: var(--font-display); font-size: 1.25rem;">${f.q}</h3>
       <div class="prose" style="color:var(--text2);">${marked.parse(f.a)}</div>
     </div>
   `).join('');
 
-  const breadcrumbItems = [
-    { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
-    { name: "Docs", url: SITE_URL + getLocalizedUrl("/knowledge-hub.html", lang) }
-  ];
+    const breadcrumbItems = [
+      { name: "Home", url: SITE_URL + getLocalizedUrl("/", lang) },
+      { name: "Docs", url: SITE_URL + getLocalizedUrl("/knowledge-hub.html", lang) }
+    ];
 
-  const ogImagePath = generateSvgOgImage("Docs & Technical Glossary", "Expert Resource Bank", "knowledge-hub-og.svg");
+    const ogImagePath = generateSvgOgImage("Docs & Technical Glossary", "Expert Resource Bank", "knowledge-hub-og.svg");
 
-  const content = `
+    const content = `
     <div class="container">
       <nav class="breadcrumbs">
         <a href="${getLocalizedUrl('/', lang)}">Home</a> › <span>Docs</span>
@@ -671,9 +794,9 @@ function renderKnowledgeHub(lang) {
           <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 1.5rem; font-family: var(--font-mono);">Navigation</h3>
           <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
             ${Object.keys(categories)
-      .filter(catId => categories[catId].longDesc)
-      .map(catId => `<li style="margin-bottom: 1rem;"><a href="#${catId}-guide" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">${categories[catId].name} Guide</a></li>`)
-      .join('')}
+        .filter(catId => categories[catId].longDesc)
+        .map(catId => `<li style="margin-bottom: 1rem;"><a href="#${catId}-guide" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">${categories[catId].name} Guide</a></li>`)
+        .join('')}
             <li style="margin-bottom: 1rem;"><a href="#glossary" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">Technical Glossary</a></li>
             <li><a href="#faq" style="color: var(--text2); text-decoration: none; display: block; transition: color 0.2s;">Global FAQ Bank</a></li>
           </ul>
@@ -696,198 +819,198 @@ function renderKnowledgeHub(lang) {
     </div>
   `;
 
-  const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqBank.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
-  const headInject = `<script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>\n  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+    const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqBank.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
+    const headInject = `<script type="application/ld+json">${JSON.stringify(getBreadcrumbSchema(breadcrumbItems))}</script>\n  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
-  return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, lang, headInject, '', ogImagePath);
-}
+    return getBaseLayout('Docs - Master Open Source Guides', 'The master resource for self-hosting, automation, and AI infrastructure. Aggregated expert guides and FAQs.', '/knowledge-hub.html', content, lang, headInject, '', ogImagePath);
+  }
 
-// --- Main Build Execution ---
-async function build() {
-  console.log('🚀 Generating Freemium.Services v2...');
+  // --- Main Build Execution ---
+  async function build() {
+    console.log('🚀 Generating Freemium.Services v2...');
 
-  const toolsDir = path.join(outDir, 'tools');
-  const catDir = path.join(outDir, 'category');
-  const compDir = path.join(outDir, 'compare');
-  const jsDir = path.join(outDir, 'js');
+    const toolsDir = path.join(outDir, 'tools');
+    const catDir = path.join(outDir, 'category');
+    const compDir = path.join(outDir, 'compare');
+    const jsDir = path.join(outDir, 'js');
 
-  [toolsDir, catDir, compDir, jsDir].forEach(d => {
-    if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
-  });
-
-  // Copy JS files for external linking
-  fs.writeFileSync(path.join(jsDir, 'chat-widget.js'), chatJsContent);
-  fs.writeFileSync(path.join(jsDir, 'search.js'), searchJsContent);
-  fs.writeFileSync(path.join(jsDir, 'newsletter.js'), newsletterJsContent);
-
-  const sitemaps = {
-    core: [],
-    knowledge: [],
-    tools: [],
-    categories: [],
-    comparisons: []
-  };
-  const imageUrls = [];
-  const searchIndex = [];
-
-  // Calculate featured tools for freshness signals
-  const featuredTools = Object.values(toolsData)
-    .sort((a, b) => (b.stars || 0) - (a.stars || 0))
-    .slice(0, 3);
-  const featuredIds = new Set(featuredTools.map(t => t.id));
-
-  // 1. Homepage
-  fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools));
-  imageUrls.push({ loc: '/', img: '/og/home-og.svg', title: 'Freemium Services - Home' });
-  sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
-
-  // 1b. Knowledge Hub
-  const hubHtml = renderKnowledgeHub();
-  fs.writeFileSync(path.join(outDir, 'knowledge-hub.html'), hubHtml);
-  sitemaps.knowledge.push({ loc: '/knowledge-hub.html', lastmod: new Date().toISOString().split('T')[0], priority: '1.0' });
-
-  // Add Docs to search index with a priority boost
-  searchIndex.push({
-    slug: 'knowledge-hub',
-    url: '/knowledge-hub.html',
-    title: 'Docs: Open Source & Self-Hosting Hub',
-    lastmod: new Date().toISOString().split('T')[0],
-    category: 'Documentation',
-    description: 'The definitive master resource for decentralized infrastructure, privacy-first automation, and local AI stacks.',
-    isFeatured: true
-  });
-  imageUrls.push({ loc: '/knowledge-hub.html', img: '/og/knowledge-hub-og.svg', title: 'Docs' });
-
-  // 2. Tool Pages
-  let toolsCount = 0;
-  Object.values(toolsData).forEach(t => {
-    imageUrls.push({ loc: `/tools/${t.id}.html`, img: `/og/${t.id}-og.svg`, title: t.name });
-    fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t));
-
-    // Featured tools get the current build date to boost freshness signals
-    const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
-    sitemaps.tools.push({ loc: `/tools/${t.id}.html`, lastmod });
-
-    searchIndex.push({
-      slug: t.id,
-      title: t.name,
-      category: t.category,
-      lastmod: lastmod,
-      description: t.description.replace(/[#*`]/g, '').slice(0, 100),
-      isFeatured: featuredIds.has(t.id),
-      alternatives: t.alternatives || [],
-      install: t.install || ''
+    [toolsDir, catDir, compDir, jsDir].forEach(d => {
+      if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
     });
-    toolsCount++;
-  });
 
-  // 3. Category Pages
-  let catCount = 0;
-  Object.keys(categories).forEach(catId => {
-    imageUrls.push({ loc: `/category/${catId}.html`, img: `/og/${catId}-og.svg`, title: categories[catId].name });
-    fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId]));
-    sitemaps.categories.push({ loc: `/category/${catId}.html`, lastmod: new Date().toISOString().split('T')[0] });
+    // Copy JS files for external linking
+    fs.writeFileSync(path.join(jsDir, 'chat-widget.js'), chatJsContent);
+    fs.writeFileSync(path.join(jsDir, 'search.js'), searchJsContent);
+    fs.writeFileSync(path.join(jsDir, 'newsletter.js'), newsletterJsContent);
 
-    // Index category hubs and apply priority boost for self-hosting guides
+    const sitemaps = {
+      core: [],
+      knowledge: [],
+      tools: [],
+      categories: [],
+      comparisons: []
+    };
+    const imageUrls = [];
+    const searchIndex = [];
+
+    // Calculate featured tools for freshness signals
+    const featuredTools = Object.values(toolsData)
+      .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+      .slice(0, 3);
+    const featuredIds = new Set(featuredTools.map(t => t.id));
+
+    // 1. Homepage
+    fs.writeFileSync(path.join(outDir, 'index.html'), renderHomepage(featuredTools));
+    imageUrls.push({ loc: '/', img: '/og/home-og.svg', title: 'Freemium Services - Home' });
+    sitemaps.core.push({ loc: '/index.html', lastmod: new Date().toISOString().split('T')[0] });
+
+    // 1b. Knowledge Hub
+    const hubHtml = renderKnowledgeHub();
+    fs.writeFileSync(path.join(outDir, 'knowledge-hub.html'), hubHtml);
+    sitemaps.knowledge.push({ loc: '/knowledge-hub.html', lastmod: new Date().toISOString().split('T')[0], priority: '1.0' });
+
+    // Add Docs to search index with a priority boost
     searchIndex.push({
-      slug: catId,
-      url: `/category/${catId}.html`,
-      title: `${categories[catId].name} Hub & Guides`,
+      slug: 'knowledge-hub',
+      url: '/knowledge-hub.html',
+      title: 'Docs: Open Source & Self-Hosting Hub',
       lastmod: new Date().toISOString().split('T')[0],
-      category: 'Guides',
-      description: categories[catId].description,
-      isFeatured: catId === 'self-hosting'
+      category: 'Documentation',
+      description: 'The definitive master resource for decentralized infrastructure, privacy-first automation, and local AI stacks.',
+      isFeatured: true
+    });
+    imageUrls.push({ loc: '/knowledge-hub.html', img: '/og/knowledge-hub-og.svg', title: 'Docs' });
+
+    // 2. Tool Pages
+    let toolsCount = 0;
+    Object.values(toolsData).forEach(t => {
+      imageUrls.push({ loc: `/tools/${t.id}.html`, img: `/og/${t.id}-og.svg`, title: t.name });
+      fs.writeFileSync(path.join(toolsDir, `${t.id}.html`), renderToolPage(t));
+
+      // Featured tools get the current build date to boost freshness signals
+      const lastmod = featuredIds.has(t.id) ? new Date().toISOString().split('T')[0] : t.lastUpdated;
+      sitemaps.tools.push({ loc: `/tools/${t.id}.html`, lastmod });
+
+      searchIndex.push({
+        slug: t.id,
+        title: t.name,
+        category: t.category,
+        lastmod: lastmod,
+        description: t.description.replace(/[#*`]/g, '').slice(0, 100),
+        isFeatured: featuredIds.has(t.id),
+        alternatives: t.alternatives || [],
+        install: t.install || ''
+      });
+      toolsCount++;
     });
 
-    catCount++;
-  });
+    // 3. Category Pages
+    let catCount = 0;
+    Object.keys(categories).forEach(catId => {
+      imageUrls.push({ loc: `/category/${catId}.html`, img: `/og/${catId}-og.svg`, title: categories[catId].name });
+      fs.writeFileSync(path.join(catDir, `${catId}.html`), renderCategoryPage(catId, categories[catId]));
+      sitemaps.categories.push({ loc: `/category/${catId}.html`, lastmod: new Date().toISOString().split('T')[0] });
 
-  // 4. Comparison Pages
-  let compCount = 0;
+      // Index category hubs and apply priority boost for self-hosting guides
+      searchIndex.push({
+        slug: catId,
+        url: `/category/${catId}.html`,
+        title: `${categories[catId].name} Hub & Guides`,
+        lastmod: new Date().toISOString().split('T')[0],
+        category: 'Guides',
+        description: categories[catId].description,
+        isFeatured: catId === 'self-hosting'
+      });
 
-  Object.keys(categories).forEach(catId => {
-    const catTools = Object.values(toolsData).filter(t => t.category === catId && t.stars > STARS_THRESHOLD);
-    for (let i = 0; i < catTools.length; i++) {
-      for (let j = i + 1; j < catTools.length; j++) {
-        const a = catTools[i].id;
-        const b = catTools[j].id;
-        const html = renderComparisonPage(a, b);
-        if (html) {
-          imageUrls.push({ loc: `/compare/${a}-vs-${b}.html`, img: `/og/${a}-vs-${b}-og.svg`, title: `${a} vs ${b}` });
-          fs.writeFileSync(path.join(compDir, `${a}-vs-${b}.html`), html);
-          sitemaps.comparisons.push({ loc: `/compare/${a}-vs-${b}.html`, lastmod: new Date().toISOString().split('T')[0] });
-          compCount++;
+      catCount++;
+    });
+
+    // 4. Comparison Pages
+    let compCount = 0;
+
+    Object.keys(categories).forEach(catId => {
+      const catTools = Object.values(toolsData).filter(t => t.category === catId && t.stars > STARS_THRESHOLD);
+      for (let i = 0; i < catTools.length; i++) {
+        for (let j = i + 1; j < catTools.length; j++) {
+          const a = catTools[i].id;
+          const b = catTools[j].id;
+          const html = renderComparisonPage(a, b);
+          if (html) {
+            imageUrls.push({ loc: `/compare/${a}-vs-${b}.html`, img: `/og/${a}-vs-${b}-og.svg`, title: `${a} vs ${b}` });
+            fs.writeFileSync(path.join(compDir, `${a}-vs-${b}.html`), html);
+            sitemaps.comparisons.push({ loc: `/compare/${a}-vs-${b}.html`, lastmod: new Date().toISOString().split('T')[0] });
+            compCount++;
+          }
         }
       }
-    }
-  });
+    });
 
-  // 5. Search Index
-  let translationCache = {};
-  if (fs.existsSync(translationCacheFile)) {
-    try {
-      translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
-    } catch (e) {
-      console.warn('⚠️ Could not load translation-cache.json');
-    }
-  }
-
-  for (const lang of LANGUAGES) {
-    if (lang === 'en') {
-      fs.writeFileSync(path.join(outDir, `search-index-en.json`), JSON.stringify(searchIndex));
-    } else {
-      console.log(`🌍 Localizing search index for: ${lang}...`);
-      const localizedIndex = [];
-
-      // Sequential processing to respect rate limits and handle cache safely
-      for (const item of searchIndex) {
-        const hash = crypto.createHash('md5').update(item.description).digest('hex');
-        const cacheKey = `${lang}:${hash}`;
-
-        let translatedDesc;
-        if (translationCache[cacheKey]) {
-          translatedDesc = translationCache[cacheKey];
-        } else {
-          translatedDesc = await translateText(item.description, lang);
-          translationCache[cacheKey] = translatedDesc;
-          // Persist cache immediately to disk to prevent data loss on build failure
-          fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
-        }
-        localizedIndex.push({ ...item, description: translatedDesc });
+    // 5. Search Index
+    let translationCache = {};
+    if (fs.existsSync(translationCacheFile)) {
+      try {
+        translationCache = JSON.parse(fs.readFileSync(translationCacheFile, 'utf8'));
+      } catch (e) {
+        console.warn('⚠️ Could not load translation-cache.json');
       }
-      fs.writeFileSync(path.join(outDir, `search-index-${lang}.json`), JSON.stringify(localizedIndex));
     }
-  }
-  fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
 
-  // 6. Sitemaps (Split for Scalable Indexing and Regional Targeting)
-  const writeSitemap = (urls, filename, langPrefix = '') => {
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    for (const lang of LANGUAGES) {
+      if (lang === 'en') {
+        fs.writeFileSync(path.join(outDir, `search-index-en.json`), JSON.stringify(searchIndex));
+      } else {
+        console.log(`🌍 Localizing search index for: ${lang}...`);
+        const localizedIndex = [];
+
+        // Sequential processing to respect rate limits and handle cache safely
+        for (const item of searchIndex) {
+          const hash = crypto.createHash('md5').update(item.description).digest('hex');
+          const cacheKey = `${lang}:${hash}`;
+
+          let translatedDesc;
+          if (translationCache[cacheKey]) {
+            translatedDesc = translationCache[cacheKey];
+          } else {
+            translatedDesc = await translateText(item.description, lang);
+            translationCache[cacheKey] = translatedDesc;
+            // Persist cache immediately to disk to prevent data loss on build failure
+            fs.writeFileSync(translationCacheFile, JSON.stringify(translationCache, null, 2));
+          }
+          localizedIndex.push({ ...item, description: translatedDesc });
+        }
+        fs.writeFileSync(path.join(outDir, `search-index-${lang}.json`), JSON.stringify(localizedIndex));
+      }
+    }
+    fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex)); // Fallback
+
+    // 6. Sitemaps (Split for Scalable Indexing and Regional Targeting)
+    const writeSitemap = (urls, filename, langPrefix = '') => {
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.map(u => `  <url>
     <loc>${SITE_URL}${langPrefix ? `/${langPrefix}` : ''}${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
 ${u.priority ? `    <priority>${u.priority}</priority>\n` : ''}${LANGUAGES.map(lang => {
-      const lp = lang === 'en' ? '' : `/${lang}`;
-      return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}${lp}${u.loc}" />`;
-    }).join('\n')}
+        const lp = lang === 'en' ? '' : `/${lang}`;
+        return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE_URL}${lp}${u.loc}" />`;
+      }).join('\n')}
   </url>`).join('\n')}
 </urlset>`;
-    fs.writeFileSync(path.join(outDir, filename), xml);
-  };
+      fs.writeFileSync(path.join(outDir, filename), xml);
+    };
 
-  const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
+    const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
 
-  writeSitemap(sitemaps.core, 'sitemap-core.xml');
-  writeSitemap(sitemaps.knowledge, 'sitemap-knowledge.xml');
-  writeSitemap(sitemaps.tools, 'sitemap-tools.xml');
-  writeSitemap(sitemaps.categories, 'sitemap-categories.xml');
-  writeSitemap(sitemaps.comparisons, 'sitemap-comparisons.xml');
-  // Legacy fallback
-  writeSitemap(totalUrls, 'sitemap.xml');
+    writeSitemap(sitemaps.core, 'sitemap-core.xml');
+    writeSitemap(sitemaps.knowledge, 'sitemap-knowledge.xml');
+    writeSitemap(sitemaps.tools, 'sitemap-tools.xml');
+    writeSitemap(sitemaps.categories, 'sitemap-categories.xml');
+    writeSitemap(sitemaps.comparisons, 'sitemap-comparisons.xml');
+    // Legacy fallback
+    writeSitemap(totalUrls, 'sitemap.xml');
 
-  // 6b. Image Sitemap
-  const imgXml = `<?xml version="1.0" encoding="UTF-8"?>
+    // 6b. Image Sitemap
+    const imgXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${imageUrls.map(item => `  <url>
     <loc>${SITE_URL}${item.loc}</loc>
@@ -897,26 +1020,26 @@ ${imageUrls.map(item => `  <url>
     </image:image>
   </url>`).join('\n')}
 </urlset>`;
-  fs.writeFileSync(path.join(outDir, 'sitemap-images.xml'), imgXml);
+    fs.writeFileSync(path.join(outDir, 'sitemap-images.xml'), imgXml);
 
-  // 6e. Multilingual Sitemaps (Regional targeting for Indian developer market)
-  LANGUAGES.filter(l => l !== 'en').forEach(lang => {
-    writeSitemap(totalUrls, `sitemap-${lang}.xml`, lang);
-  });
+    // 6e. Multilingual Sitemaps (Regional targeting for Indian developer market)
+    LANGUAGES.filter(l => l !== 'en').forEach(lang => {
+      writeSitemap(totalUrls, `sitemap-${lang}.xml`, lang);
+    });
 
-  // 6f. Blog, Features, News Fallbacks (Copy static or generate placeholder)
-  ['blog', 'features', 'news'].forEach(type => {
-    const filename = `sitemap-${type}.xml`;
-    const sourcePath = path.join(__dirname, filename);
-    if (fs.existsSync(sourcePath)) {
-      fs.copyFileSync(sourcePath, path.join(outDir, filename));
-    } else {
-      writeSitemap([], filename);
-    }
-  });
+    // 6f. Blog, Features, News Fallbacks (Copy static or generate placeholder)
+    ['blog', 'features', 'news'].forEach(type => {
+      const filename = `sitemap-${type}.xml`;
+      const sourcePath = path.join(__dirname, filename);
+      if (fs.existsSync(sourcePath)) {
+        fs.copyFileSync(sourcePath, path.join(outDir, filename));
+      } else {
+        writeSitemap([], filename);
+      }
+    });
 
-  // 6c. Sitemap Index (The Master Link for GSC)
-  const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+    // 6c. Sitemap Index (The Master Link for GSC)
+    const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap><loc>${SITE_URL}/sitemap-core.xml</loc></sitemap>
   <sitemap><loc>${SITE_URL}/sitemap-categories.xml</loc></sitemap>
@@ -930,10 +1053,10 @@ ${imageUrls.map(item => `  <url>
   ${LANGUAGES.filter(l => l !== 'en').map(l => `<sitemap><loc>${SITE_URL}/sitemap-${l}.xml</loc></sitemap>`).join('\n  ')}
   <sitemap><loc>${SITE_URL}/sitemap.xml</loc></sitemap>
 </sitemapindex>`;
-  fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), sitemapIndex);
+    fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), sitemapIndex);
 
-  // 6d. Expert Robots.txt Integration (Preventing Regression)
-  const expertRobots = `# ============================================================
+    // 6d. Expert Robots.txt Integration (Preventing Regression)
+    const expertRobots = `# ============================================================
 # freemium.services — robots.txt (Programmatically Generated)
 # Strategy  : Maximum crawlability for ALL bots
 # ============================================================
@@ -999,32 +1122,32 @@ Sitemap: ${SITE_URL}/sitemap-ml.xml
 Sitemap: ${SITE_URL}/sitemap.xml
 
 Host: freemium.services`;
-  fs.writeFileSync(path.join(outDir, 'robots.txt'), expertRobots);
+    fs.writeFileSync(path.join(outDir, 'robots.txt'), expertRobots);
 
-  // 7. Performance Budget Check
-  const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
-  const totalPages = totalUrls.length;
-  if (totalPages > 5000) {
-    console.warn(`\x1b[33m⚠️ Warning: Total pages (${totalPages}) approaching crawl budget limits.\x1b[0m`);
+    // 7. Performance Budget Check
+    const totalUrls = [...sitemaps.core, ...sitemaps.knowledge, ...sitemaps.tools, ...sitemaps.categories, ...sitemaps.comparisons];
+    const totalPages = totalUrls.length;
+    if (totalPages > 5000) {
+      console.warn(`\x1b[33m⚠️ Warning: Total pages (${totalPages}) approaching crawl budget limits.\x1b[0m`);
+    }
+
+    totalUrls.forEach(u => {
+      const filePath = path.join(outDir, u.loc.replace(/^\//, ''));
+      if (fs.existsSync(filePath) && fs.statSync(filePath).size > (MAX_PAGE_SIZE_KB * 1024)) {
+        console.warn(`\x1b[33m⚠️ Performance Alert: ${u.loc} exceeds ${MAX_PAGE_SIZE_KB}KB. Check content depth.\x1b[0m`);
+      }
+    });
+
+    // 7. Build Report Metrics
+    const buildReport = {
+      tools: toolsCount, categories: catCount, comparisonPages: compCount,
+      localizedPages: totalPages * LANGUAGES.length,
+      generatedAt: new Date().toISOString()
+    };
+    fs.writeFileSync(path.join(outDir, 'build-report.json'), JSON.stringify(buildReport, null, 2));
+
+    console.log('✅ Build Complete: 50+ Future-Proof Features Integrated.');
+    console.log(`📊 Report generated at: public/build-report.json`);
   }
 
-  totalUrls.forEach(u => {
-    const filePath = path.join(outDir, u.loc.replace(/^\//, ''));
-    if (fs.existsSync(filePath) && fs.statSync(filePath).size > (MAX_PAGE_SIZE_KB * 1024)) {
-      console.warn(`\x1b[33m⚠️ Performance Alert: ${u.loc} exceeds ${MAX_PAGE_SIZE_KB}KB. Check content depth.\x1b[0m`);
-    }
-  });
-
-  // 7. Build Report Metrics
-  const buildReport = {
-    tools: toolsCount, categories: catCount, comparisonPages: compCount,
-    localizedPages: totalPages * LANGUAGES.length,
-    generatedAt: new Date().toISOString()
-  };
-  fs.writeFileSync(path.join(outDir, 'build-report.json'), JSON.stringify(buildReport, null, 2));
-
-  console.log('✅ Build Complete: 50+ Future-Proof Features Integrated.');
-  console.log(`📊 Report generated at: public/build-report.json`);
-}
-
-build().catch(err => { console.error('❌ Build failed:', err); process.exit(1); });
+  build().catch(err => { console.error('❌ Build failed:', err); process.exit(1); });
